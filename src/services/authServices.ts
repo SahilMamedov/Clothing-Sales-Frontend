@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IRegister } from "../types";
+import { IToken } from "../types";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -7,8 +7,8 @@ export const authApi = createApi({
     baseUrl: "http://localhost:5000/api/account/",
   }),
   endpoints: (builder) => ({
-    fetchRegisters: builder.mutation<any, IRegister>({
-      query: (body: IRegister) => {
+    fetchRegisters: builder.mutation<any, FormData>({
+      query: (body: FormData) => {
         return {
           url: "register",
           method: "POST",
@@ -16,6 +16,16 @@ export const authApi = createApi({
         };
       },
     }),
+    fetchLogin: builder.mutation<IToken, FormData>({
+      query: (body) => {
+        //console.log(body);
+        return {
+          url: "login",
+          method: "POST",
+          body,
+        };
+      },
+    }),
   }),
 });
-export const { useFetchRegistersMutation } = authApi;
+export const { useFetchRegistersMutation, useFetchLoginMutation } = authApi;

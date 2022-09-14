@@ -13,8 +13,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFetchRegistersMutation } from "services/authServices";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IRegister } from "../../../types";
+import { NavLink, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+import { Links } from "../../../Routes/Links";
 
 function Copyright(props: any) {
   return (
@@ -37,29 +40,39 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUp() {
-  //  const [newObj] = useFetchRegistersMutation();
+  const [postRegisterData, response] = useFetchRegistersMutation();
+  const { isSuccess, data, isError } = response;
+  //console.log(data);
+  console.log(isSuccess);
+
+  // console.log(isSuccess);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
 
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    //   surName: data.get("surName"),
-    //   name: data.get("name"),
-    // });
+    postRegisterData(data);
 
-    const newObj = {
-      email: data.get("email"),
-      password: data.get("password"),
-      surName: data.get("surName"),
-      name: data.get("name"),
-    };
-
-    //console.log(newObj);
+    navigate("/login");
+    swal(
+      "Ugurlu qeydiyyat",
+      "Davam etmek ucun ok duymesine click edin",
+      "success"
+    );
   };
-
+  useEffect(() => {
+    if (isSuccess) {
+      swal(
+        "Ugurlu qeydiyyat",
+        "Davam etmek ucun ok duymesine click edin",
+        "success"
+      );
+      console.log(data);
+      navigate("/login");
+    }
+  }, [isSuccess]);
+  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -122,7 +135,7 @@ export default function SignUp() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type="text"
                   id="password"
                   autoComplete="new-password"
                 />
@@ -146,9 +159,9 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <NavLink to={Links.app.login}>
                   Already have an account? Sign in
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

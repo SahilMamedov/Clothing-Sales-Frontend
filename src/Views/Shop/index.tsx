@@ -49,7 +49,6 @@ export const Shop: FC = () => {
   const handleClickDiscount = () => {
     setopenColor(!openColor);
   };
-  console.log(isLoading);
   return (
     <>
       <Container>

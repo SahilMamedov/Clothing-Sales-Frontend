@@ -10,11 +10,45 @@ import {
   StyledHeartIcon,
   StyledBasketIcon,
   UserProfile,
+  StyledUser,
+  UserBox,
+  Box,
+  Line,
+  Logout,
+  Profile,
+  StyledSignOut,
+  Register,
 } from "./styles";
 import { logo } from "Assets";
 import { Links } from "Routes/Links";
 
+import decode from "jwt-decode";
+import { IUser } from "types";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export const Header = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<IUser>();
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (token) {
+      const user: IUser = decode(token);
+      setUser(user);
+    }
+  }, []);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(!open);
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+  const handleRegister = () => {
+    navigate("/register");
+  };
   return (
     <StyledNavbar>
       <DisplayFlex>
@@ -37,7 +71,28 @@ export const Header = () => {
         </StyledPosition>
         <StyledHeartIcon />
         <StyledBasketIcon />
-        <UserProfile>User Profile</UserProfile>
+        <StyledUser onClick={handleClickOpen} />
+        <Box>
+          {open ? (
+            <>
+              <UserBox>
+                <Profile>Profile</Profile>
+                <Line />
+                {user ? (
+                  <Logout onClick={handleLogout}>
+                    Log Out
+                    <StyledSignOut />
+                  </Logout>
+                ) : (
+                  <Register onClick={handleRegister}>Register</Register>
+                )}
+              </UserBox>
+            </>
+          ) : (
+            ""
+          )}
+        </Box>
+        <UserProfile>{user?.Name ? user.Email : "bosh"}</UserProfile>
       </DisplayFlex>
     </StyledNavbar>
   );

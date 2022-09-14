@@ -20,19 +20,15 @@ export const Goods: FC<IGoods> = ({
   isMainImg,
 }) => {
   return (
-    <>
-      <StyledCard key={id}>
-        <StyledCardImg src={isMainImg} />
-        <StyledInformation>
-          <StyledProductName>{Name}</StyledProductName>
-          <StyledBrandName>{BrandName}</StyledBrandName>
-          <StyledDiscountPrice>${Price * Discount}</StyledDiscountPrice>
-          <StyledPrice>${Price}</StyledPrice>
-          <StyledDiscount>
-            {Discount > 0 && `(${Discount} % off)`}
-          </StyledDiscount>
-        </StyledInformation>
-      </StyledCard>
-    </>
+    <StyledCard key={id}>
+      <StyledCardImg src={isMainImg} />
+      <StyledInformation>
+        <StyledProductName>{Name}</StyledProductName>
+        <StyledBrandName>{BrandName}</StyledBrandName>
+        <StyledDiscountPrice>${Price * Discount}</StyledDiscountPrice>
+        <StyledPrice>${Price}</StyledPrice>
+        <StyledDiscount>{Discount > 0 && `(${Discount} % off)`}</StyledDiscount>
+      </StyledInformation>
+    </StyledCard>
   );
 };

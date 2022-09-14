@@ -19,7 +19,7 @@ export const BlogsSlider: FC = () => {
     <div>
       <Slider {...settings}>
         {data?.map((item) => (
-          <Blogs {...item} />
+          <Blogs key={item.id} {...item} />
         ))}
       </Slider>
     </div>

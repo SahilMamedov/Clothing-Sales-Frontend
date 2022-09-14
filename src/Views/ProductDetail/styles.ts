@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import Slider from "react-slick";
+import ReactImageMagnify from "react-image-magnify";
 
 export const Container = styled.div`
-  background: #f5f5f5;
   padding: 25px 60px;
+  background: #f5f5f5;
+  height: 1200px;
+`;
+export const ProductContainer = styled.div`
   display: flex;
 `;
 
@@ -63,7 +67,9 @@ export const Flex = styled.div`
   margin: 10px 0px;
 `;
 
-export const StyledSize = styled.div`
+export const StyledSize = styled.div.attrs(
+  (props: { bacground: string }) => props
+)`
   width: 55px;
   display: flex;
   align-items: center;
@@ -72,10 +78,11 @@ export const StyledSize = styled.div`
   border: 1px solid #bababa;
   border-radius: 100%;
   margin-right: 19px;
+  background-color: ${(props) => props.bacground};
   cursor: pointer;
-  &:hover {
-    background-color: deepskyblue;
-  }
+  //&:hover {
+  //  background-color: deepskyblue;
+  //}
 `;
 export const WrapperSize = styled.div`
   display: flex;
@@ -88,11 +95,11 @@ export const VerticalSlider = styled.div`
 export const StyledSlider = styled(Slider)`
   display: flex;
   flex-wrap: nowrap;
-  height: 900px;
+  height: 817px;
 `;
 export const SliderImg = styled.img`
-  width: 175px;
-  height: 175px;
+  width: 158px;
+  height: 158px;
   cursor: pointer;
   border-radius: 10px;
 `;
@@ -102,14 +109,26 @@ export const IsMainImgBox = styled.div`
 `;
 
 export const IsMainImg = styled.img`
-  height: 900px;
   border-radius: 10px;
-  width: 837px;
+  width: 740px;
+  height: 817px;
 `;
 export const WrapperColor = styled.div`
   display: flex;
   margin: 10px 0;
 `;
+// export const StyledReactImageMagnify = styled(ReactImageMagnify)`
+//   height: 500px;
+//   smallImage {
+//     width: 300px;
+//     height: 300px;
+//   }
+//   ,
+//   largeImage {
+//     width: 400px;
+//     height: 400px;
+//   }
+// `;
 
 // export const Color = styled.div.attrs((props: { background: string }) => props)`
 //   height: 30px;
@@ -179,3 +198,33 @@ export const StyledButton = styled.button`
   cursor: pointer;
   color: white;
 `;
+
+export const DetailBox = styled(ProductContainer)`
+  justify-content: space-around;
+  border-bottom: 1px solid #848484;
+`;
+
+export const DetailTitle = styled(Select)`
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
+export const ProductDetails = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.small};
+  font-weight: ${({ theme }) => theme.fontWeight.thin};
+  color: #848484;
+  border-bottom: 3px solid #002482;
+  margin-bottom: 15px;
+  line-height: ${({ theme }) => theme.lineHeight.small};
+  cursor: pointer;
+`;
+
+export const ProductDetailWrapper = styled.div`
+  padding-top: 80px;
+  margin: 0 140px;
+`;
+export const DetailDesc = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.small};
+  font-weight: ${({ theme }) => theme.fontWeight.thin};
+  line-height: ${({ theme }) => theme.lineHeight.small};
+`;
+export const DetailsInformation = styled.div``;

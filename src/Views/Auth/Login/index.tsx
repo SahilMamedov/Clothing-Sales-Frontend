@@ -12,6 +12,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useFetchLoginMutation } from "../../../services/authServices";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Links } from "../../../Routes/Links";
+import { useEffect } from "react";
 
 function Copyright(props: any) {
   return (
@@ -34,13 +38,26 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [postLoginData, response] = useFetchLoginMutation();
+  const { isError, isSuccess, data, isLoading } = response;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem("token", JSON.stringify(data.token));
+      navigate("/");
+    }
+  }, [isSuccess]);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    postLoginData(data);
   };
 
   return (
@@ -105,9 +122,9 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <NavLink to={Links.app.register}>
                   {"Don't have an account? Sign Up"}
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

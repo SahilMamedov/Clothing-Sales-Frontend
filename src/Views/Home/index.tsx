@@ -12,7 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { StyledCustomerTitle } from "Components/shared/CustomerFeedBack/styles";
 import { CustomerFeedbackSlider } from "Components/shared/Slider/CustomerFeedbackSlider";
-import { BlogsSlider } from "../../Components/shared/Slider/BlogsSlider";
+import { BlogsSlider } from "Components/shared/Slider/BlogsSlider";
 
 export const Home = () => {
   const { data, isError, isLoading } = useFetchGoodsQuery();

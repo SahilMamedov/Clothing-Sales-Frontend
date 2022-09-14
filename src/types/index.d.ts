@@ -18,10 +18,22 @@ export interface IBlogs {
   Desc: string;
   ImgUrl: string;
 }
-
+export interface IToken {
+  token?: string;
+}
 export interface IRegister {
   name: string;
   surName: string;
   email: string;
   password: string;
+}
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface IUser {
+  Name: string;
+  Surname: string;
+  Email?: string;
 }
