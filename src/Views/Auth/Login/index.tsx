@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -15,7 +13,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFetchLoginMutation } from "../../../services/authServices";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Links } from "../../../Routes/Links";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 function Copyright(props: any) {
   return (
@@ -37,13 +42,36 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
+interface State {
+  password: string;
+  showPassword: boolean;
+}
 export default function SignIn() {
+  const [values, setValues] = useState<State>({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleChange =
+    (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
   const [postLoginData, response] = useFetchLoginMutation();
   const { isError, isSuccess, data, isLoading } = response;
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("token", JSON.stringify(data.token));
+
       navigate("/");
     }
   }, [isSuccess]);
@@ -52,11 +80,7 @@ export default function SignIn() {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
+    data.set("password", values.password);
     postLoginData(data);
   };
 
@@ -93,20 +117,34 @@ export default function SignIn() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            <div>
+              <FormControl sx={{ width: "40ch" }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={values.password}
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+            </div>
             <Button
               type="submit"
               fullWidth

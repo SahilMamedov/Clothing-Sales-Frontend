@@ -13,8 +13,10 @@ import Box from "@mui/material/Box";
 import { StyledCustomerTitle } from "Components/shared/CustomerFeedBack/styles";
 import { CustomerFeedbackSlider } from "Components/shared/Slider/CustomerFeedbackSlider";
 import { BlogsSlider } from "Components/shared/Slider/BlogsSlider";
+import { useUser } from "Hooks/useUser";
 
 export const Home = () => {
+  useUser();
   const { data, isError, isLoading } = useFetchGoodsQuery();
 
   return (

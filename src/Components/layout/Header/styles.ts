@@ -77,52 +77,56 @@ export const StyledBasketIcon = styled(ShoppingCart)`
   color: #201d1d;
   margin-left: 20px;
   font-size: 26px;
+  cursor: pointer;
   margin-right: 20px;
 `;
 export const UserProfile = styled.div`
   width: 150px;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 40px;
 `;
 export const UserBox = styled.div`
   position: absolute;
-  height: 75px;
-  width: 130px;
+  width: 160px;
+  padding: 10px 0px;
   top: 40px;
-  left: -30px;
-  background-color: cadetblue;
-  border-radius: 10px;
+  left: -100px;
   font-size: 20px;
-  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px black;
+  background-color: white;
+`;
+
+export const LoginButton = styled.button`
+  height: 35px;
+  color: white;
+  width: 120px;
+  background-color: crimson;
+  border: solid 1px #dedede;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  align-items: center;
+  font-size: 16px;
   cursor: pointer;
 `;
+
+export const RegisterButton = styled(LoginButton)`
+  background-color: white;
+  color: black;
+  margin-top: 10px;
+`;
+export const LogoutButton = styled(LoginButton)``;
+
 export const Box = styled.div`
   display: flex;
   position: relative;
 `;
-export const Line = styled.span`
-  position: absolute;
-  left: 0px;
-  top: 36px;
-  border: 1px solid white;
-  display: flex;
-  width: 100%;
-  height: 0px;
-`;
-export const Logout = styled.div`
-  padding-top: 13px;
-  cursor: pointer;
-  padding-left: 10px;
-`;
+
 export const StyledSignOut = styled(SignOut)`
   font-size: 18px;
   padding-left: 15px;
-`;
-export const Profile = styled.div`
-  padding-left: 10px;
-`;
-export const Register = styled.div`
-  padding-top: 13px;
-  cursor: pointer;
-  padding-left: 10px;
 `;

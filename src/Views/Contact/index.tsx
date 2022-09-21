@@ -1,1 +1,3 @@
-export const Contact = () => <>Contact</>;
+export const Contact = () => {
+  return <>contact</>;
+};

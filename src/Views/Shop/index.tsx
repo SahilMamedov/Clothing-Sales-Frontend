@@ -1,6 +1,6 @@
-import Box from "@mui/joy/Box";
-import Slider from "@mui/joy/Slider";
 import * as React from "react";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
@@ -28,11 +28,11 @@ import { IGoods } from "types";
 import { NavLink } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function valueText(value: number) {
+function valuetext(value: number) {
   return `${value}°C`;
 }
 export const Shop: FC = () => {
-  const [value, setValue] = React.useState<number[]>([20, 37]);
+  const [value, setValue] = React.useState<number[]>([0, 0]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
@@ -56,13 +56,13 @@ export const Shop: FC = () => {
           <SideBarBox>
             <SideBarTitle>Filters</SideBarTitle>
             <Title>Price</Title>
-            <Box sx={{ width: 300, color: "red" }}>
+            <Box sx={{ width: 300 }}>
               <Slider
                 getAriaLabel={() => "Temperature range"}
                 value={value}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
-                getAriaValueText={valueText}
+                getAriaValueText={valuetext}
               />
             </Box>
             <Line />

@@ -36,4 +36,5 @@ export interface IUser {
   Name: string;
   Surname: string;
   Email?: string;
+  IsOnline?: boolean;
 }

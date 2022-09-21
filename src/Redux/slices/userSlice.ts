@@ -1,16 +1,18 @@
+import { IUser } from "../../types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "types";
 
-interface initialStateTypes {
+interface initialUserTypes {
   user: IUser;
 }
-const initialState: initialStateTypes = {
+const initialState: initialUserTypes = {
   user: {
     Name: "",
-    Surname: "",
     Email: "",
+    Surname: "",
+    IsOnline: false,
   },
 };
+
 const userSlice = createSlice({
   name: "userSlice",
   initialState,
@@ -19,13 +21,12 @@ const userSlice = createSlice({
       state.user.Name = action.payload.Name;
       state.user.Surname = action.payload.Surname;
       state.user.Email = action.payload.Email;
+      state.user.IsOnline = true;
     },
     logoutUser: (state) => {
-      state.user.Email = "";
-      state.user.Name = "";
-      state.user.Surname = "";
+      state.user = { IsOnline: false } as IUser;
     },
   },
 });
-export const { authUser } = userSlice.actions;
+export const { authUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;

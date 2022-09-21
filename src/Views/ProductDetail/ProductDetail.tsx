@@ -30,21 +30,21 @@ import {
   Boxx,
   ProductDetailWrapper,
   ProductContainer,
-  ProductDetails,
-  DetailsInformation,
-  DetailBox,
   DetailTitle,
   DetailDesc,
+  StyledTextField,
+  CommentButton,
+  CommentBox,
+  Comment,
 } from "./styles";
 
-import { Rating } from "@mui/material";
+import { Button, Rating } from "@mui/material";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import { StyledRow } from "../Home/styles";
-import { StyledHeartIcon } from "../../Components/layout/Header/styles";
-import { useEffect, useState } from "react";
+import { StyledHeartIcon } from "Components/layout/Header/styles";
+import SendIcon from "@mui/icons-material/Send";
+import { useRef, useState } from "react";
 import * as React from "react";
-import ReactImageMagnify from "react-image-magnify";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -83,6 +83,11 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export const ProductDetail = () => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -93,11 +98,7 @@ export const ProductDetail = () => {
   };
 
   const { id } = useParams();
-  const [active, setActive] = useState(false);
-  const handleActive = () => {
-    setActive(true);
-  };
-  console.log(active);
+
   const { data, isLoading, isError } = useFetchGetGoodsQuery(`${id}`);
 
   const [image, setImage] = useState(data?.ProductImgUrl[0]);
@@ -105,6 +106,14 @@ export const ProductDetail = () => {
   const handleClick = (image: string) => {
     setImage(image);
   };
+
+  const [comment, setComment] = useState<any[]>([""]);
+
+  const changeHandler = (ev: any) => {
+    setComment(ev.target.value);
+  };
+
+  const handleAddComment = () => {};
 
   return (
     <Container>
@@ -165,9 +174,7 @@ export const ProductDetail = () => {
               <Select>Select Size</Select>
               <WrapperSize>
                 {data?.Size.map((s) => (
-                  <StyledSize onClick={handleActive} key={s}>
-                    {s}
-                  </StyledSize>
+                  <StyledSize key={s}>{s}</StyledSize>
                 ))}
               </WrapperSize>
               <Select>Select Color</Select>
@@ -208,25 +215,60 @@ export const ProductDetail = () => {
         )}
       </ProductContainer>
       <ProductDetailWrapper>
-        <DetailBox>
-          <ProductDetails>Product Details</ProductDetails>
-          <ProductDetails>Ratings & Reviews</ProductDetails>
-        </DetailBox>
-        <DetailsInformation>
-          <DetailTitle>Product Details</DetailTitle>
-          <DetailDesc>
-            Blue washed jacket, has a spread collar, 4 pockets, button closure,
-            long sleeves, straight hem
-          </DetailDesc>
-          <DetailTitle>Size & Fit</DetailTitle>
-          <DetailDesc>The model (height 5'8") is wearing a size S</DetailDesc>
-          <DetailTitle>Material & Care</DetailTitle>
-          <DetailDesc>
-            100% cotton
-            <br />
-            Machine Wash
-          </DetailDesc>
-        </DetailsInformation>
+        <Box>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab label="Product Details" {...a11yProps(0)} />
+              <Tab label="Ratings & Reviews" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <>
+              <DetailTitle>Product Details</DetailTitle>
+              <DetailDesc>
+                Blue washed jacket, has a spread collar, 4 pockets, button
+                closure, long sleeves, straight hem
+              </DetailDesc>
+              <DetailTitle>Size & Fit</DetailTitle>
+              <DetailDesc>
+                The model (height 5'8") is wearing a size S
+              </DetailDesc>
+              <DetailTitle>Material & Care</DetailTitle>
+              <DetailDesc>
+                100% cotton
+                <br />
+                Machine Wash
+              </DetailDesc>
+            </>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <>
+              <DetailTitle>Ratings</DetailTitle>
+              <Flex>
+                <StyledTextField
+                  onChange={changeHandler}
+                  id="filled-basic"
+                  label="comment"
+                  variant="filled"
+                />
+                <CommentButton>
+                  <Button
+                    onClick={handleAddComment}
+                    variant="contained"
+                    endIcon={<SendIcon />}
+                  >
+                    Send
+                  </Button>
+                </CommentButton>
+              </Flex>
+              <CommentBox>{comment}</CommentBox>
+            </>
+          </TabPanel>
+        </Box>
       </ProductDetailWrapper>
     </Container>
   );

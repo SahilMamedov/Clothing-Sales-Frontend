@@ -13,41 +13,39 @@ import {
   StyledUser,
   UserBox,
   Box,
-  Line,
-  Logout,
-  Profile,
   StyledSignOut,
-  Register,
+  LoginButton,
+  RegisterButton,
+  LogoutButton,
 } from "./styles";
 import { logo } from "Assets";
 import { Links } from "Routes/Links";
 
-import decode from "jwt-decode";
-import { IUser } from "types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useUser } from "Hooks/useUser";
+import { logoutUser } from "Redux/slices/userSlice";
+import { useAppDispatch, useAppSelector } from "Redux/hooks/hooks";
 export const Header = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<IUser>();
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    if (token) {
-      const user: IUser = decode(token);
-      setUser(user);
-    }
-  }, []);
-  const [open, setOpen] = useState(false);
 
+  const [open, setOpen] = useState(false);
+  useUser();
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const handleClickOpen = () => {
     setOpen(!open);
   };
   const handleLogout = () => {
+    dispatch(logoutUser());
     localStorage.removeItem("token");
     navigate("/login");
   };
   const handleRegister = () => {
     navigate("/register");
+  };
+  const handleLogin = () => {
+    navigate("/login");
   };
   return (
     <StyledNavbar>
@@ -76,15 +74,17 @@ export const Header = () => {
           {open ? (
             <>
               <UserBox>
-                <Profile>Profile</Profile>
-                <Line />
-                {user ? (
-                  <Logout onClick={handleLogout}>
-                    Log Out
-                    <StyledSignOut />
-                  </Logout>
+                {user.IsOnline ? (
+                  <LogoutButton onClick={handleLogout}>
+                    Logout <StyledSignOut />
+                  </LogoutButton>
                 ) : (
-                  <Register onClick={handleRegister}>Register</Register>
+                  <>
+                    <LoginButton onClick={handleLogin}>Login</LoginButton>{" "}
+                    <RegisterButton onClick={handleRegister}>
+                      Register
+                    </RegisterButton>{" "}
+                  </>
                 )}
               </UserBox>
             </>
@@ -92,7 +92,7 @@ export const Header = () => {
             ""
           )}
         </Box>
-        <UserProfile>{user?.Name ? user.Email : "bosh"}</UserProfile>
+        <UserProfile>{user.Email}</UserProfile>
       </DisplayFlex>
     </StyledNavbar>
   );

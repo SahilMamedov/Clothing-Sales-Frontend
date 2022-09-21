@@ -13,11 +13,18 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFetchRegistersMutation } from "services/authServices";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { IRegister } from "../../../types";
 import { NavLink, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { Links } from "../../../Routes/Links";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 function Copyright(props: any) {
   return (
@@ -39,19 +46,35 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
+interface State {
+  password: string;
+  showPassword: boolean;
+}
 export default function SignUp() {
+  const [values, setValues] = useState<State>({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleChange =
+    (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
   const [postRegisterData, response] = useFetchRegistersMutation();
   const { isSuccess, data, isError } = response;
-  //console.log(data);
-  console.log(isSuccess);
-
-  // console.log(isSuccess);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const data = new FormData(event.currentTarget);
-
+    data.set("password", values.password);
     postRegisterData(data);
 
     navigate("/login");
@@ -68,7 +91,6 @@ export default function SignUp() {
         "Davam etmek ucun ok duymesine click edin",
         "success"
       );
-      console.log(data);
       navigate("/login");
     }
   }, [isSuccess]);
@@ -130,15 +152,33 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="text"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                <div>
+                  <FormControl sx={{ width: "46ch" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password}
+                      onChange={handleChange("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                          >
+                            {values.showPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                    />
+                  </FormControl>
+                </div>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel

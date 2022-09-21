@@ -19,9 +19,9 @@ export const AppRoutes = () => {
           <Route path={Links.app.home} element={<Home />} />
           <Route path={Links.app.men} element={<Men />} />
           <Route path={Links.app.women} element={<Women />} />
-          <Route path={Links.app.kids} element={<Login />} />
+          <Route path={Links.app.kids} element={<Kids />} />
           <Route path={Links.app.shop} element={<Shop />} />
-          <Route path={Links.app.contact} element={<Register />} />
+          <Route path={Links.app.contact} element={<Contact />} />
           <Route path={Links.app.register} element={<Register />} />
           <Route path={Links.app.login} element={<Login />} />
           <Route path={Links.app.productDetail} element={<ProductDetail />} />

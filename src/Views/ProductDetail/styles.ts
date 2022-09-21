@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import Slider from "react-slick";
 import ReactImageMagnify from "react-image-magnify";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 export const Container = styled.div`
   padding: 25px 60px;
   background: #f5f5f5;
-  height: 1200px;
+  height: 1300px;
 `;
 export const ProductContainer = styled.div`
   display: flex;
@@ -227,4 +229,19 @@ export const DetailDesc = styled.span`
   font-weight: ${({ theme }) => theme.fontWeight.thin};
   line-height: ${({ theme }) => theme.lineHeight.small};
 `;
-export const DetailsInformation = styled.div``;
+
+export const StyledTextField = styled(TextField)`
+  width: 800px;
+`;
+export const CommentButton = styled.div`
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+export const CommentBox = styled.ul`
+  margin-top: 30px;
+  height: 200px;
+`;
+export const Comment = styled.li`
+  margin: 10px 0px;
+  font-size: 18px;
+`;
