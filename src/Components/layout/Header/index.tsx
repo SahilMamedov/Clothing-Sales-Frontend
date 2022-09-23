@@ -14,9 +14,7 @@ import {
   UserBox,
   Box,
   StyledSignOut,
-  LoginButton,
-  RegisterButton,
-  LogoutButton,
+  StyledButton,
 } from "./styles";
 import { logo } from "Assets";
 import { Links } from "Routes/Links";
@@ -75,15 +73,15 @@ export const Header = () => {
             <>
               <UserBox>
                 {user.IsOnline ? (
-                  <LogoutButton onClick={handleLogout}>
+                  <StyledButton onClick={handleLogout}>
                     Logout <StyledSignOut />
-                  </LogoutButton>
+                  </StyledButton>
                 ) : (
                   <>
-                    <LoginButton onClick={handleLogin}>Login</LoginButton>{" "}
-                    <RegisterButton onClick={handleRegister}>
+                    <StyledButton onClick={handleLogin}>Login</StyledButton>{" "}
+                    <StyledButton onClick={handleRegister}>
                       Register
-                    </RegisterButton>{" "}
+                    </StyledButton>{" "}
                   </>
                 )}
               </UserBox>

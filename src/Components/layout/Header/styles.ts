@@ -96,30 +96,29 @@ export const UserBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
   border: solid 1px black;
   background-color: white;
 `;
 
-export const LoginButton = styled.button`
+export const StyledButton = styled.button`
   height: 35px;
-  color: white;
+  color: black;
   width: 120px;
-  background-color: crimson;
+  background-color: lightskyblue;
   border: solid 1px #dedede;
   display: flex;
   justify-content: center;
   border-radius: 8px;
   align-items: center;
   font-size: 16px;
+  margin: 5px 0px;
+  &:hover {
+    background-color: crimson;
+    color: white;
+  }
   cursor: pointer;
 `;
-
-export const RegisterButton = styled(LoginButton)`
-  background-color: white;
-  color: black;
-  margin-top: 10px;
-`;
-export const LogoutButton = styled(LoginButton)``;
 
 export const Box = styled.div`
   display: flex;

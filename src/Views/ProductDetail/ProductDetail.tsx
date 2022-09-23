@@ -144,22 +144,6 @@ export const ProductDetail = () => {
               </VerticalSlider>
               <IsMainImgBox>
                 <IsMainImg src={image} />
-                {/*<Div>*/}
-                {/*  <StyledReactImageMagnify*/}
-                {/*    {...{*/}
-                {/*      smallImage: {*/}
-                {/*        alt: "Wristwatch by Ted Baker London",*/}
-                {/*        isFluidWidth: true,*/}
-                {/*        src: `${image}`,*/}
-                {/*      },*/}
-                {/*      largeImage: {*/}
-                {/*        src: `${image}`,*/}
-                {/*        width: 1000,*/}
-                {/*        height: 2600,*/}
-                {/*      },*/}
-                {/*    }}*/}
-                {/*  />*/}
-                {/*</Div>*/}
               </IsMainImgBox>
             </WrapperImg>
             <ProductInformation>
