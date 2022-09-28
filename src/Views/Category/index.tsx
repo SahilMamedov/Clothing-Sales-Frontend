@@ -14,7 +14,6 @@ import { FC } from "react";
 import { useFetchGoodsQuery } from "services/goodsServices";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import * as React from "react";
 
 export const Men: FC = () => {
   const { data, isError, isLoading } = useFetchGoodsQuery();
@@ -41,7 +40,7 @@ export const Men: FC = () => {
         <StyledRow>
           {data?.map(
             (item) =>
-              item.TypeName == "Men" && (
+              item.typeName == "Men" && (
                 <StyledItem key={item.id}>
                   <Goods {...item} />
                 </StyledItem>
