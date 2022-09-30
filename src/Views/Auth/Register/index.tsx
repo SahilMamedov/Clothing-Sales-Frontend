@@ -78,11 +78,6 @@ export default function SignUp() {
     postRegisterData(data);
 
     navigate("/login");
-    swal(
-      "Ugurlu qeydiyyat",
-      "Davam etmek ucun ok duymesine click edin",
-      "success"
-    );
   };
   useEffect(() => {
     if (isSuccess) {

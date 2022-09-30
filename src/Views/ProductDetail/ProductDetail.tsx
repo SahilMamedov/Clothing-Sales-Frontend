@@ -17,25 +17,30 @@ import {
   StyledDiscount,
   StyledDiscountPrice,
   StyledPrice,
-  StyledSize,
   StyledSlider,
   VerticalSlider,
   WrapperColor,
   WrapperImg,
   WrapperSize,
   ContentLink,
-  ColorImg,
   ButtonBox,
   Loading,
-  Boxx,
   ProductDetailWrapper,
   ProductContainer,
   DetailTitle,
   DetailDesc,
-  StyledTextField,
   CommentButton,
   CommentBox,
   Comment,
+  LoadingBox,
+  StyledTextarea,
+  UserName,
+  AddComment,
+  Badge,
+  BadgeIconButton,
+  BadgeBox,
+  
+  
 } from "./styles";
 
 import { Button, Rating } from "@mui/material";
@@ -43,18 +48,35 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import { StyledHeartIcon } from "Components/layout/Header/styles";
 import SendIcon from "@mui/icons-material/Send";
-import { useRef, useState } from "react";
-import * as React from "react";
-
+import { Fragment, useEffect, useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+import { useAppSelector } from "../../Redux/hooks/hooks";
+import {
+  useCommentPostMutation,
+  useGetCommentsQuery,
+  useRemoveCommentMutation
+} from "../../services/commentServices";
+
+import * as React from 'react';
+ 
+
+  import Typography from '@mui/joy/Typography';
+  import Add from '@mui/icons-material/Add';
+  import Remove from '@mui/icons-material/Remove';
+import { useAddItemMutation } from "services/basketServices";
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
+
+
+
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -75,7 +97,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+         {children}
         </Box>
       )}
     </div>
@@ -83,9 +105,100 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export const ProductDetail = () => {
-  const [value, setValue] = React.useState(0);
+  const { id } = useParams();
+ 
+
+const [comment, setComment] = useState<any[]>();
+
+const [value, setValue] = useState(0);
+
+const [count, setCount] = React.useState(0);
+
+const { data, isLoading } = useFetchGetGoodsQuery(`${id}`);
+
+const [postCommentId, {isSuccess:successRemoveComment}]=useRemoveCommentMutation()
+ 
+const { user } = useAppSelector((state) => state.user);
+
+const [postData,{isSuccess}] = useCommentPostMutation();
+
+const [postId,{isSuccess:isSuccessAddBasket}] = useAddItemMutation()
+
+
+if(isSuccessAddBasket){
+  console.log(isSuccessAddBasket);
+  console.log("girdi");
+  
+  
+}
+  const [image, setImage] = useState(data?.productPhotos[0].path);
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+  };
+
+  const changeHandler = (ev: any) => {
+    setComment(ev.target.value);
+    
+  };
+
+  const handleClick = (image: string) => {
+    setImage(image);
+  };
+
+  const handleCommentDelet=(Id:number)=>{
+    postCommentId(Id)
+  }
+
+  const handleAddComment = () => {
+    // @ts-ignore
+    postData(postComment);
+  }
+
+
+  const handleAddBasket =()=>{
+    console.log(basketItem);
+    // @ts-ignore
+    postId(basketItem)
+   
+   
+    
+  }
+ 
+
+
+
+  
+  const {
+    data: commentAll,
+    refetch: fetchComment
+  } = useGetCommentsQuery(data?.id, {
+    skip: data?.id == null,
+  });
+
+
+
+
+
+useEffect(()=>{
+
+  if(isSuccess){
+    fetchComment();
+  }
+  if(successRemoveComment){
+    fetchComment();
+  }
+},[isSuccess,successRemoveComment])
+
+  const basketItem={
+    ProductId: data?.id,
+    Count:count
+  }
+
+  const postComment = {
+    AppUserId: user.nameid,
+    productId: data?.id,
+    content: comment,
   };
 
   const settings = {
@@ -96,29 +209,10 @@ export const ProductDetail = () => {
     vertical: true,
     verticalSwiping: true,
   };
-
-  const { id } = useParams();
-
-  const { data, isLoading, isError } = useFetchGetGoodsQuery(`${id}`);
-
-  const [image, setImage] = useState(data?.ProductImgUrl[0]);
-
-  const handleClick = (image: string) => {
-    setImage(image);
-  };
-
-  const [comment, setComment] = useState<any[]>([""]);
-
-  const changeHandler = (ev: any) => {
-    setComment(ev.target.value);
-  };
-
-  const handleAddComment = () => {};
-
   return (
     <Container>
       <ProductContainer>
-        <Boxx>
+        <LoadingBox>
           <Loading>
             {isLoading && (
               <Box sx={{ display: "flex" }}>
@@ -126,46 +220,48 @@ export const ProductDetail = () => {
               </Box>
             )}
           </Loading>
-        </Boxx>
+        </LoadingBox>
         {data !== undefined && (
           <>
             <WrapperImg>
               <VerticalSlider>
                 <StyledSlider {...settings}>
-                  {data?.ProductImgUrl.map((img) => (
-                    <SliderBox key={img}>
-                      <SliderImg onClick={() => handleClick(img)} src={img} />
+                  {data?.productPhotos.map((img) => (
+                    <SliderBox key={img.id}>
+                      <SliderImg
+                        onClick={() => handleClick(img.path)}
+                        src={img.path}
+                      />
                       <>
-                        {image == undefined && setImage(data.ProductImgUrl[0])}
+                        {image == undefined &&
+                          setImage(data.productPhotos[0].path)}
                       </>
                     </SliderBox>
                   ))}
                 </StyledSlider>
               </VerticalSlider>
-              <IsMainImgBox>
-                <IsMainImg src={image} />
-              </IsMainImgBox>
+              <IsMainImgBox>{<IsMainImg src={image} />}</IsMainImgBox>
             </WrapperImg>
             <ProductInformation>
-              <ProductName>{data?.Name}</ProductName>
-              <StyledBrandName>{data?.BrandName}</StyledBrandName>
+              <ProductName>{data?.name}</ProductName>
+              <StyledBrandName>{data?.brand.name}</StyledBrandName>
               <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
               <Flex>
-                <StyledDiscountPrice>{data?.Discount}$</StyledDiscountPrice>
-                <StyledPrice>${data?.Price}</StyledPrice>
-                <StyledDiscount>{`(${data?.Discount} % off)`}</StyledDiscount>
+                <StyledDiscountPrice>
+                  {data?.price - (data?.discount * data.price) / 100}$
+                </StyledDiscountPrice>
+                <StyledPrice>${data?.price}</StyledPrice>
+                <StyledDiscount>{`(${data?.discount} % off)`}</StyledDiscount>
               </Flex>
               <Select>Select Size</Select>
               <WrapperSize>
-                {data?.Size.map((s) => (
-                  <StyledSize key={s}>{s}</StyledSize>
-                ))}
+                {/*{data?.Size.map((s) => (*/}
+                {/*  <StyledSize key={s}>{s}</StyledSize>*/}
+                {/*))}*/}
               </WrapperSize>
-              <Select>Select Color</Select>
-              <WrapperColor>
-                {data?.ProductImgUrl.map((c) => (
-                  <ColorImg key={c} src={c} />
-                ))}
+              <Select>Color</Select>
+              <WrapperColor background={data?.color}>
+                {data?.color}
               </WrapperColor>
               <Select>Best offers</Select>
               <Flex>
@@ -190,8 +286,40 @@ export const ProductDetail = () => {
                 <Content>get 25% off</Content>
                 <ContentLink>T&C</ContentLink>
               </Flex>
+              <Badge>
+              <BadgeBox>
+         <BadgeBox
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            pt: 4,
+            borderTop: '1px solid',
+            borderColor: 'background.level1',
+          }}
+        >
+          <BadgeIconButton
+            size="sm"
+            variant="outlined"
+            onClick={() => setCount((c) => c - 1)}
+          >
+            <Remove />
+          </BadgeIconButton>
+          <Typography fontWeight="md" textColor="text.secondary">
+            {count}
+          </Typography>
+          <BadgeIconButton
+            size="sm"
+            variant="outlined"
+            onClick={() => setCount((c) => c + 1)}
+          >
+            <Add />
+          </BadgeIconButton>
+        </BadgeBox>
+      </BadgeBox>
+              </Badge>
               <ButtonBox>
-                <StyledButton>Add to cart</StyledButton>
+                <StyledButton onClick={handleAddBasket}>Add to cart</StyledButton>
                 <StyledHeartIcon />
               </ButtonBox>
             </ProductInformation>
@@ -230,27 +358,56 @@ export const ProductDetail = () => {
             </>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <>
+            <div>
               <DetailTitle>Ratings</DetailTitle>
               <Flex>
-                <StyledTextField
+                <StyledTextarea
+                  placeholder="Your comment"
+                  label="Your comment"
+                  variant="default"
+                  withAsterisk
+                  disabled={user.IsOnline == false}
                   onChange={changeHandler}
-                  id="filled-basic"
-                  label="comment"
-                  variant="filled"
+                  error={
+                    user.IsOnline
+                      ? ""
+                      : "Comment yazmag ucun login olmalisiniz!"
+                  }
                 />
                 <CommentButton>
-                  <Button
+                  <AddComment
                     onClick={handleAddComment}
                     variant="contained"
                     endIcon={<SendIcon />}
+                    disabled={user.IsOnline == false}
                   >
                     Send
-                  </Button>
+                  </AddComment>
                 </CommentButton>
               </Flex>
-              <CommentBox>{comment}</CommentBox>
-            </>
+              <CommentBox>
+                {commentAll != null && (
+                  <>
+                    {commentAll.map((com) => (
+                     <Fragment key={com.id}>
+                      <UserName>  {com.appUser?.name}{com.appUser?.surname}</UserName>
+                      <Comment>
+                        {com.content}
+                       {com.appUserId==user.nameid &&
+                        <Tooltip title="Delete">
+                        <IconButton onClick={()=>handleCommentDelet(com.id)}>
+                        <DeleteIcon/>
+                        </IconButton>
+                        </Tooltip>
+                       }
+                      </Comment>
+
+                     </Fragment>
+                    ))}
+                  </>
+                )}
+              </CommentBox>
+            </div>
           </TabPanel>
         </Box>
       </ProductDetailWrapper>

@@ -10,13 +10,27 @@ import {
   StyledWrapper,
 } from "./styles";
 import { Goods } from "Components/shared/ProductCard";
-import { FC } from "react";
-import { useFetchGoodsQuery } from "services/goodsServices";
+import { FC, useEffect } from "react";
+import { useFetchGoodsCategoryQuery } from "services/goodsServices";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useParams } from "react-router-dom";
+import { StyledNavlink } from "../Shop/styles";
 
-export const Men: FC = () => {
-  const { data, isError, isLoading } = useFetchGoodsQuery();
+export const Category: FC = () => {
+  const params = useParams();
+
+  const {
+    data,
+    isError,
+    isLoading,
+    refetch: fetchGoods,
+  } = useFetchGoodsCategoryQuery(params.category, {
+    skip: !params.category,
+  });
+  useEffect(() => {
+    fetchGoods();
+  }, [params.category]);
   return (
     <>
       <StyledContainer>
@@ -38,14 +52,13 @@ export const Men: FC = () => {
           )}
         </StyledIsLoading>
         <StyledRow>
-          {data?.map(
-            (item) =>
-              item.typeName == "Men" && (
-                <StyledItem key={item.id}>
-                  <Goods {...item} />
-                </StyledItem>
-              )
-          )}
+          {data?.map((item) => (
+            <StyledItem key={item.id}>
+              <StyledNavlink to={`/productdetail/${item.id}`}>
+                <Goods {...item} />
+              </StyledNavlink>
+            </StyledItem>
+          ))}
         </StyledRow>
       </StyledContainer>
     </>

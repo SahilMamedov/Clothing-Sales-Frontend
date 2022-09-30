@@ -16,12 +16,14 @@ import {
   ListItem,
   Loading,
   OpenIcon,
+  PriceValue,
   SideBar,
   SideBarBox,
   SideBarTitle,
   StyledBox,
   StyledNavlink,
   Title,
+  Value,
   WrapperCard,
 } from "./styles";
 import { IGoods } from "types";
@@ -36,6 +38,8 @@ export const Shop: FC = () => {
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
+    console.log(value[0]);
+    console.log(value[1]);
   };
 
   const { data, isError, isLoading } = useFetchGoodsQuery();
@@ -55,7 +59,7 @@ export const Shop: FC = () => {
         <SideBar>
           <SideBarBox>
             <SideBarTitle>Filters</SideBarTitle>
-            <Title>Price</Title>
+            <Title>Price </Title>
             <Box sx={{ width: 300 }}>
               <Slider
                 getAriaLabel={() => "Temperature range"}
@@ -65,6 +69,10 @@ export const Shop: FC = () => {
                 getAriaValueText={valuetext}
               />
             </Box>
+            <PriceValue>
+              <Value> {value[0]}</Value>
+              <Value>{value[1]}</Value>
+            </PriceValue>
             <Line />
             <Title onClick={handleClickBrand}>
               Brand {openBrand ? <OpenIcon /> : <CloseIcon />}
@@ -89,7 +97,7 @@ export const Shop: FC = () => {
               : ""}
             <Line />
             <Title onClick={handleClickDiscount}>
-              Color {openColor ? <OpenIcon /> : <CloseIcon />}
+              Category {openColor ? <OpenIcon /> : <CloseIcon />}
             </Title>
             {openColor
               ? data1.map((item, index) => (

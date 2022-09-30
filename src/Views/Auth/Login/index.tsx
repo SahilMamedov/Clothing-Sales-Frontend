@@ -70,8 +70,9 @@ export default function SignIn() {
 
   useEffect(() => {
     if (isSuccess) {
-      localStorage.setItem("token", JSON.stringify(data.token));
-
+      localStorage.setItem("token",data.token);
+     
+        
       navigate("/");
     }
   }, [isSuccess]);

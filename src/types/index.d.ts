@@ -1,15 +1,17 @@
 export interface IGoods {
-  id: string;
-  Name: string;
-  BrandName: string;
-  Price: number;
-  Trending: boolean;
-  Discount: number;
-  ProductImgUrl: string[];
-  TypeName: string;
-  isMainImg: string;
-  Size: string[];
-  Colors: string[];
+  id: number;
+  name: string;
+  brand: any;
+  brandName: string;
+  price: number;
+  trending: boolean;
+  discount: number;
+  typeName: string;
+  isMainPhoto: string;
+  discountPrice: number;
+  photoPath: string;
+  productPhotos: any[];
+  color: string;
 }
 export interface IBlogs {
   id: string;
@@ -19,7 +21,7 @@ export interface IBlogs {
   ImgUrl: string;
 }
 export interface IToken {
-  token?: string;
+  token: string;
 }
 export interface IRegister {
   name: string;
@@ -27,14 +29,38 @@ export interface IRegister {
   email: string;
   password: string;
 }
-export interface ILogin {
-  email: string;
-  password: string;
-}
 
 export interface IUser {
+  nameid: string;
   Name: string;
   Surname: string;
   Email?: string;
   IsOnline?: boolean;
+}
+export interface AppUser {
+  name: string;
+  surname: string;
+  userId:string;
+}
+export interface IComment {
+  id:number
+  appUserId: string;
+  ProductId: number|undefined
+  content: any[];
+  appUser?: AppUser;
+  name?: string;
+  surname?: string;
+}
+export interface IBasketItem {
+  id: number;
+  productId: number;
+  product?: IGoods;
+  sum: number;
+  price: number;
+  path: string;
+  count: number;
+}
+export interface Basket {
+  basketItems: IBasketItem[];
+  total: number;
 }

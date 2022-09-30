@@ -4,19 +4,26 @@ import { IBlogs, IGoods } from "../types";
 export const goodsApi = createApi({
   reducerPath: "goodsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://63146f31fc9dc45cb4ed6c7f.mockapi.io/",
+    baseUrl: "http://localhost:14345/api/",
   }),
   endpoints: (builder) => ({
     fetchGoods: builder.query<IGoods[], void>({
-      query: () => `goods`,
+      query: () => `product`,
+    }),
+    fetchGoodsCategory: builder.query<IGoods[], string | undefined>({
+      query: (ctr) => `product?typeName=${ctr}`,
     }),
     fetchBlogs: builder.query<IBlogs[], void>({
       query: () => `blogs`,
     }),
     fetchGetGoods: builder.query<IGoods, string>({
-      query: (id) => `goods/${id}`,
+      query: (id) => `product/${id}`,
     }),
   }),
 });
-export const { useFetchGoodsQuery, useFetchBlogsQuery, useFetchGetGoodsQuery } =
-  goodsApi;
+export const {
+  useFetchGoodsQuery,
+  useFetchBlogsQuery,
+  useFetchGetGoodsQuery,
+  useFetchGoodsCategoryQuery,
+} = goodsApi;

@@ -18,7 +18,7 @@ export const StyledCardImg = styled.img`
 `;
 
 export const StyledProductName = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.medium};
+  font-size: ${({ theme }) => theme.fontSize.small};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => theme.color.CharlestonGreen};
   line-height: ${({ theme }) => theme.lineHeight.medium};
@@ -39,7 +39,7 @@ export const StyledBrandName = styled.p`
 `;
 
 export const StyledDiscountPrice = styled.span`
-  font-size: ${({ theme }) => theme.fontSize.medium};
+  font-size: ${({ theme }) => theme.fontSize.small};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => theme.color.CharlestonGreen};
   line-height: ${({ theme }) => theme.lineHeight.medium};

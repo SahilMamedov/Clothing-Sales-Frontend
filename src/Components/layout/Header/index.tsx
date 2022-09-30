@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "Hooks/useUser";
 import { logoutUser } from "Redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "Redux/hooks/hooks";
+
 export const Header = () => {
   const navigate = useNavigate();
 
@@ -31,20 +32,28 @@ export const Header = () => {
   useUser();
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+
   const handleClickOpen = () => {
     setOpen(!open);
   };
+
   const handleLogout = () => {
     dispatch(logoutUser());
     localStorage.removeItem("token");
     navigate("/login");
   };
+
   const handleRegister = () => {
     navigate("/register");
   };
+
   const handleLogin = () => {
     navigate("/login");
   };
+
+  const handleBasket = () =>{
+navigate("/basket")
+  }
   return (
     <StyledNavbar>
       <DisplayFlex>
@@ -66,7 +75,7 @@ export const Header = () => {
           <StyledSearchIcon />
         </StyledPosition>
         <StyledHeartIcon />
-        <StyledBasketIcon />
+        <StyledBasketIcon onClick={handleBasket} />
         <StyledUser onClick={handleClickOpen} />
         <Box>
           {open ? (

@@ -6,6 +6,7 @@ interface initialUserTypes {
 }
 const initialState: initialUserTypes = {
   user: {
+    nameid: "",
     Name: "",
     Email: "",
     Surname: "",
@@ -21,6 +22,7 @@ const userSlice = createSlice({
       state.user.Name = action.payload.Name;
       state.user.Surname = action.payload.Surname;
       state.user.Email = action.payload.Email;
+      state.user.nameid = action.payload.nameid;
       state.user.IsOnline = true;
     },
     logoutUser: (state) => {

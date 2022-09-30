@@ -13,21 +13,22 @@ import { IGoods } from "types";
 
 export const Goods: FC<IGoods> = ({
   id,
-  Name,
-  BrandName,
-  Discount,
-  Price,
-  isMainImg,
+  name,
+  brandName,
+  discount,
+  price,
+  photoPath,
+  discountPrice,
 }) => {
   return (
     <StyledCard key={id}>
-      <StyledCardImg src={isMainImg} />
+      <StyledCardImg src={photoPath} />
       <StyledInformation>
-        <StyledProductName>{Name}</StyledProductName>
-        <StyledBrandName>{BrandName}</StyledBrandName>
-        <StyledDiscountPrice>${Price * Discount}</StyledDiscountPrice>
-        <StyledPrice>${Price}</StyledPrice>
-        <StyledDiscount>{Discount > 0 && `(${Discount} % off)`}</StyledDiscount>
+        <StyledProductName>{name}</StyledProductName>
+        <StyledBrandName>{brandName}</StyledBrandName>
+        <StyledDiscountPrice>${discountPrice}</StyledDiscountPrice>
+        <StyledPrice>${price}</StyledPrice>
+        <StyledDiscount>{`(${discount} % off)`}</StyledDiscount>
       </StyledInformation>
     </StyledCard>
   );

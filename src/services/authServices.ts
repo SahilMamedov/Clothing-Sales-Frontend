@@ -4,9 +4,10 @@ import { IToken } from "../types";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/account/",
+    baseUrl: "http://localhost:14345/api/account/",
   }),
   endpoints: (builder) => ({
+
     fetchRegisters: builder.mutation<any, FormData>({
       query: (body: FormData) => {
         return {
@@ -26,6 +27,7 @@ export const authApi = createApi({
         };
       },
     }),
+    
   }),
 });
 export const { useFetchRegistersMutation, useFetchLoginMutation } = authApi;

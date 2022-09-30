@@ -18,7 +18,6 @@ import { useUser } from "Hooks/useUser";
 export const Home = () => {
   useUser();
   const { data, isError, isLoading } = useFetchGoodsQuery();
-
   return (
     <StyledMain>
       <MainSlider />
@@ -31,7 +30,7 @@ export const Home = () => {
             </Box>
           )}
         </StyledRow>
-        <TrendingSlider data={data?.filter((p) => p.Trending)} />
+        <TrendingSlider data={data?.filter((p) => p.trending)} />
         <StyledCustomerTitle>What Our Customer Says</StyledCustomerTitle>
         <CustomerFeedbackSlider />
         <StyledFeaturedBlogs>Featured Blogs</StyledFeaturedBlogs>

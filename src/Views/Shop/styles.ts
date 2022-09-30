@@ -48,6 +48,25 @@ export const ListItem = styled.div`
   color: blueviolet;
 `;
 
+export const PriceValue = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  font-size: 24px;
+  margin-right: 60px;
+`;
+export const Value = styled.span`
+  color: crimson;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 100%;
+  border: 1px solid lightskyblue;
+`;
 export const OpenIcon = styled(CaretDown)`
   font-size: 20px;
   padding-right: 20px;

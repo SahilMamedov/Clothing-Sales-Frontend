@@ -2,12 +2,15 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import ReactImageMagnify from "react-image-magnify";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
+import { Textarea } from "@mantine/core";
+import Button from "@mui/material/Button";
+import Box from '@mui/joy/Box';
+import IconButton from '@mui/joy/IconButton';
 
 export const Container = styled.div`
   padding: 25px 60px;
   background: #f5f5f5;
-  height: 1300px;
+  height: 100%;
 `;
 export const ProductContainer = styled.div`
   display: flex;
@@ -25,7 +28,7 @@ export const ProductInformation = styled.div`
 export const StyledDiscountPrice = styled.span`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  color: ${({ theme }) => theme.color.CharlestonGreen};
+  color: red;
   line-height: ${({ theme }) => theme.lineHeight.medium};
   margin: 0;
 `;
@@ -46,7 +49,7 @@ export const StyledDiscount = styled.span`
   padding-top: 5px;
 `;
 export const ProductName = styled.h1`
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  font-weight: ${({ theme }) => theme.fontWeight.thin};
   line-height: 45px;
   color: ${({ theme }) => theme.color.CharlestonGreen};
   margin: 0px;
@@ -54,7 +57,7 @@ export const ProductName = styled.h1`
 
 export const StyledBrandName = styled.h2`
   line-height: ${({ theme }) => theme.lineHeight.medium};
-  font-weight: ${({ theme }) => theme.fontWeight.thin};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => theme.color.CharlestonGreen};
   margin: 10px 0px;
 `;
@@ -70,7 +73,7 @@ export const Flex = styled.div`
 `;
 
 export const StyledSize = styled.div.attrs(
-  (props: { bacground: string }) => props
+  (props: { background: string }) => props
 )`
   width: 55px;
   display: flex;
@@ -80,7 +83,7 @@ export const StyledSize = styled.div.attrs(
   border: 1px solid #bababa;
   border-radius: 100%;
   margin-right: 19px;
-  background-color: ${(props) => props.bacground};
+  background-color: ${(props) => props.background};
   cursor: pointer;
   //&:hover {
   //  background-color: deepskyblue;
@@ -115,9 +118,20 @@ export const IsMainImg = styled.img`
   width: 740px;
   height: 817px;
 `;
-export const WrapperColor = styled.div`
-  display: flex;
+export const WrapperColor = styled.div.attrs(
+  (props: { background: string }) => props
+)`
   margin: 10px 0;
+  font-weight: 700;
+  background-color: ${(props) => props.background};
+  width: 110px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
 `;
 // export const StyledReactImageMagnify = styled(ReactImageMagnify)`
 //   height: 500px;
@@ -132,16 +146,6 @@ export const WrapperColor = styled.div`
 //   }
 // `;
 
-// export const Color = styled.div.attrs((props: { background: string }) => props)`
-//   height: 30px;
-//   width: 30px;
-//   border-radius: 100%;
-//   cursor: pointer;
-//   margin-right: 5px;
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-//   background-color: ${(props) => props.background};
-// `;
 export const Loading = styled.div`
   position: absolute;
   display: flex;
@@ -152,16 +156,10 @@ export const Loading = styled.div`
   justify-content: center;
 `;
 
-export const Boxx = styled.div`
+export const LoadingBox = styled.div`
   height: 200px;
 `;
-export const ColorImg = styled.img`
-  height: 74px;
-  width: 74px;
-  margin-right: 18px;
-  cursor: pointer;
-  border-radius: 5px;
-`;
+
 export const ContentBold = styled.span`
   font-size: ${({ theme }) => theme.fontSize.small};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
@@ -233,15 +231,39 @@ export const DetailDesc = styled.span`
 export const StyledTextField = styled(TextField)`
   width: 800px;
 `;
+
+export const StyledTextarea = styled(Textarea)`
+  width: 600px;
+`;
+
 export const CommentButton = styled.div`
-  margin-top: 10px;
-  margin-left: 10px;
+margin-top: 26px;
 `;
 export const CommentBox = styled.ul`
   margin-top: 30px;
-  height: 200px;
 `;
 export const Comment = styled.li`
   margin: 10px 0px;
-  font-size: 18px;
+  font-size: 15px;
+  list-style: none;
+  height: 50px;
+  width: 600px;
+  color: darksalmon;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #c2bdbd;
 `;
+export const AddComment=styled(Button)`
+height: 63px;
+`
+export const UserName=styled.span`
+font-size: 18px;
+color:black;
+`
+export const Badge=styled.div`
+
+
+`
+export const BadgeBox=styled(Box)`
+`
+export const BadgeIconButton=styled(IconButton)``
