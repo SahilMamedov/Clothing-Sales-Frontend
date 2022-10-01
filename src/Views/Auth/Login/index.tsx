@@ -21,7 +21,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-
+import { extendedApi} from 'services/basketServices';
+import {  useAppDispatch } from 'Redux/hooks/hooks';
 function Copyright(props: any) {
   return (
     <Typography
@@ -47,6 +48,11 @@ interface State {
   showPassword: boolean;
 }
 export default function SignIn() {
+
+  const dispatch = useAppDispatch();
+  dispatch(extendedApi.util.resetApiState());
+
+
   const [values, setValues] = useState<State>({
     password: "",
     showPassword: false,

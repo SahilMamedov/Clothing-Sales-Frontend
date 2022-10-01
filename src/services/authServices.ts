@@ -19,7 +19,7 @@ export const authApi = createApi({
     }),
     fetchLogin: builder.mutation<IToken, FormData>({
       query: (body) => {
-        //console.log(body);
+        //console.log("body",bod);
         return {
           url: "login",
           method: "POST",

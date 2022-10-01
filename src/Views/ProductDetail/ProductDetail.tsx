@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFetchGetGoodsQuery } from "../../services/goodsServices";
 import {
   Container,
@@ -43,7 +43,7 @@ import {
   
 } from "./styles";
 
-import { Button, Rating } from "@mui/material";
+import {Rating } from "@mui/material";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import { StyledHeartIcon } from "Components/layout/Header/styles";
@@ -54,13 +54,14 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { extendedApi} from 'services/basketServices';
+import {  useAppDispatch } from 'Redux/hooks/hooks';
 import { useAppSelector } from "../../Redux/hooks/hooks";
 import {
   useCommentPostMutation,
   useGetCommentsQuery,
   useRemoveCommentMutation
 } from "../../services/commentServices";
-
 import * as React from 'react';
  
 
@@ -68,6 +69,7 @@ import * as React from 'react';
   import Add from '@mui/icons-material/Add';
   import Remove from '@mui/icons-material/Remove';
 import { useAddItemMutation } from "services/basketServices";
+import { addItem } from "Redux/slices/basketSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -105,8 +107,11 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export const ProductDetail = () => {
+const navigate =useNavigate()
+
   const { id } = useParams();
- 
+   const dispatch = useAppDispatch();
+  
 
 const [comment, setComment] = useState<any[]>();
 
@@ -122,15 +127,18 @@ const { user } = useAppSelector((state) => state.user);
 
 const [postData,{isSuccess}] = useCommentPostMutation();
 
-const [postId,{isSuccess:isSuccessAddBasket}] = useAddItemMutation()
+const [postId,{isSuccess:succesBasket,data:dataBasket}] = useAddItemMutation()
+
+//console.log(response);
 
 
-if(isSuccessAddBasket){
-  console.log(isSuccessAddBasket);
-  console.log("girdi");
+// if(succesBasket){
+//  dispatch(addItem(dataBasket?.basketItems))
+//   console.log(dataBasket);
   
+// }
   
-}
+
   const [image, setImage] = useState(data?.productPhotos[0].path);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -157,27 +165,33 @@ if(isSuccessAddBasket){
 
 
   const handleAddBasket =()=>{
-    console.log(basketItem);
-    // @ts-ignore
-    postId(basketItem)
-   
-   
     
+
+    if(user.IsOnline){
+      // @ts-ignore
+      postId(basketItem)
+   
+
+
+
+
+      
+      //dispatch(extendedApi.util.resetApiState());
+    }
+    if(!user.IsOnline){
+      navigate("/login")
+    }
+    
+  
   }
  
 
-
-
-  
   const {
     data: commentAll,
     refetch: fetchComment
   } = useGetCommentsQuery(data?.id, {
     skip: data?.id == null,
   });
-
-
-
 
 
 useEffect(()=>{
@@ -209,6 +223,8 @@ useEffect(()=>{
     vertical: true,
     verticalSwiping: true,
   };
+
+
   return (
     <Container>
       <ProductContainer>
@@ -248,7 +264,7 @@ useEffect(()=>{
               <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
               <Flex>
                 <StyledDiscountPrice>
-                  {data?.price - (data?.discount * data.price) / 100}$
+                  ${data?.price - (data?.discount * data.price) / 100}
                 </StyledDiscountPrice>
                 <StyledPrice>${data?.price}</StyledPrice>
                 <StyledDiscount>{`(${data?.discount} % off)`}</StyledDiscount>

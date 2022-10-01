@@ -1,6 +1,8 @@
 
+
 import { fetchBaseQuery,createApi } from '@reduxjs/toolkit/query/react';
 import { Basket } from 'types';
+
 export interface Props{
     ProductId:number;
     Count:number;
@@ -27,12 +29,32 @@ export const basketApi= createApi({
               method: "POST",
               
             };
-           
-            
           },
         }),
-    
-    })
-})
 
-export const {useAddItemMutation} = basketApi;
+        deleteItem: builder.mutation<{ total: number }, number>({
+          query: (id) => {
+            return {
+              url: `/${id}`,
+              method: "DELETE",
+            };
+          },
+        }),
+        // getAllBasket:builder.query<Basket,void>({
+        //       query:()=>''
+        // })
+    })
+    
+})
+export const extendedApi = basketApi.injectEndpoints({
+  endpoints: (build) => ({
+    getAllBasket: build.query<Basket, void>({
+      query: () => `/`,
+    }),
+  }),
+});
+export const { useGetAllBasketQuery } = extendedApi;
+
+
+
+export const {useAddItemMutation,useDeleteItemMutation} = basketApi;

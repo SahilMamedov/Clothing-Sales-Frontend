@@ -1,3 +1,4 @@
+import { basketSlice } from './slices/basketSlice';
 import { basketApi } from './../services/basketServices';
 import { configureStore } from "@reduxjs/toolkit";
 import { goodsApi } from "../services/goodsServices";
@@ -9,6 +10,9 @@ import { commentApi } from "../services/commentServices";
 export const store = configureStore({
   reducer: {
     user: userSlice,
+   //basket:basketSlice,
+
+
     [goodsApi.reducerPath]: goodsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,

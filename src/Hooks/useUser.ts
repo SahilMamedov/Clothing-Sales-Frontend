@@ -10,7 +10,7 @@ export const useUser = () => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodeUser = decode<IUser>(token);
-      console.log(decodeUser);
+     
       dispatch(authUser(decodeUser));
     }
   }, []);
