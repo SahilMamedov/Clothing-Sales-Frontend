@@ -9,6 +9,7 @@ import { ProductDetail } from "../Views/ProductDetail/ProductDetail";
 import Register from "Views/Auth/Register";
 import Login from "Views/Auth/Login";
 import { Basket } from "../Views/Basket";
+import {Checkout} from "../Views/Basket/Checkout/Checkout"
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -26,6 +27,7 @@ export const AppRoutes = () => {
           <Route path={Links.app.login} element={<Login />} />
           <Route path={Links.app.productDetail} element={<ProductDetail />} />
           <Route path={Links.app.basket} element={<Basket/>}/>
+          <Route path={Links.app.checkout} element={<Checkout/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

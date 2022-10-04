@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IBlogs, IGoods } from "../types";
+import { IGoods } from "../types";
 
 export const goodsApi = createApi({
   reducerPath: "goodsApi",
@@ -13,9 +13,6 @@ export const goodsApi = createApi({
     fetchGoodsCategory: builder.query<IGoods[], string | undefined>({
       query: (ctr) => `product?typeName=${ctr}`,
     }),
-    fetchBlogs: builder.query<IBlogs[], void>({
-      query: () => `blogs`,
-    }),
     fetchGetGoods: builder.query<IGoods, string>({
       query: (id) => `product/${id}`,
     }),
@@ -23,7 +20,6 @@ export const goodsApi = createApi({
 });
 export const {
   useFetchGoodsQuery,
-  useFetchBlogsQuery,
   useFetchGetGoodsQuery,
   useFetchGoodsCategoryQuery,
 } = goodsApi;

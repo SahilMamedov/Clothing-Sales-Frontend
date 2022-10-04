@@ -13,19 +13,19 @@ interface initialStateTypes{
   };
 
   export const basketSlice =createSlice({
-    name:"basketSlice",
+    name:"basket",
     initialState,
     reducers:{
-        addItem:(state,action:PayloadAction<IBasketItem[]>)=>{
-        state.basket.basketItems=action.payload;      
+        addItem:(state,action:PayloadAction<IBasketItem[]>) => {
+        state.basket.basketItems=action.payload;
         },
 
-        removeItem:(state,action:PayloadAction<number>)=>{
-            state.basket.basketItems = state.basket.basketItems.filter(
-                (b) => b.productId!== action.payload
-            )
-        }
+        // removeItem:(state,action:PayloadAction<number>)=>{
+        //     state.basket.basketItems = state.basket.basketItems.filter(
+        //         (b) => b.productId!== action.payload
+        //     )
+        // }
     }
   })
-  export const { addItem, removeItem } = basketSlice.actions;
+  export const { addItem } = basketSlice.actions;
 export default basketSlice.reducer;

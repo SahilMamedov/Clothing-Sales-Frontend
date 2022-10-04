@@ -1,4 +1,5 @@
-import { basketSlice } from './slices/basketSlice';
+import { blogApi } from './../services/blogServices';
+import { shopApi } from './../services/shopServices';
 import { basketApi } from './../services/basketServices';
 import { configureStore } from "@reduxjs/toolkit";
 import { goodsApi } from "../services/goodsServices";
@@ -10,13 +11,14 @@ import { commentApi } from "../services/commentServices";
 export const store = configureStore({
   reducer: {
     user: userSlice,
-   //basket:basketSlice,
 
 
     [goodsApi.reducerPath]: goodsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,
     [basketApi.reducerPath]:basketApi.reducer,
+    [shopApi.reducerPath]:shopApi.reducer,
+    [blogApi.reducerPath]:blogApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -25,6 +27,8 @@ export const store = configureStore({
       authApi.middleware,
       commentApi.middleware,
       basketApi.middleware,
+      shopApi.middleware,
+      blogApi.middleware,
     ),
 });
 setupListeners(store.dispatch);

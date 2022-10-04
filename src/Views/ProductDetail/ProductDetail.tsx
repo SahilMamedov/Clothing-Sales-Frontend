@@ -54,7 +54,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { extendedApi} from 'services/basketServices';
+//import { extendedApi} from 'services/basketServices';
 import {  useAppDispatch } from 'Redux/hooks/hooks';
 import { useAppSelector } from "../../Redux/hooks/hooks";
 import {
@@ -63,7 +63,9 @@ import {
   useRemoveCommentMutation
 } from "../../services/commentServices";
 import * as React from 'react';
- 
+import { ToastContainer, toast,Zoom } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
   import Typography from '@mui/joy/Typography';
   import Add from '@mui/icons-material/Add';
@@ -127,16 +129,16 @@ const { user } = useAppSelector((state) => state.user);
 
 const [postData,{isSuccess}] = useCommentPostMutation();
 
-const [postId,{isSuccess:succesBasket,data:dataBasket}] = useAddItemMutation()
-
-//console.log(response);
+const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
 
 
-// if(succesBasket){
-//  dispatch(addItem(dataBasket?.basketItems))
-//   console.log(dataBasket);
+
+if(successBasket){
+
+ //dispatch(addItem(dataBasket?.basketItems))
+  //console.log(dataBasket);
   
-// }
+}
   
 
   const [image, setImage] = useState(data?.productPhotos[0].path);
@@ -166,20 +168,31 @@ const [postId,{isSuccess:succesBasket,data:dataBasket}] = useAddItemMutation()
 
   const handleAddBasket =()=>{
     
-
-    if(user.IsOnline){
-      // @ts-ignore
-      postId(basketItem)
-   
-
-
-
-
+    if(count>0){
+      if(user.IsOnline){
+       
+        // @ts-ignore
+        postId(basketItem)
+       
+        
+        toast.success('Added to Basket', {
+          position: "bottom-right",
+          autoClose: 3500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme:"colored",
+          transition:Zoom
+          
       
-      //dispatch(extendedApi.util.resetApiState());
-    }
-    if(!user.IsOnline){
-      navigate("/login")
+          });
+        //dispatch(extendedApi.util.resetApiState());
+      }
+      if(!user.IsOnline){
+        navigate("/login")
+      }
     }
     
   
@@ -317,7 +330,7 @@ useEffect(()=>{
           <BadgeIconButton
             size="sm"
             variant="outlined"
-            onClick={() => setCount((c) => c - 1)}
+            onClick={() => setCount((c)=> c> 0 ? c-1:0 )}
           >
             <Remove />
           </BadgeIconButton>
@@ -399,6 +412,7 @@ useEffect(()=>{
                   >
                     Send
                   </AddComment>
+
                 </CommentButton>
               </Flex>
               <CommentBox>
@@ -427,6 +441,17 @@ useEffect(()=>{
           </TabPanel>
         </Box>
       </ProductDetailWrapper>
+      <ToastContainer
+     position="bottom-right"
+     autoClose={5000}
+     hideProgressBar={false}
+     newestOnTop
+     closeOnClick
+     rtl={false}
+     pauseOnFocusLoss
+     draggable
+     pauseOnHover
+     />
     </Container>
   );
 };

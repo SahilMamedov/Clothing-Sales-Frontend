@@ -71,7 +71,7 @@ export default function SignIn() {
   };
 
   const [postLoginData, response] = useFetchLoginMutation();
-  const { isError, isSuccess, data, isLoading } = response;
+  const { isError, isSuccess, data, isLoading ,error } = response;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,6 +90,7 @@ export default function SignIn() {
     data.set("password", values.password);
     postLoginData(data);
   };
+//console.log("error",error.data);
 
   return (
     <ThemeProvider theme={theme}>
@@ -111,7 +112,6 @@ export default function SignIn() {
           <Box
             component="form"
             onSubmit={handleSubmit}
-            noValidate
             sx={{ mt: 1 }}
           >
             <TextField
@@ -151,6 +151,7 @@ export default function SignIn() {
                   label="Password"
                 />
               </FormControl>
+              <span>{isError}</span>
             </div>
             <Button
               type="submit"

@@ -1,10 +1,10 @@
 import Slider from "react-slick";
-import { useFetchBlogsQuery } from "services/goodsServices";
 import { Blogs } from "../../Blogs";
 import { FC } from "react";
+import { useFetchBlogsQuery } from "services/blogServices";
 
 export const BlogsSlider: FC = () => {
-  const { data, isLoading, isError } = useFetchBlogsQuery();
+  const { data} = useFetchBlogsQuery();
   console.log(data, "blog data");
   const settings = {
     dots: true,

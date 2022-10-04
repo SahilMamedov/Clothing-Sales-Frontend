@@ -68,7 +68,7 @@ export default function SignUp() {
   };
 
   const [postRegisterData, response] = useFetchRegistersMutation();
-  const { isSuccess, data, isError } = response;
+  const { isSuccess } = response;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,10 +76,11 @@ export default function SignUp() {
     data.set("password", values.password);
     postRegisterData(data);
 
-    navigate("/login");
   };
   useEffect(() => {
     if (isSuccess) {
+      console.log("okey");
+      
       swal(
         "Ugurlu qeydiyyat",
         "Davam etmek ucun ok duymesine click edin",
@@ -109,7 +110,6 @@ export default function SignUp() {
           </Typography>
           <Box
             component="form"
-            noValidate
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >

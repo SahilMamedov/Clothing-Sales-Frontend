@@ -10,6 +10,7 @@ export const Links = {
     productDetail: "/productdetail/:id",
     register: "/register",
     login: "/login",
-    basket:"/basket"
+    basket:"/basket",
+    checkout:"checkout",
   },
 };

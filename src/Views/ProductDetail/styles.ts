@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Slider from "react-slick";
-import ReactImageMagnify from "react-image-magnify";
 import TextField from "@mui/material/TextField";
 import { Textarea } from "@mantine/core";
 import Button from "@mui/material/Button";

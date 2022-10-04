@@ -23,7 +23,7 @@ export const basketApi= createApi({
   
         addItem: builder.mutation<Basket, Props>({
           query: (item) => {
-            console.log(item,"item id")
+            
             return {
               url: `?ProductId=${item?.ProductId}&count=${item.Count}`,
               method: "POST",

@@ -22,6 +22,8 @@ Container,
 Flex,
 StyledTableImg, 
 TotalBox} from "./styles"
+
+import { ToastContainer, toast,Zoom} from 'react-toastify';
 import {  useDeleteItemMutation, useGetAllBasketQuery } from 'services/basketServices';
 import { useEffect } from 'react';
 import { useAppSelector } from 'Redux/hooks/hooks';
@@ -64,14 +66,28 @@ export const Basket= () => {
 
  
 const handleDelet = (id:number) => {
-  
   postDeletId(id)
+
+  toast.error('Successfully Deleted', {
+    position: "bottom-right",
+    autoClose: 3500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme:"colored",
+    transition:Zoom
+    });
   
 }
 const handleGoToBack =() =>{
   navigate("/shop")
 }
-console.log(data?.total);
+
+const handleConfrim=()=>{
+  navigate("/checkout")
+}
 
 useEffect(()=>{
 if(user.IsOnline){
@@ -134,7 +150,7 @@ if(user.IsOnline){
       <CargoField fontSize='18px' paddingButtom='17px'>{data?.total} ($)</CargoField>
     </TotalBox>
     <ButtonBox>
-   <ConfrimButton>
+   <ConfrimButton onClick={handleConfrim}>
    Confirm the cart
    </ConfrimButton>
     </ButtonBox>
@@ -147,14 +163,28 @@ if(user.IsOnline){
   <BasketText>The Basket is Empty</BasketText>
   <BasketImg src='https://us.123rf.com/450wm/vectorplus/vectorplus1601/vectorplus160100112/50566994-shopping-basket-icon-on-white-background-vector-illustration-.jpg?ver=6'/>
 
-      <Button variant="contained" color="success" onClick={handleGoToBack}>
-        Go to Shop
-      </Button>
+      
 
 </BasketBox>
  
  
  }
+ <ButtonBox>
+ <Button variant="contained" color="success" onClick={handleGoToBack}>
+        Go to Shop
+  </Button>
+ </ButtonBox>
+ <ToastContainer
+     position="bottom-right"
+     autoClose={5000}
+     hideProgressBar={false}
+     newestOnTop
+     closeOnClick
+     rtl={false}
+     pauseOnFocusLoss
+     draggable
+     pauseOnHover
+     />
   </Container>
   );
 }

@@ -6,7 +6,7 @@ import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useFetchGoodsQuery } from "services/goodsServices";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Goods } from "Components";
 import {
   CloseIcon,
@@ -29,6 +29,7 @@ import {
 import { IGoods } from "types";
 import { NavLink } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useFetchBrandQuery, useFetchCategoryQuery } from "services/shopServices";
 
 function valuetext(value: number) {
   return `${value}°C`;
@@ -43,15 +44,26 @@ export const Shop: FC = () => {
   };
 
   const { data, isError, isLoading } = useFetchGoodsQuery();
-  const data1 = ["data1", "data2", "data3", "data4", "data5"];
-  const [openColor, setopenColor] = React.useState(false);
+
+  const {data:dataBrands} =useFetchBrandQuery()
+  const {data:dataCategory} =  useFetchCategoryQuery()
+
+ 
+  const [openCategory, setopenCategory] = React.useState(false);
+
   const [openBrand, setopenBrand] = React.useState(false);
+
   const [checked, setChecked] = useState<string>();
+
+
+
+ 
+  
   const handleClickBrand = () => {
     setopenBrand(!openBrand);
   };
-  const handleClickDiscount = () => {
-    setopenColor(!openColor);
+  const handleClickCategory = () => {
+    setopenCategory(!openCategory);
   };
   return (
     <>
@@ -78,32 +90,34 @@ export const Shop: FC = () => {
               Brand {openBrand ? <OpenIcon /> : <CloseIcon />}
             </Title>
             {openBrand
-              ? data1.map((item, index) => (
-                  <ListItem key={index}>
+              ? dataBrands?.map((brand) => (
+                  <ListItem key={brand.id}>
                     <FormGroup>
                       <FormControlLabel
                         control={
                           <Checkbox
                             onChange={() =>
-                              "checked" ? setChecked(item) : setChecked("")
+                              "checked" ? setChecked(brand.name) : setChecked("")
                             }
                           />
                         }
-                        label={item}
+                        label={brand.name}
                       />
                     </FormGroup>
                   </ListItem>
                 ))
               : ""}
             <Line />
-            <Title onClick={handleClickDiscount}>
-              Category {openColor ? <OpenIcon /> : <CloseIcon />}
+            <Title onClick={handleClickCategory}>
+              Category {openCategory ? <OpenIcon /> : <CloseIcon />}
             </Title>
-            {openColor
-              ? data1.map((item, index) => (
-                  <ListItem key={index}>
+            {openCategory
+              ? dataCategory?.map((category) => (
+                  <ListItem key={category.id}>
                     <FormGroup>
-                      <FormControlLabel control={<Checkbox />} label={item} />
+                      <FormControlLabel control={<Checkbox onChange={() =>
+                              "checked" ? setChecked(category.name) : setChecked("")
+                            } />} label={category.name} />
                     </FormGroup>
                   </ListItem>
                 ))

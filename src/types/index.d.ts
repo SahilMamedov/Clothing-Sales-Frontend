@@ -64,3 +64,11 @@ export interface Basket {
   basketItems: IBasketItem[];
   total: number;
 }
+export interface Brands{
+  id:number,
+  name:string
+}
+export interface Categories{
+  id:number;
+  name:string;
+}
