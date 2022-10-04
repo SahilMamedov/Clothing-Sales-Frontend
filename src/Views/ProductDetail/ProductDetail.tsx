@@ -133,12 +133,13 @@ const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
 
 
 
-if(successBasket){
 
- //dispatch(addItem(dataBasket?.basketItems))
-  //console.log(dataBasket);
-  
-}
+  if(dataBasket?.basketItems && successBasket){
+     dispatch(addItem(dataBasket?.basketItems))
+   
+    }
+
+  //console.log(dataBasket?.basketItems,"detail");
   
 
   const [image, setImage] = useState(data?.productPhotos[0].path);
@@ -173,8 +174,8 @@ if(successBasket){
        
         // @ts-ignore
         postId(basketItem)
-       
         
+       
         toast.success('Added to Basket', {
           position: "bottom-right",
           autoClose: 3500,
@@ -197,7 +198,8 @@ if(successBasket){
     
   
   }
- 
+
+
 
   const {
     data: commentAll,

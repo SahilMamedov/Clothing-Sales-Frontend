@@ -13,12 +13,16 @@ interface initialStateTypes{
   };
 
   export const basketSlice =createSlice({
-    name:"basket",
+    name:"basketSlice",
     initialState,
     reducers:{
         addItem:(state,action:PayloadAction<IBasketItem[]>) => {
         state.basket.basketItems=action.payload;
         },
+
+        addTotal:(state,action:PayloadAction<number>)=>{
+          state.basket.total=action.payload
+        }
 
         // removeItem:(state,action:PayloadAction<number>)=>{
         //     state.basket.basketItems = state.basket.basketItems.filter(

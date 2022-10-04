@@ -15,24 +15,42 @@ import {
   Box,
   StyledSignOut,
   StyledButton,
+  Basket,
+  BasketLength,
 } from "./styles";
 import { logo } from "Assets";
 import { Links } from "Routes/Links";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "Hooks/useUser";
 import { logoutUser } from "Redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "Redux/hooks/hooks";
+import { useGetAllBasketQuery } from "services/basketServices";
+import { addItem } from "Redux/slices/basketSlice";
 
 export const Header = () => {
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   useUser();
   const { user } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const {data,isSuccess}=useGetAllBasketQuery()
 
+ 
+useEffect(()=>{
+  if(isSuccess&&data.basketItems){
+    
+    dispatch(addItem(data.basketItems))
+    
+      }
+},[data?.basketItems])
+  
+
+  const {basket} = useAppSelector((state)=>state.basket)
+
+
+  
   const handleClickOpen = () => {
     setOpen(!open);
   };
@@ -75,7 +93,10 @@ navigate("/basket")
           <StyledSearchIcon />
         </StyledPosition>
         <StyledHeartIcon />
+        <Basket>
+          <BasketLength>{basket?.basketItems.length}</BasketLength>
         <StyledBasketIcon onClick={handleBasket} />
+        </Basket>
         <StyledUser onClick={handleClickOpen} />
         <Box>
           {open ? (

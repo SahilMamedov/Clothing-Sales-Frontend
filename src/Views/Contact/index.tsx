@@ -1,6 +1,8 @@
 
 //import Swal from 'sweetalert2/dist/sweetalert2.js'
 
+import { useAppSelector } from "Redux/hooks/hooks";
+
 //import 'sweetalert2/src/sweetalert2.scss'
 
   //  export const Contact = () => {
@@ -34,7 +36,12 @@
 // );
 // }
 
+
 export const Contact = () => {
+  const {basket} = useAppSelector((state)=>state.basket)
+
+  console.log(basket);
+
   return (
     <>
       Contact

@@ -43,7 +43,7 @@ export interface AppUser {
   userId:string;
 }
 export interface IComment {
-  id:number
+  id:number;
   appUserId: string;
   ProductId: number|undefined
   content: any[];

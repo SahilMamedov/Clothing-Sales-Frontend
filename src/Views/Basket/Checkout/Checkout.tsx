@@ -8,14 +8,21 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from "@mui/material/Box";
 import PaymentForm from "./PaymentForm";
+import { useAppSelector } from "Redux/hooks/hooks";
 const theme = createTheme();
+
+
 export const Checkout = () =>  {
+  
+  const {basket} = useAppSelector((state)=>state.basket)
+
+
   const [value, setValue] = React.useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
-  console.log(value);
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
 
@@ -34,6 +41,7 @@ export const Checkout = () =>  {
     console.log(Data);
     
   };
+console.log(basket.basketItems,"basket");
 
 
   return (
@@ -136,12 +144,16 @@ export const Checkout = () =>  {
       <span>Prdouct</span>
       <span>SubTotal</span>
     </SubTitle>
-    <Justify>
+    <>
+    {basket.basketItems.length !== 0 && 
+    basket.basketItems.map((item)=> 
+    <div key={item.id}>
+      <Justify>
     <PrdouctName>
-    Field Roast Chao Cheese Creamy Original  × 1
+    {`${item.product?.name} x ${item.count}`}  
     </PrdouctName>
     <PrdouctPrice>
-      $19.50
+      ${item.price}
     </PrdouctPrice>
     </Justify>
     <Justify>
@@ -149,9 +161,12 @@ export const Checkout = () =>  {
       Total
     </Total>
     <TotalPrice>
-      $44
+      ${item.sum}
     </TotalPrice>
     </Justify>
+    </div>
+    )}
+    </>
     <FormControl>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"

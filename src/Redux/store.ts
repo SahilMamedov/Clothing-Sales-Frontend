@@ -1,3 +1,4 @@
+import  basketSlice  from './slices/basketSlice';
 import { blogApi } from './../services/blogServices';
 import { shopApi } from './../services/shopServices';
 import { basketApi } from './../services/basketServices';
@@ -11,7 +12,7 @@ import { commentApi } from "../services/commentServices";
 export const store = configureStore({
   reducer: {
     user: userSlice,
-
+    basket:basketSlice,
 
     [goodsApi.reducerPath]: goodsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,

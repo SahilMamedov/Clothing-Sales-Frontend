@@ -129,3 +129,22 @@ export const StyledSignOut = styled(SignOut)`
   font-size: 18px;
   padding-left: 15px;
 `;
+
+export const Basket=styled.div`
+position: relative;
+`
+export const BasketLength=styled.span`
+height: 18px;
+width: 18px;
+border-radius: 50px;
+background-color: red;
+display: flex;
+right: 8px;
+top: -12px;
+align-items: center;
+color:white;
+padding-bottom: 1px;
+justify-content: center;
+position: absolute;
+
+`

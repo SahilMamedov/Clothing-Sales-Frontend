@@ -26,8 +26,9 @@ TotalBox} from "./styles"
 import { ToastContainer, toast,Zoom} from 'react-toastify';
 import {  useDeleteItemMutation, useGetAllBasketQuery } from 'services/basketServices';
 import { useEffect } from 'react';
-import { useAppSelector } from 'Redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from 'Redux/hooks/hooks';
 import { useNavigate } from 'react-router-dom';
+import { addItem } from 'Redux/slices/basketSlice';
 
 
 
@@ -58,6 +59,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const Basket= () => {
   const navigate=useNavigate()
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
   
 
@@ -65,6 +67,15 @@ export const Basket= () => {
   const [postDeletId,{isSuccess:isSuccessDelet}] = useDeleteItemMutation()
 
  
+
+  
+  if(data?.basketItems){
+
+    dispatch(addItem(data?.basketItems))
+     
+     
+   }
+
 const handleDelet = (id:number) => {
   postDeletId(id)
 
