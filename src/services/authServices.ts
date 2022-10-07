@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IToken } from "../types";
-
+export interface IRegister{
+  error:string
+  data:string
+}
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
@@ -8,7 +11,7 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
 
-    fetchRegisters: builder.mutation<any, FormData>({
+    fetchRegisters: builder.mutation<IRegister, FormData>({
       query: (body: FormData) => {
         return {
           url: "register",

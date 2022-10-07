@@ -68,18 +68,19 @@ export default function SignUp() {
   };
 
   const [postRegisterData, response] = useFetchRegistersMutation();
-  const { isSuccess } = response;
+  const { isSuccess,error } = response;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     data.set("password", values.password);
     postRegisterData(data);
+    
 
   };
+
   useEffect(() => {
     if (isSuccess) {
-      console.log("okey");
       
       swal(
         "Ugurlu qeydiyyat",

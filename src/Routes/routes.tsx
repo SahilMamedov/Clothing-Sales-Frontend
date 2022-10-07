@@ -10,6 +10,7 @@ import Register from "Views/Auth/Register";
 import Login from "Views/Auth/Login";
 import { Basket } from "../Views/Basket";
 import {Checkout} from "../Views/Basket/Checkout/Checkout"
+import { Profile } from "Views/Auth/Profile";
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -28,6 +29,7 @@ export const AppRoutes = () => {
           <Route path={Links.app.productDetail} element={<ProductDetail />} />
           <Route path={Links.app.basket} element={<Basket/>}/>
           <Route path={Links.app.checkout} element={<Checkout/>}/>
+          <Route path={Links.app.profile} element={<Profile/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

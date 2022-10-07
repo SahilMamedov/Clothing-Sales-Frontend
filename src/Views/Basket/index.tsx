@@ -28,7 +28,7 @@ import {  useDeleteItemMutation, useGetAllBasketQuery } from 'services/basketSer
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'Redux/hooks/hooks';
 import { useNavigate } from 'react-router-dom';
-import { addItem } from 'Redux/slices/basketSlice';
+import { addItem, addTotal } from 'Redux/slices/basketSlice';
 
 
 
@@ -72,6 +72,7 @@ export const Basket= () => {
   if(data?.basketItems){
 
     dispatch(addItem(data?.basketItems))
+     dispatch(addTotal(data?.total))
      
      
    }

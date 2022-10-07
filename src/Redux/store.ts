@@ -8,6 +8,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { authApi } from "../services/authServices";
 import userSlice from "./slices/userSlice";
 import { commentApi } from "../services/commentServices";
+import { saleApi } from 'services/saleServices';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     [basketApi.reducerPath]:basketApi.reducer,
     [shopApi.reducerPath]:shopApi.reducer,
     [blogApi.reducerPath]:blogApi.reducer,
+    [saleApi.reducerPath]:saleApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -30,6 +32,7 @@ export const store = configureStore({
       basketApi.middleware,
       shopApi.middleware,
       blogApi.middleware,
+      saleApi.middleware,
     ),
 });
 setupListeners(store.dispatch);

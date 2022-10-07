@@ -61,6 +61,10 @@ useEffect(()=>{
     navigate("/login");
   };
 
+  const handleProfile =() =>{
+    navigate("/profile")
+  }
+
   const handleRegister = () => {
     navigate("/register");
   };
@@ -103,9 +107,16 @@ navigate("/basket")
             <>
               <UserBox>
                 {user.IsOnline ? (
+                  <>
                   <StyledButton onClick={handleLogout}>
                     Logout <StyledSignOut />
                   </StyledButton>
+                  <StyledButton onClick={handleProfile}>
+                    My Profile
+                  </StyledButton>
+                  </>
+                  
+
                 ) : (
                   <>
                     <StyledButton onClick={handleLogin}>Login</StyledButton>{" "}

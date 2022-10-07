@@ -8,40 +8,60 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from "@mui/material/Box";
 import PaymentForm from "./PaymentForm";
-import { useAppSelector } from "Redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "Redux/hooks/hooks";
+import { useStartSaleMutation } from "services/saleServices";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+import { useGetAllBasketQuery } from "services/basketServices";
+import { addItem } from "Redux/slices/basketSlice";
 const theme = createTheme();
 
 
 export const Checkout = () =>  {
-  
+  const dispatch = useAppDispatch();
+  const navigate=useNavigate()
   const {basket} = useAppSelector((state)=>state.basket)
-
 
   const [value, setValue] = React.useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
-  
+  const [postSaleData,{isSuccess:succesSale}]= useStartSaleMutation()
+  const {data,isSuccess,refetch:fetchBasket}=useGetAllBasketQuery()
+
+
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
 
   const data = new FormData(event.currentTarget);
-    const Data={
-      lastName:data.get("lastname"),
-      firstName:data.get("firstname"),
-      email:data.get("email"),
-      phone:data.get("phone"),
-      city:data.get("city"),
-      apartment:data.get("apartment"),
-      streetAddress:data.get("streetaddress"),
-      notes:data.get("notes"),
-      value:value
-    }
-    console.log(Data);
-    
+
+  data.set("payment",value=="cash"?"true":"false")
+
+  postSaleData(data)
+
   };
-console.log(basket.basketItems,"basket");
+
+  if(succesSale){
+    
+   
+      fetchBasket()
+        if(isSuccess){
+          dispatch(addItem(data?.basketItems))
+          swal(
+            "Sifarishiniz qeyde alindi",
+            "Bizi sechdiniyiniz ucun teshekkurler",
+            "success"
+          );
+          navigate("/shop");
+        }
+ 
+    
+  }
+
+ 
+
 
 
   return (
@@ -90,10 +110,10 @@ console.log(basket.basketItems,"basket");
             <StyledTextField
               width="720px"
               required
-              id="streetAddress"
+              id="address"
               label="Street address "
-              name="streetaddress"
-              autoComplete="streetaddress"
+              name="address"
+              autoComplete="address"
               autoFocus
             />
              <StyledTextField
@@ -109,12 +129,12 @@ console.log(basket.basketItems,"basket");
             <StyledTextField
               width="350px"
               required
-              id="phone"
+              id="mobile"
               label="Phone"
-              name="phone"
+              name="mobile"
               defaultValue='+994'
-              type='tel'
-              autoComplete="phone"
+              type=''
+              autoComplete="mobile"
               autoFocus
             />
             <StyledTextField
@@ -131,8 +151,8 @@ console.log(basket.basketItems,"basket");
             <StyledTextarea
              placeholder="order notes (optional)"
              required
-             id="notes"
-             name="notes"
+             id="note"
+             name="note"
              variant="default"
              withAsterisk
             />
@@ -156,16 +176,16 @@ console.log(basket.basketItems,"basket");
       ${item.price}
     </PrdouctPrice>
     </Justify>
+    </div>
+    )}
     <Justify>
     <Total>
       Total
     </Total>
     <TotalPrice>
-      ${item.sum}
+      ${basket.total}
     </TotalPrice>
     </Justify>
-    </div>
-    )}
     </>
     <FormControl>
       <RadioGroup

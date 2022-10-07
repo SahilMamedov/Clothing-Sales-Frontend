@@ -72,3 +72,24 @@ export interface Categories{
   id:number;
   name:string;
 }
+
+export interface ISaleTypes{
+  firstName?:string;
+  lastName?:string;
+  email:string;
+  address:string;
+  mobile:number;
+  apartment:string;
+  city:string;
+  payment:boolean;
+  note?:string;
+}
+export interface IOrder{
+  id:number;
+  date:string;
+  orderStatus:number;
+  total:number;
+}
+export interface IOrderData{
+
+}

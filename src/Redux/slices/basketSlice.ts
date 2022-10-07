@@ -24,12 +24,8 @@ interface initialStateTypes{
           state.basket.total=action.payload
         }
 
-        // removeItem:(state,action:PayloadAction<number>)=>{
-        //     state.basket.basketItems = state.basket.basketItems.filter(
-        //         (b) => b.productId!== action.payload
-        //     )
-        // }
+     
     }
   })
-  export const { addItem } = basketSlice.actions;
+  export const { addItem,addTotal } = basketSlice.actions;
 export default basketSlice.reducer;

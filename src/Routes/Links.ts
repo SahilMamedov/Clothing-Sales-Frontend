@@ -12,5 +12,6 @@ export const Links = {
     login: "/login",
     basket:"/basket",
     checkout:"checkout",
+    profile:"profile"
   },
 };
