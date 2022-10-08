@@ -80,17 +80,19 @@ export const Basket= () => {
 const handleDelet = (id:number) => {
   postDeletId(id)
 
-  toast.error('Successfully Deleted', {
-    position: "bottom-right",
-    autoClose: 3500,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme:"colored",
-    transition:Zoom
-    });
+    toast.success('Successfully Deleted', {
+      position: "bottom-right",
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme:"colored",
+      transition:Zoom
+      
+  
+      });
   
 }
 const handleGoToBack =() =>{

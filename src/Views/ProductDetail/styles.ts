@@ -266,3 +266,16 @@ export const Badge=styled.div`
 export const BadgeBox=styled(Box)`
 `
 export const BadgeIconButton=styled(IconButton)``
+
+export const JustifyBetween=styled.div`
+display:flex;
+width: 600px;
+justify-content: space-between;
+`
+
+export const StyledNotification=styled.div`
+
+display: flex;
+
+justify-content: end;
+`

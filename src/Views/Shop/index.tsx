@@ -6,7 +6,7 @@ import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useFetchGoodsQuery } from "services/goodsServices";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Goods } from "Components";
 import {
   CloseIcon,
@@ -20,14 +20,11 @@ import {
   SideBar,
   SideBarBox,
   SideBarTitle,
-  StyledBox,
   StyledNavlink,
   Title,
   Value,
   WrapperCard,
 } from "./styles";
-import { IGoods } from "types";
-import { NavLink } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useFetchBrandQuery, useFetchCategoryQuery } from "services/shopServices";
 

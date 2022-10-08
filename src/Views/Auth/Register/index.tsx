@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,7 +25,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-
+  import { Modal, Group } from '@mantine/core';
 function Copyright(props: any) {
   return (
     <Typography
@@ -50,6 +51,9 @@ interface State {
   showPassword: boolean;
 }
 export default function SignUp() {
+
+  const [opened, setOpened] = useState(true);
+
   const [values, setValues] = useState<State>({
     password: "",
     showPassword: false,
@@ -90,9 +94,22 @@ export default function SignUp() {
       navigate("/login");
     }
   }, [isSuccess]);
+
   const navigate = useNavigate();
   return (
-    <ThemeProvider theme={theme}>
+   <>
+  
+    
+    <Modal
+          opened={opened}
+          onClose={() => setOpened(false)}
+          title="Register!"
+          overlayOpacity={0.7}
+          closeOnClickOutside={false}
+        >
+
+
+           <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -117,7 +134,7 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="name"
                   name="name"
                   required
                   fullWidth
@@ -144,6 +161,16 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -192,6 +219,7 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <NavLink to={Links.app.login}>
@@ -204,5 +232,9 @@ export default function SignUp() {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
+
+
+        </Modal>
+   </>
   );
 }

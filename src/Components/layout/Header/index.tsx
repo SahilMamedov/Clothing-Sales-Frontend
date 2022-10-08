@@ -58,7 +58,7 @@ useEffect(()=>{
   const handleLogout = () => {
     dispatch(logoutUser());
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   const handleProfile =() =>{

@@ -23,6 +23,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { extendedApi} from 'services/basketServices';
 import {  useAppDispatch } from 'Redux/hooks/hooks';
+  import { Modal} from '@mantine/core';
+
+
 function Copyright(props: any) {
   return (
     <Typography
@@ -49,8 +52,10 @@ interface State {
 }
 export default function SignIn() {
 
-  const dispatch = useAppDispatch();
-  dispatch(extendedApi.util.resetApiState());
+  const [opened, setOpened] = useState(true);
+
+  // const dispatch = useAppDispatch();
+  // dispatch(extendedApi.util.resetApiState());
 
 
   const [values, setValues] = useState<State>({
@@ -71,14 +76,14 @@ export default function SignIn() {
   };
 
   const [postLoginData, response] = useFetchLoginMutation();
-  const { isError, isSuccess, data, isLoading ,error } = response;
+  const { isError, isSuccess, data } = response;
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("token",data.token);
      
-        
       navigate("/");
     }
   }, [isSuccess]);
@@ -90,10 +95,17 @@ export default function SignIn() {
     data.set("password", values.password);
     postLoginData(data);
   };
-//console.log("error",error.data);
 
   return (
-    <ThemeProvider theme={theme}>
+  <>
+    <Modal
+    opened={opened}
+    onClose={() => setOpened(false)}
+    title="Login"
+    overlayOpacity={0.7}
+    closeOnClickOutside={false}
+  >
+   <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -178,5 +190,9 @@ export default function SignIn() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+  </Modal>
+  {/* {navigate("/")} */}
+  </>
+    
   );
 }

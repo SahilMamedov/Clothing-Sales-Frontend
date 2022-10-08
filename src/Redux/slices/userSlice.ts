@@ -8,6 +8,7 @@ const initialState: initialUserTypes = {
   user: {
     nameid: "",
     Name: "",
+    unique_name: "",
     Email: "",
     Surname: "",
     IsOnline: false,
@@ -23,6 +24,7 @@ const userSlice = createSlice({
       state.user.Surname = action.payload.Surname;
       state.user.Email = action.payload.Email;
       state.user.nameid = action.payload.nameid;
+      state.user.unique_name=action.payload.unique_name;
       state.user.IsOnline = true;
     },
     logoutUser: (state) => {

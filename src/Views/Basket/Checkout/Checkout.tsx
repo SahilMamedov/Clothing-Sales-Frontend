@@ -37,7 +37,7 @@ export const Checkout = () =>  {
 
   const data = new FormData(event.currentTarget);
 
-  data.set("payment",value=="cash"?"true":"false")
+  data.set("Cash",value=="cash"?"true":"false")
 
   postSaleData(data)
 

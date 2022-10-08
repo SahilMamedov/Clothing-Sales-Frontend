@@ -1,6 +1,13 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Box from '@mui/material/Box';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+
 import {
     Container,
     StyledTab,
@@ -12,10 +19,24 @@ import {
     StyledBox,
     OrderBox,
     OrderItem,
-    Iamge
+    Iamge,
+    Flex,
+    SaveChangesBtn,
+    ProfileInfo,
+    IsLoading,
 
  } from './styles';
-import { useGetOrderAllQuery } from 'services/saleServices';
+
+
+
+import {  useGetOrderAllQuery, useGetOrderItemAllQuery } from 'services/saleServices';
+import {useEffect, useState} from "react"
+import { OrderDetails } from './OrderDetails';
+import { useAppSelector } from 'Redux/hooks/hooks';
+import { useUpdateUserMutation } from 'services/authServices';
+import { ToastContainer, toast,Zoom } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,91 +73,247 @@ function a11yProps(index: number) {
 
 
 
+
 export const Profile=()=> {
 
-const  arr = [2,4,6,7,8,6,54,534,24,76]
+  const { user } = useAppSelector((state) => state.user);
 
-    const {data} = useGetOrderAllQuery()
+  const navigate=useNavigate()
 
-    console.log(data);
-    
-    const [open, setOpen] = React.useState(false);
+  const {data,refetch:fetchOrder} = useGetOrderAllQuery()
+   
+
+  const [showDetail,setShowDetal]=useState(0)
+
+  const [open, setOpen] = useState(false);
+
+  const [value, setValue] = React.useState(0);
+
+  const [orderID,setOrderID] = useState<number>()
+
+
 
   const handleClick = (orderId:number) => {
-console.log(orderId);
-
+    setOrderID(orderId)
     setOpen(!open);
   };
-  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+ const handleViewOrderDetail = (orderId:number)=>{
+  setShowDetal(orderId)
+  
+ }
 
+ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+
+  const data = new FormData(event.currentTarget);
+  postUpdateUser(data)
+};
+
+
+  const [postUpdateUser,response] = useUpdateUserMutation()
+
+  const { isError, isSuccess, data:updateData,isLoading } = response;
+
+  
+  const {data:orderItemData} = useGetOrderItemAllQuery(orderID,{skip:orderID===undefined})
+  
+  useEffect(()=>{
+    fetchOrder()
+  },[])
+    
+
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem("token",updateData.token);
+      toast.success('Successfully Updated User', {
+        position: "bottom-right",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme:"colored",
+        transition:Zoom
+        
+    
+        });
+    //navigate("/")
+    }
+  }, [isSuccess]);
+  
+   // console.log(useUser(),"user");
+    
+  
   return (
     <Container>
-   <Box >
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <StyledTab label="Profile" {...a11yProps(0)} />
+      {showDetail >0?<OrderDetails orderId={showDetail}/>:
+         <Box >
+         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+             <StyledTab label="Profile" {...a11yProps(0)} />
+             
+             <StyledTab label="Orders" {...a11yProps(1)} />
+           </Tabs>
+         </Box>
+         <TabPanel value={value} index={0}>
           
-          <StyledTab label="Orders" {...a11yProps(1)} />
-        </Tabs>
+
+         <Box  
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ '& > :not(style)': { m: 1 } }}>
+      <FormControl variant="standard">
+        <InputLabel htmlFor="input-with-icon-adornment">
+         Firstname
+        </InputLabel>
+        <Input
+          id="firstname"
+          name='firstname'
+          defaultValue={user.Name}
+          startAdornment={
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <TextField
+        id="surname"
+        label="Lastname"
+        name='surname'
+        defaultValue={user.Surname}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      />
+      <Box 
+    
+      sx={{ display: 'flex', alignItems: 'flex-end', }}>
+      <TextField
+        id="email"
+        label="email"
+        name='email'
+        type='email'
+        defaultValue={user.Email}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      />
+      <ProfileInfo>
+      <TextField
+        id="Username"
+        name='username'
+        label="Username"
+        defaultValue={user.unique_name}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      />
+      </ProfileInfo>
       </Box>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}  >
-        <StyledBox>
-          
-
-          {data !== undefined&&
-          <>
-         {data.map((item)=>
-           <StyledTable key={item.id} onClick={()=>handleClick(item.id)}>
-           <thead>
-           <StyledTr>
-           <StyledTh>
-           Order
-           <StyledTd>{item.id}</StyledTd>
-           </StyledTh>
-           <StyledTh>
-           Data
-           <StyledTd>{item.date}</StyledTd>
-           </StyledTh>
-           <StyledTh>
-           Status
-           <StyledTd>{item.orderStatus==0?"Pending":""}</StyledTd>
-           </StyledTh>
-           <StyledTh>
-           Total
-           <StyledTd>${item.total}</StyledTd>
-           </StyledTh>
-           <StyledTh>
-           <StyledButton>View</StyledButton>
-           </StyledTh>
-           </StyledTr>
-           </thead>
-          </StyledTable>
-          )}
-          </>
-      }      
      
-       {open? <OrderBox>
-        <OrderItem>
-            salam<Iamge src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa3FV1g4LAWsvBsSLJ2tpQm_yZv6UzBdTJrLQ4B3B_&s' />
-        </OrderItem>
-        <OrderItem>
-            salam<Iamge src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa3FV1g4LAWsvBsSLJ2tpQm_yZv6UzBdTJrLQ4B3B_&s' />
-        </OrderItem>
-        <OrderItem>
-            salam<Iamge src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa3FV1g4LAWsvBsSLJ2tpQm_yZv6UzBdTJrLQ4B3B_&s' />
-        </OrderItem>
-       </OrderBox>:""}
-       </StyledBox>
-
-      </TabPanel>
+         
+      
+      <SaveChangesBtn> {isLoading?
+      <IsLoading >
+          <CircularProgress
+        color="warning"
+        size='35px'
+/>
+      </IsLoading>:"Save Changes"}
+      </SaveChangesBtn>
     </Box>
+   
+
+         </TabPanel>
+         <TabPanel value={value} index={1}  >
+         <StyledBox>
+{data !== undefined&&
+
+<span>
+{data.map((item)=>
+<Flex>
+ <StyledTable key={item.id} onClick={()=>handleClick(item.id)}>
+ <thead>
+ <StyledTr>
+ <StyledTh>
+ Order
+ <StyledTd>{item.id}</StyledTd>
+ </StyledTh>
+ <StyledTh>
+ Data
+ <StyledTd>{item.date}</StyledTd>
+ </StyledTh>
+ <StyledTh>
+ Status
+ <StyledTd>{item.orderStatus===0?"Pending":""}</StyledTd>
+ </StyledTh>
+ <StyledTh>
+ Total
+ <StyledTd>${item.total}</StyledTd>
+ </StyledTh>
+ 
+ </StyledTr>
+ </thead>
+</StyledTable>
+<StyledTh>
+ <StyledButton onClick={()=>handleViewOrderDetail(item.id)}>View</StyledButton>
+ </StyledTh>
+</Flex>
+)}
+</span>
+}      
+
+{open?
+<>
+{orderItemData?.map((item)=>
+<OrderBox>
+<OrderItem>
+  {`${item.name} x ${item.count}`}<Iamge src={item.photo.path} />
+</OrderItem>
+</OrderBox>
+)}
+</>
+:""}
+</StyledBox>
+         </TabPanel>
+       </Box>
+      
+      }
+      <ToastContainer
+     position="bottom-right"
+     autoClose={5000}
+     hideProgressBar={false}
+     newestOnTop
+     closeOnClick
+     rtl={false}
+     pauseOnFocusLoss
+     draggable
+     pauseOnHover
+     />
+
     </Container>
   );
 }
+
+

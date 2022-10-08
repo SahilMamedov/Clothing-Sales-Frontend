@@ -35,52 +35,96 @@
 // );
 // }
 
+import { Notification } from '@mantine/core';
+  
+  export const Contact =()=>{
+  
+    return (
+      <>
+       <Notification
+        loading
+        title="Uploading data to the server"
+        disallowClose
+      >
+        Please wait until data is uploaded, you cannot close this notification yet
+      </Notification>
+      </>
+    );
+  }
+
+
+  
+
+
+
+  // import * as React from 'react';
+  // import Tabs from '@mui/material/Tabs';
+  // import Tab from '@mui/material/Tab';
+  // import Typography from '@mui/material/Typography';
+  // import Box from '@mui/material/Box';
+  
+  // interface TabPanelProps {
+  //   children?: React.ReactNode;
+  //   index: number;
+  //   value: number;
+  // }
+  
+  // function TabPanel(props: TabPanelProps) {
+  //   const { children, value, index, ...other } = props;
+  
+  //   return (
+  //     <div
+  //       role="tabpanel"
+  //       hidden={value !== index}
+  //       id={`simple-tabpanel-${index}`}
+  //       aria-labelledby={`simple-tab-${index}`}
+  //       {...other}
+  //     >
+  //       {value === index && (
+  //         <Box sx={{ p: 3 }}>
+  //           <Typography>{children}</Typography>
+  //         </Box>
+  //       )}
+  //     </div>
+  //   );
+  // }
+  
+  // function a11yProps(index: number) {
+  //   return {
+  //     id: `simple-tab-${index}`,
+  //     'aria-controls': `simple-tabpanel-${index}`,
+  //   };
+  // }
+  
+  // export default function BasicTabs() {
+  //   const [value, setValue] = React.useState(0);
+  
+  //   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  //     setValue(newValue);
+  //   };
+  
+  //   return (
+  //     <Box sx={{ width: '100%' }}>
+  //       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+  //         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+  //           <Tab label="Item One" {...a11yProps(0)} />
+  //           <Tab label="Item Two" {...a11yProps(1)} />
+  //         </Tabs>
+  //       </Box>
+  //       <TabPanel value={value} index={0}>
+  //         Item One
+  //       </TabPanel>
+  //       <TabPanel value={value} index={1}>
+  //         Item Two
+  //       </TabPanel>
+      
+  //     </Box>
+  //   );
+  // }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Container } from 'Views/Auth/Profile/styles';
-
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-];
-
-export const Contact = () => {
-  return (
-    <Container>
-
-   
-    </Container>
-  );
-}
 
 
 

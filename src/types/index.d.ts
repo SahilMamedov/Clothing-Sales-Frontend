@@ -35,12 +35,14 @@ export interface IUser {
   Name: string;
   Surname: string;
   Email?: string;
+  unique_name:string
   IsOnline?: boolean;
 }
 export interface AppUser {
   name: string;
   surname: string;
   userId:string;
+  email:string;
 }
 export interface IComment {
   id:number;
@@ -50,6 +52,7 @@ export interface IComment {
   appUser?: AppUser;
   name?: string;
   surname?: string;
+  createTime:string;
 }
 export interface IBasketItem {
   id: number;
@@ -91,5 +94,23 @@ export interface IOrder{
   total:number;
 }
 export interface IOrderData{
-
+id:number;
+address:string;
+note:string;
+apartment:string;
+mobile:number;
+city:string;
+appUser:AppUser;
+cash:boolean;
+createdAt:string;
+// firstName:string;
+// lastName:string;
+// email:string;
+}
+export interface IOrderItem{
+id:number;
+name:string;
+count:number;
+total:number
+photo:{path:string}
 }

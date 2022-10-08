@@ -22,7 +22,6 @@ export const authApi = createApi({
     }),
     fetchLogin: builder.mutation<IToken, FormData>({
       query: (body) => {
-        //console.log("body",bod);
         return {
           url: "login",
           method: "POST",
@@ -30,7 +29,16 @@ export const authApi = createApi({
         };
       },
     }),
+    updateUser: builder.mutation<IToken, FormData>({
+      query: (body) => {
+        return {
+          url: "updateUser",
+          method: "PUT",
+          body,
+        };
+      },
+    }),
     
   }),
 });
-export const { useFetchRegistersMutation, useFetchLoginMutation } = authApi;
+export const { useFetchRegistersMutation, useFetchLoginMutation,useUpdateUserMutation } = authApi;

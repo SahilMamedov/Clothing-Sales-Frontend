@@ -1,7 +1,5 @@
-import { IOrder, ISaleTypes } from './../types/index.d';
+import { IOrder, IOrderData, IOrderItem, ISaleTypes } from './../types/index.d';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-
 
 
 export const saleApi=createApi({
@@ -28,9 +26,35 @@ export const saleApi=createApi({
     }),
     getOrderAll:builder.query<IOrder[],void>({
         query: () => `/getOrderAll`,
+    }),
+
+    getOrderItemAll:builder.query<IOrderItem[],number|undefined>({
+
+        query:(orderId)=> {
+            return{
+            url:`getOrderItemAll?orderid=${orderId}`,
+            method:"GET"
+            }
+        }
+       
+        
+    }),
+
+    getOrderData:builder.query<IOrderData[],number|undefined>({
+        query:(orderId)=>{
+            return{
+                url:`getOrder?orderid=${orderId}`,
+                method:"GET"
+            }
+        }
     })
 
     })
 })
 
-export const  {useStartSaleMutation,useGetOrderAllQuery}=saleApi;
+export const 
+ {  useStartSaleMutation,
+    useGetOrderAllQuery,
+    useGetOrderItemAllQuery,
+    useGetOrderDataQuery 
+}=saleApi;

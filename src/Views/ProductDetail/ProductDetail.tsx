@@ -39,6 +39,8 @@ import {
   Badge,
   BadgeIconButton,
   BadgeBox,
+  JustifyBetween,
+  StyledNotification,
   
   
 } from "./styles";
@@ -66,13 +68,13 @@ import * as React from 'react';
 import { ToastContainer, toast,Zoom } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Notification } from '@mantine/core';
   import Typography from '@mui/joy/Typography';
   import Add from '@mui/icons-material/Add';
   import Remove from '@mui/icons-material/Remove';
 import { useAddItemMutation } from "services/basketServices";
 import { addItem } from "Redux/slices/basketSlice";
-
+import dayjs from "dayjs";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -123,7 +125,7 @@ const [count, setCount] = React.useState(0);
 
 const { data, isLoading } = useFetchGetGoodsQuery(`${id}`);
 
-const [postCommentId, {isSuccess:successRemoveComment}]=useRemoveCommentMutation()
+const [postCommentId, {isSuccess:successRemoveComment,isLoading:LoadingRemoveComment}]=useRemoveCommentMutation()
  
 const { user } = useAppSelector((state) => state.user);
 
@@ -138,8 +140,6 @@ const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
      dispatch(addItem(dataBasket?.basketItems))
    
     }
-
-  //console.log(dataBasket?.basketItems,"detail");
   
 
   const [image, setImage] = useState(data?.productPhotos[0].path);
@@ -422,7 +422,12 @@ useEffect(()=>{
                   <>
                     {commentAll.map((com) => (
                      <Fragment key={com.id}>
-                      <UserName>  {com.appUser?.name}{com.appUser?.surname}</UserName>
+                      <JustifyBetween>
+                      <UserName> {com.appUser?.name}{com.appUser?.surname} </UserName>  
+                      <div>
+                        {dayjs(`${com.createTime}`).format("DD.MM.YYYY HH:m")}
+                        </div>
+                      </JustifyBetween>
                       <Comment>
                         {com.content}
                        {com.appUserId==user.nameid &&
@@ -433,7 +438,7 @@ useEffect(()=>{
                         </Tooltip>
                        }
                       </Comment>
-
+                         
                      </Fragment>
                     ))}
                   </>
@@ -454,6 +459,18 @@ useEffect(()=>{
      draggable
      pauseOnHover
      />
+     <StyledNotification>
+      {LoadingRemoveComment && <Notification
+        loading
+        title="Delet Comment"
+        disallowClose
+      >
+        Your comment is currently being deleted
+      </Notification>
+    }
+     
+     </StyledNotification>
+     
     </Container>
   );
 };

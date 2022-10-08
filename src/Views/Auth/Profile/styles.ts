@@ -1,3 +1,4 @@
+
 import Box from '@mui/material/Box';
 
 import Tab from "@mui/material/Tab";
@@ -20,9 +21,7 @@ export const StyledTable=styled.table`
 align-items: center;
 width: 100%;
 height: 81px;
-border: 1px solid #e4e5ee;
 cursor: pointer;
-margin: 15px 0;
 
 `
 export const StyledTh=styled.th`
@@ -55,7 +54,7 @@ font-weight: 400 !important;
 
 `
 export const OrderBox=styled.div`
-padding: 20px;
+padding: 0 20px;
 `
 export const OrderItem=styled.div`
 padding:10px 20px;
@@ -69,4 +68,55 @@ justify-content: space-between;
 export const StyledBox=styled.div`
 border: 1px solid #e4e5ee;
 margin: 15px 0px;
+`
+export const Flex=styled.div`
+display: flex;
+border: 1px solid #e4e5ee;
+margin: 15px 0;
+`
+
+export const OrderDetailBox=styled.div`
+border: 1px solid #e4e5ee;
+width: 100%;
+`
+export const Filed=styled.div`
+padding: 8px;
+font-size: .875rem;
+border-bottom: 1px solid #e4e5ee;
+width: 700px;
+font-weight: 700;
+`
+export const Column=styled.div`
+display: flex;
+`
+export const OrderDetailItem=styled.div`
+width: 490px;
+padding: 8px;
+font-size: .875rem;
+border-bottom: 1px solid #e4e5ee;
+border-left: 1px solid #e4e5ee;
+`
+export const SaveChangesBtn=styled.button`
+width: 133px;
+height: 38px;
+background-color: #233a95;
+font-size: .875rem;
+font-weight: 500;
+color: white;
+border-radius: 4px;
+display: flex;
+justify-content: center;
+align-items: center;
+border: none;
+cursor: pointer;
+margin-top: 30px !important;
+`
+export const ProfileInfo=styled.div`
+margin-left: 17px;
+`
+export const IsLoading=styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+
 `
