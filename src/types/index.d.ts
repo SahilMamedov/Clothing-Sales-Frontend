@@ -2,7 +2,7 @@ export interface IGoods {
   id: number;
   name: string;
   brand: any;
-  brandName: string;
+  brandName: Brands;
   price: number;
   trending: boolean;
   discount: number;
@@ -10,8 +10,15 @@ export interface IGoods {
   isMainPhoto: string;
   discountPrice: number;
   photoPath: string;
+  productPhotos:IProductImage[]
   productPhotos: any[];
   color: string;
+}
+export interface IProductImage{
+  id:number;
+  path:string;
+  isMain:boolean;
+
 }
 export interface IBlogs {
   id: string;
@@ -37,6 +44,7 @@ export interface IUser {
   Email?: string;
   unique_name:string
   IsOnline?: boolean;
+  Role:[]
 }
 export interface AppUser {
   name: string;
@@ -107,10 +115,26 @@ createdAt:string;
 // lastName:string;
 // email:string;
 }
+
+export interface IFilterProduc{
+  brandIds?:number[];
+  categoryIds?:number[];
+  maxPrice?:number;
+  minPrice?:number;
+  page:number;
+  
+  }
+  
 export interface IOrderItem{
 id:number;
 name:string;
 count:number;
-total:number
+total:number;
+color:string;
 photo:{path:string}
+}
+
+export interface IReturnFilterProduct{
+  result: Goods[];
+  totalCount: number;
 }

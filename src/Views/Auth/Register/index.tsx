@@ -139,7 +139,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="name"
-                  label="name"
+                  label="Name"
                   autoFocus
                 />
               </Grid>
@@ -148,7 +148,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="surName"
-                  label="SurName"
+                  label="Surname"
                   name="surName"
                   autoComplete="family-name"
                 />

@@ -234,8 +234,10 @@ useEffect(()=>{
     dots: false,
     infinite: true,
     slidesToShow: 5,
-    slidesToScroll: 1,
+    swipeToSlide: true,
     vertical: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
     verticalSwiping: true,
   };
 

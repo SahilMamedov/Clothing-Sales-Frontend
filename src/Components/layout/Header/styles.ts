@@ -7,6 +7,7 @@ import {
   SignOut,
   User,
 } from "phosphor-react";
+import TableCell from "@mui/material/TableCell";
 
 export const StyledNavbar = styled.nav`
   height: 80px;
@@ -147,4 +148,25 @@ padding-bottom: 1px;
 justify-content: center;
 position: absolute;
 
+`
+export const StyledBox=styled.div`
+width: 720px;
+max-height: 350px;
+display: flex;
+justify-content: center;
+position: absolute;
+  top: 0px;
+  z-index: 100;
+`
+export const SerachField=styled(TableCell)`
+height: 80px;
+`
+export const Img=styled.img`
+height: 80px;
+width: 80px;
+`
+export const Container=styled.div`
+position: relative;
+display: flex;
+justify-content: center;
 `

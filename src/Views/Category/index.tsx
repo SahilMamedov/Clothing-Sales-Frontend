@@ -31,6 +31,9 @@ export const Category: FC = () => {
   useEffect(() => {
     fetchGoods();
   }, [params.category]);
+
+
+  
   return (
     <>
       <StyledContainer>

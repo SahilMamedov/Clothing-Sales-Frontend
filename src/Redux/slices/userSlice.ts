@@ -12,6 +12,7 @@ const initialState: initialUserTypes = {
     Email: "",
     Surname: "",
     IsOnline: false,
+    Role:[],
   },
 };
 

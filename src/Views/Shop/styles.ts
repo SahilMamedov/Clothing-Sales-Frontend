@@ -5,10 +5,18 @@ import { NavLink } from "react-router-dom";
 
 export const Container = styled.div`
   background-color: #f5f5f5;
-  padding: 50px 40px;
-  display: flex;
+ 
   position: relative;
 `;
+export const Wrapper=styled.div`
+ display: flex;
+ padding: 50px 40px;
+`
+export const StyledPagination=styled.div`
+padding-bottom: 15px;
+display: flex;
+justify-content: center;
+`
 
 export const SideBar = styled.div`
   width: 400px;

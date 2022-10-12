@@ -17,7 +17,17 @@ import {
   StyledButton,
   Basket,
   BasketLength,
+  Img,
+  SerachField, 
+  StyledBox,
+  Container
 } from "./styles";
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import { logo } from "Assets";
 import { Links } from "Routes/Links";
 
@@ -28,15 +38,29 @@ import { logoutUser } from "Redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "Redux/hooks/hooks";
 import { useGetAllBasketQuery } from "services/basketServices";
 import { addItem } from "Redux/slices/basketSlice";
+import { useFetchSearchMutation } from "services/shopServices";
+import { StyledNavlink } from "Views/Shop/styles";
+import { debounce } from "lodash";
 
 export const Header = () => {
+
   const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
-  const [open, setOpen] = useState(false);
-  useUser();
+
+  const {basket} = useAppSelector((state)=>state.basket)
+
   const { user } = useAppSelector((state) => state.user);
+
+  const [open, setOpen] = useState(false);
+
+  useUser();
+  
   const {data,isSuccess}=useGetAllBasketQuery()
 
+  const [postSearch,response] = useFetchSearchMutation()
+
+  const {data:searchData} =response
  
 useEffect(()=>{
   if(isSuccess&&data.basketItems){
@@ -47,9 +71,16 @@ useEffect(()=>{
 },[data?.basketItems])
   
 
-  const {basket} = useAppSelector((state)=>state.basket)
+const debounced = debounce(async (search) => {
+    postSearch(search)
+  
+  
+}, 1000);
 
-
+const handleSearchChange =(ev:any)=>{
+  
+  debounced(ev.target.value)
+}
   
   const handleClickOpen = () => {
     setOpen(!open);
@@ -77,6 +108,7 @@ useEffect(()=>{
 navigate("/basket")
   }
   return (
+    <>
     <StyledNavbar>
       <DisplayFlex>
         <StyledLogo>
@@ -93,7 +125,7 @@ navigate("/basket")
       </DisplayFlex>
       <DisplayFlex>
         <StyledPosition>
-          <StyledSearch placeholder="Search" />
+          <StyledSearch onChange={handleSearchChange} placeholder="Search" />
           <StyledSearchIcon />
         </StyledPosition>
         <StyledHeartIcon />
@@ -134,5 +166,34 @@ navigate("/basket")
         <UserProfile>{user.Email}</UserProfile>
       </DisplayFlex>
     </StyledNavbar>
+    <Container>
+      {searchData !==undefined && 
+      <StyledBox>
+      <TableContainer component={Paper}>
+           <Table  aria-label="customized table">
+             <TableHead>
+              {searchData.result.map((item)=>
+               <StyledNavlink key={item.id} to={`/productdetail/${item.id}`}>
+                <TableRow >
+               <SerachField sx={{width:"100px"}}>{item.productPhotos.map((img)=>img.isMain && <Img key={img.id} src={img.path}/>)}</SerachField>
+               <SerachField >{item.name}</SerachField>
+               <SerachField >{item.brand.name}</SerachField>
+               <SerachField >{item.color}</SerachField>
+               <SerachField >${item?.price - (item?.discount * item.price) / 100}</SerachField>
+             </TableRow>
+             </StyledNavlink>
+              )}
+               
+             </TableHead>
+             <TableBody>
+             </TableBody>
+           </Table>
+         </TableContainer>
+         </StyledBox>
+      }
+    
+    </Container>
+   
+    </>
   );
 };

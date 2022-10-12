@@ -3,6 +3,7 @@ import Theme from "./Them/them";
 import { AppRoutes } from "./Routes/routes";
 import { store } from "./Redux/store";
 import { Provider } from "react-redux";
+import { AppRoutesAdmin } from "AdminPanel/Routes/routes";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Provider store={store}>
         <Theme>
           <AppRoutes />
+          <AppRoutesAdmin/>
         </Theme>
       </Provider>
     </>

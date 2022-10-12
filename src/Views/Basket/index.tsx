@@ -64,6 +64,7 @@ export const Basket= () => {
   
 
   const {data,refetch:fetchgetBasket} =useGetAllBasketQuery(undefined,{skip:user.IsOnline==false})
+  
   const [postDeletId,{isSuccess:isSuccessDelet}] = useDeleteItemMutation()
 
  

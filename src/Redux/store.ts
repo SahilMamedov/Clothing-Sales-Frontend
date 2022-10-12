@@ -1,3 +1,5 @@
+import { saleAdminApi } from './../services/AdminPanelServices/saleAdminServices';
+import { loginApi } from './../services/AdminPanelServices/accountServices';
 import  basketSlice  from './slices/basketSlice';
 import { blogApi } from './../services/blogServices';
 import { shopApi } from './../services/shopServices';
@@ -22,6 +24,8 @@ export const store = configureStore({
     [shopApi.reducerPath]:shopApi.reducer,
     [blogApi.reducerPath]:blogApi.reducer,
     [saleApi.reducerPath]:saleApi.reducer,
+    [loginApi.reducerPath]:loginApi.reducer,
+    [saleAdminApi.reducerPath]:saleAdminApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -33,6 +37,9 @@ export const store = configureStore({
       shopApi.middleware,
       blogApi.middleware,
       saleApi.middleware,
+      loginApi.middleware,
+      saleAdminApi.middleware,
+
     ),
 });
 setupListeners(store.dispatch);

@@ -27,8 +27,6 @@ import {
 
  } from './styles';
 
-
-
 import {  useGetOrderAllQuery, useGetOrderItemAllQuery } from 'services/saleServices';
 import {useEffect, useState} from "react"
 import { OrderDetails } from './OrderDetails';
@@ -116,7 +114,7 @@ export const Profile=()=> {
 
   const [postUpdateUser,response] = useUpdateUserMutation()
 
-  const { isError, isSuccess, data:updateData,isLoading } = response;
+  const { isSuccess, data:updateData,isLoading } = response;
 
   
   const {data:orderItemData} = useGetOrderItemAllQuery(orderID,{skip:orderID===undefined})
@@ -131,7 +129,7 @@ export const Profile=()=> {
       localStorage.setItem("token",updateData.token);
       toast.success('Successfully Updated User', {
         position: "bottom-right",
-        autoClose: 3500,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -139,14 +137,16 @@ export const Profile=()=> {
         progress: undefined,
         theme:"colored",
         transition:Zoom
-        
     
         });
-    //navigate("/")
+        setTimeout(() => {
+          navigate("/")
+        }, 2000);
     }
+
+
   }, [isSuccess]);
   
-   // console.log(useUser(),"user");
     
   
   return (
@@ -252,8 +252,8 @@ export const Profile=()=> {
 
 <span>
 {data.map((item)=>
-<Flex>
- <StyledTable key={item.id} onClick={()=>handleClick(item.id)}>
+<Flex key={item.id}>
+ <StyledTable  onClick={()=>handleClick(item.id)}>
  <thead>
  <StyledTr>
  <StyledTh>
@@ -266,7 +266,7 @@ export const Profile=()=> {
  </StyledTh>
  <StyledTh>
  Status
- <StyledTd>{item.orderStatus===0?"Pending":""}</StyledTd>
+ <StyledTd>{item.orderStatus===0 && "Pending" || item.orderStatus===1 && "Accepted"  || item.orderStatus===2 && "Rejected"}</StyledTd>
  </StyledTh>
  <StyledTh>
  Total
@@ -287,7 +287,7 @@ export const Profile=()=> {
 {open?
 <>
 {orderItemData?.map((item)=>
-<OrderBox>
+<OrderBox key={item.id}>
 <OrderItem>
   {`${item.name} x ${item.count}`}<Iamge src={item.photo.path} />
 </OrderItem>

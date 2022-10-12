@@ -16,7 +16,6 @@ export const OrderDetails =({orderId}:Props)=>{
 const {data}= useGetOrderDataQuery(orderId)
 
 
-console.log(data,"dataaaaaaaaa");
 
   return(
     <>

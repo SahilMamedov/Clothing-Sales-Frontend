@@ -40,9 +40,6 @@ export const basketApi= createApi({
             };
           },
         }),
-        // getAllBasket:builder.query<Basket,void>({
-        //       query:()=>''
-        // })
     })
     
 })

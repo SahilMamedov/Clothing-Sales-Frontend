@@ -18,6 +18,8 @@ import { useUser } from "Hooks/useUser";
 export const Home = () => {
   useUser();
   const { data, isLoading } = useFetchGoodsQuery();
+
+
   return (
     <StyledMain>
       <MainSlider />

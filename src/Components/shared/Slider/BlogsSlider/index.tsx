@@ -5,7 +5,6 @@ import { useFetchBlogsQuery } from "services/blogServices";
 
 export const BlogsSlider: FC = () => {
   const { data} = useFetchBlogsQuery();
-  console.log(data, "blog data");
   const settings = {
     dots: true,
     infinite: true,

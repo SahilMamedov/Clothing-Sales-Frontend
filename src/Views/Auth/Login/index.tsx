@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFetchLoginMutation } from "../../../services/authServices";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Links } from "../../../Routes/Links";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -23,7 +23,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { extendedApi} from 'services/basketServices';
 import {  useAppDispatch } from 'Redux/hooks/hooks';
-  import { Modal} from '@mantine/core';
+  import { Modal, validateJson} from '@mantine/core';
 
 
 function Copyright(props: any) {
@@ -68,6 +68,7 @@ export default function SignIn() {
       setValues({ ...values, [prop]: event.target.value });
     };
 
+    
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -76,7 +77,7 @@ export default function SignIn() {
   };
 
   const [postLoginData, response] = useFetchLoginMutation();
-  const { isError, isSuccess, data } = response;
+  const { isSuccess, data,error } = response;
   const navigate = useNavigate();
 
   
@@ -90,12 +91,11 @@ export default function SignIn() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const data = new FormData(event.currentTarget);
     data.set("password", values.password);
     postLoginData(data);
   };
-
+    
   return (
   <>
     <Modal
@@ -163,7 +163,7 @@ export default function SignIn() {
                   label="Password"
                 />
               </FormControl>
-              <span>{isError}</span>
+              {/* <span>{error.data as ReactNode}</span> */}
             </div>
             <Button
               type="submit"
