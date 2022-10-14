@@ -133,6 +133,7 @@ const [postData,{isSuccess}] = useCommentPostMutation();
 
 const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
 
+console.log(data,"dataaa");
 
 
 

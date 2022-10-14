@@ -31,6 +31,12 @@ import { useNavigate } from 'react-router-dom';
 import { addItem, addTotal } from 'Redux/slices/basketSlice';
 
 
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import Typography from '@mui/joy/Typography';
+import { StyledBox,Confirmation, CancelBtn, StyledBtn,DialogBox } from 'Components/shared/Styles/styles';
 
 
 
@@ -58,6 +64,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export const Basket= () => {
+
+  const [basketItemID,setBasketItemID] = React.useState(0)
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (id:number) => {
+    setOpen(true);
+    if(id>0){
+      setBasketItemID(id)
+    }
+  
+  };
+  const handleDelet = () => {
+  
+    if(basketItemID){
+      postDeletId(basketItemID)
+      toast.success('Successfully Deleted', {
+        position: "bottom-right",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme:"colored",
+        transition:Zoom
+        
+    
+        });
+       
+    }
+    setOpen(false);
+  }
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+
   const navigate=useNavigate()
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
@@ -78,24 +122,7 @@ export const Basket= () => {
      
    }
 
-const handleDelet = (id:number) => {
-  postDeletId(id)
 
-    toast.success('Successfully Deleted', {
-      position: "bottom-right",
-      autoClose: 3500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme:"colored",
-      transition:Zoom
-      
-  
-      });
-  
-}
 const handleGoToBack =() =>{
   navigate("/shop")
 }
@@ -120,7 +147,7 @@ if(user.IsOnline){
 
   return (
 <Container>
-  {user.IsOnline && data?.basketItems.length != 0 ?
+  {user.IsOnline && data?.basketItems.length !== 0 ?
   
   <Flex>
   <TableContainer component={Paper} sx={{ maxWidth: 1000 }}>
@@ -146,7 +173,7 @@ if(user.IsOnline){
               <StyledTableCell align="right">{item.count}</StyledTableCell>
               <StyledTableCell align="right">${item.sum}</StyledTableCell>
               <StyledTableCell>
-              <IconButton aria-label="delete" size="large" onClick={()=>handleDelet(item.productId)}>
+              <IconButton aria-label="delete" size="large" onClick={()=>handleClickOpen(item.productId)}>
                 <DeleteIcon  />
                </IconButton>
                </StyledTableCell>
@@ -200,6 +227,42 @@ if(user.IsOnline){
      draggable
      pauseOnHover
      />
+    
+      <DialogBox
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <StyledBox>
+          <Confirmation>
+          <Typography
+            id="alert-dialog-modal-title"
+            component="h2"
+            level="inherit"
+            fontSize="1.25em"
+            mb="0.25em"
+            startDecorator={<ReportProblemIcon />}
+          >
+            Confirmation
+          </Typography>
+          </Confirmation>
+       <hr/>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          are you sure you want to delete?
+          
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <CancelBtn onClick={handleClose}>Cancel</CancelBtn>
+          <StyledBtn onClick={handleDelet} autoFocus>
+            Delet
+          </StyledBtn>
+        </DialogActions>
+        </StyledBox>
+       
+      </DialogBox>
   </Container>
   );
 }

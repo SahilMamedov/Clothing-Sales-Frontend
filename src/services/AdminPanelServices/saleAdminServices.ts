@@ -20,14 +20,17 @@ export const saleAdminApi= createApi({
             return headers;
           },
     }),
+    tagTypes:['updateAndGetOrder'],
     endpoints:(builder)=>({
         fetchGetAllOrder:builder.query<IAdminOrder[],void>({
+            providesTags:['updateAndGetOrder'],
             query: () => `allOrder`,
         }),
         fetchGetAllOrderItems:builder.query<IOrderItem[],number>({
             query:(orderId)=>`OrderItem?orderid=${orderId}`
         }),
         fetchUpdateOrder:builder.mutation<void,Props>({
+            invalidatesTags:['updateAndGetOrder'],
             query:({orderId,orderStatus})=>{
                 return{
                     url:`?orderId=${orderId}&orderStatus=${orderStatus}`,

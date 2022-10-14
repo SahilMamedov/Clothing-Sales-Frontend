@@ -80,6 +80,15 @@ export default function SignIn() {
   const { isSuccess, data,error } = response;
   const navigate = useNavigate();
 
+  useEffect(()=>{
+   if(error){
+    if("data" in error){
+      
+      console.log(error.data);
+      
+    }
+   }
+  },[error])
   
   useEffect(() => {
     if (isSuccess) {

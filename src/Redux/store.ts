@@ -11,6 +11,7 @@ import { authApi } from "../services/authServices";
 import userSlice from "./slices/userSlice";
 import { commentApi } from "../services/commentServices";
 import { saleApi } from 'services/saleServices';
+import { productApi } from 'services/AdminPanelServices/productServices';
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     [saleApi.reducerPath]:saleApi.reducer,
     [loginApi.reducerPath]:loginApi.reducer,
     [saleAdminApi.reducerPath]:saleAdminApi.reducer,
+    [productApi.reducerPath]:productApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -39,6 +41,7 @@ export const store = configureStore({
       saleApi.middleware,
       loginApi.middleware,
       saleAdminApi.middleware,
+      productApi.middleware,
 
     ),
 });

@@ -2422,6 +2422,11 @@
     "@svgr/plugin-svgo" "^5.5.0"
     loader-utils "^2.0.0"
 
+"@tabler/icons@^1.103.0":
+  version "1.103.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.103.0.tgz#d112adc9301b229ceca99fd87949b0df56de79f8"
+  integrity sha512-oXUNf/Bn+88Xm+uWVht9MRRB/usDtjNrzKr7XhlB1P6V4vpWdG68OMffEONDbFqvEMC/eGYfhLI/PUHsR2XN4A==
+
 "@testing-library/dom@^8.5.0":
   version "8.17.1"
   resolved "https://registry.npmjs.org/@testing-library/dom/-/dom-8.17.1.tgz"

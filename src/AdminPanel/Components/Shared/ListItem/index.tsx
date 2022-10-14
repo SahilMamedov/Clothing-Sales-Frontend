@@ -34,25 +34,34 @@ export const mainListItems = (
     </ListItemButton>
 </StyledNavlink>
    
-
-    <ListItemButton>
+<StyledNavlink to={AppLinks.product}>
+<ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Products" />
     </ListItemButton>
-    <ListItemButton>
+</StyledNavlink>
+   
+
+
+<StyledNavlink to={AppLinks.categoryAndBrand}>
+<ListItemButton>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <ListItemText primary="Category And Brand" />
     </ListItemButton>
+</StyledNavlink>
+
+
     <ListItemButton>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Integrations" />
     </ListItemButton>
+
   </React.Fragment>
 );
 

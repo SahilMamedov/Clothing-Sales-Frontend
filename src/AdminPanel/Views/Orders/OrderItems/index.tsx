@@ -50,6 +50,7 @@ const columns: GridColDef<Rows>[] = [
     field: 'name',
     headerName: 'Name',
     width: 150,
+    editable:true
    
   },
   {

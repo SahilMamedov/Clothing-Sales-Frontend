@@ -133,7 +133,7 @@ export const Checkout = () =>  {
               label="Phone"
               name="mobile"
               defaultValue='+994'
-              type=''
+              type='number'
               autoComplete="mobile"
               autoFocus
             />

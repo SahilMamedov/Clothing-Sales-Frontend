@@ -17,7 +17,7 @@ import { OrderItems } from './OrderItems';
 export const Orders =() => {
 const [orderId,setOrderId]=useState(0)
 
-const {data,refetch:fetchGetOrders} =useFetchGetAllOrderQuery()
+const {data} =useFetchGetAllOrderQuery()
 
 const [postOrderUpdate,{isSuccess}] =useFetchUpdateOrderMutation()
 
@@ -29,11 +29,11 @@ useEffect(()=>{
 
 },[data])
 
-useEffect(()=>{
-if(isSuccess){
-  fetchGetOrders()
-}
-},[isSuccess])
+// useEffect(()=>{
+// if(isSuccess){
+//   fetchGetOrders()
+// }
+// },[isSuccess])
 
 const handleReject =(orderId:number,statusCod:number)=>{
   
@@ -89,10 +89,11 @@ const handleView=(orderId:number)=>{
 type Rows = IAdminOrder;
 
 const columns: GridColDef<Rows>[] = [
-  { field: 'id', headerName: 'ID', width: 80 },
+  { field: 'id', headerName: 'ID', headerClassName: 'super-app-theme--header', width: 80 },
   {
     field: 'photo',
     headerName: 'Photo',
+    headerClassName: 'super-app-theme--header',
     type:"img",
     width: 120,
     renderCell: (params) =>{
@@ -106,36 +107,43 @@ const columns: GridColDef<Rows>[] = [
     field: 'firstName',
     headerName: 'First name',
     width: 110,
+    headerClassName: 'super-app-theme--header',
    
   },
   {
     field: 'lastName',
     headerName: 'Last name',
     width: 130,
+    headerClassName: 'super-app-theme--header',
   },
   {
     field: 'mobile',
     headerName: 'Number',
     width: 130,
+    headerClassName: 'super-app-theme--header',
   },
   {
     field: 'date',
     headerName: 'Date',
     width: 140,
+    headerClassName: 'super-app-theme--header',
   },
   {
     field: 'city',
     headerName: 'City',
     width: 120,
+    headerClassName: 'super-app-theme--header',
   },
   {
     field: 'address',
     headerName: 'Address',
     width: 120,
+    headerClassName: 'super-app-theme--header',
   },
   {
     field: 'cash',
     headerName: 'Payment',
+    headerClassName: 'super-app-theme--header',
     width: 130,
     renderCell:(params)=>{
       return(
@@ -149,11 +157,13 @@ const columns: GridColDef<Rows>[] = [
     field: 'total',
     headerName: 'Total Price',
     width: 100,
+    headerClassName: 'super-app-theme--header',
   
   },
   {
     field: 'orderStatus',
     headerName: 'OrderStatus',
+    headerClassName: 'super-app-theme--header',
     width: 120,
     renderCell: (params) => {
       if (params.value === OrderStatus.Pending) {
@@ -170,6 +180,7 @@ const columns: GridColDef<Rows>[] = [
     field:" ",
     headerName:" ",
     width: 100,
+    headerClassName: 'super-app-theme--header',
     
 
     renderCell:(params)=>{
@@ -189,7 +200,9 @@ const columns: GridColDef<Rows>[] = [
   {
     field: 'l',
     headerName: ' ',
+    headerClassName: 'super-app-theme--header',
     width: 90,
+    
   renderCell:(params)=>{
     return(
       <ViewButton onClick={()=>handleView(params.row.id)}>View</ViewButton>
@@ -203,7 +216,12 @@ const columns: GridColDef<Rows>[] = [
 
   return (
     <StyledBox>
-      <Box sx={{ height: 400, width: '100%' }}>
+      <Box sx={{ height: 400, width: '100%',
+    '& .super-app-theme--header': {
+      backgroundColor: 'rgba(7, 148, 66, 0.55)',
+    },
+    
+    }}>
         {orderId>0?<OrderItems orderId={orderId}/>:
          <DataGrid
          rows={rows}

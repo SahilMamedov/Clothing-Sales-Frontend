@@ -4,7 +4,7 @@ export const StyledBox=styled.div`
 width: 1495px;
 display: flex;
 justify-content: center;
-
+margin: 30px 0px;
 `
 export  const Image=styled.img`
 width: 80px;
