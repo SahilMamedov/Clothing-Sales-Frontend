@@ -13,6 +13,7 @@ import { commentApi } from "../services/commentServices";
 import { saleApi } from 'services/saleServices';
 import { productApi } from 'services/AdminPanelServices/productServices';
 import { CategoryAndBrand } from 'services/AdminPanelServices/categoryAndBrandservices';
+import { usersApi } from 'services/AdminPanelServices/usersServices';
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     [saleAdminApi.reducerPath]:saleAdminApi.reducer,
     [productApi.reducerPath]:productApi.reducer,
     [CategoryAndBrand.reducerPath]:CategoryAndBrand.reducer,
+    [usersApi.reducerPath]:usersApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -45,6 +47,7 @@ export const store = configureStore({
       saleAdminApi.middleware,
       productApi.middleware,
       CategoryAndBrand.middleware,
+      usersApi.middleware,
 
     ),
 });

@@ -204,14 +204,14 @@ const columns: GridColDef<Rows>[] = [
      {open?<CreateProduct/>:<>
      <StyledButton onClick={handleAddProduct}>Add Product</StyledButton>
      <StyledBox>
-      <Box sx={{ height: 800,alignItems:"center", width: '1232px','& .header': {
+      <Box sx={{ height: 631,alignItems:"center", width: '1232px','& .header': {
       backgroundColor: 'rgba(83, 233, 128, 0.849)',
     }, }}>
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={13}
-        rowsPerPageOptions={[13]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
       
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}

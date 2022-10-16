@@ -53,12 +53,14 @@ export const mainListItems = (
 </StyledNavlink>
 
 
+    <StyledNavlink to={AppLinks.users}>
     <ListItemButton>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Users" />
     </ListItemButton>
+    </StyledNavlink>
 
   </React.Fragment>
 );

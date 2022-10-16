@@ -1,187 +1,168 @@
-// import * as React from 'react';
-// import Button from '@mui/material/Button';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import styled from 'styled-components';
-// import Dialog from '@mui/material/Dialog';
-// import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-// import Typography from '@mui/joy/Typography';
+import * as React from 'react';
+import SelectUnstyled, {
+  selectUnstyledClasses,
+  SelectUnstyledProps,
+  SelectUnstyledRootSlotProps,
+} from '@mui/base/SelectUnstyled';
+import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled';
+import PopperUnstyled from '@mui/base/PopperUnstyled';
+import { styled } from '@mui/system';
+import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 
+const blue = {
+  100: '#DAECFF',
+  200: '#99CCF3',
+  400: '#3399FF',
+  500: '#007FFF',
+  600: '#0072E5',
+  900: '#003A75',
+};
 
-// export const Container=styled(Dialog)`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `
+const grey = {
+  50: '#f6f8fa',
+  100: '#eaeef2',
+  200: '#d0d7de',
+  300: '#afb8c1',
+  400: '#8c959f',
+  500: '#6e7781',
+  600: '#57606a',
+  700: '#424a53',
+  800: '#32383f',
+  900: '#24292f',
+};
 
-// export const StyledBtn=styled.button`
-//   background-color: #D3232F;
-//   padding: 4px 16px ;
-//   color: white;
-//   border-radius: 6px;
-//   border: none;
-//   width: 120px;
-//   font-weight: 600;
-//   letter-spacing: 1px;
-//   font-size: 0.875rem;
-//   height: 40px;
-// cursor: pointer;
-// &:hover{
-//   background-color: #A10E25;;
-// }
-// `
-// export const StyledBox=styled.div`
-// width: 420px;
-// border-radius: 16px;
-// border-radius: 16px;
-// `
-// export const Confirmation =styled.div`
-//   margin: 15px;
-// `
-// export const CancelBtn=styled.button`
-// width: 70px;
-// height: 40px;
-// border-radius: 6px;
-// cursor: pointer;
-// border: none;
-// color: black;
-// background-color: white;
-// &:hover{
-//   background-color:#eeeff0;
-// }
-// `
+const Button = React.forwardRef(function Button<TValue extends {}>(
+  props: SelectUnstyledRootSlotProps<TValue>,
+  ref: React.ForwardedRef<HTMLButtonElement>,
+) {
+  const { ownerState, ...other } = props;
+  return (
+    <button type="button" {...other} ref={ref}>
+      {other.children}
+      {ownerState.open ? <UnfoldMoreRoundedIcon /> : <UnfoldMoreRoundedIcon />}
+    </button>
+  );
+});
 
+const StyledButton = styled(Button, { shouldForwardProp: () => true })(
+  ({ theme }) => `
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  min-height: calc(1.5em + 22px);
+  min-width: 320px;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: left;
+  line-height: 1.5;
+  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  position: relative;
 
-// export const Contact = ()=> {
-//   const [open, setOpen] = React.useState(false);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 120ms;
 
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
+  &:hover {
+    background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
+    border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
+  }
 
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
+  &.${selectUnstyledClasses.focusVisible} {
+    border-color: ${blue[400]};
+    outline: 3px solid ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
+  }
 
-//   return (
-//     <div>
-//       <Button variant="outlined" onClick={handleClickOpen}>
-//         Open alert dialog
-//       </Button>
-//       <Container
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby="alert-dialog-title"
-//         aria-describedby="alert-dialog-description"
-//       >
-//         <StyledBox>
-//           <Confirmation>
-//           <Typography
-//             id="alert-dialog-modal-title"
-//             component="h2"
-//             level="inherit"
-//             fontSize="1.25em"
-//             mb="0.25em"
-//             startDecorator={<ReportProblemIcon />}
-//           >
-//             Confirmation
-//           </Typography>
-//           </Confirmation>
-//        <hr/>
-//         <DialogContent>
-//           <DialogContentText id="alert-dialog-description">
-//           are you sure you want to delete?
-          
-//           </DialogContentText>
-//         </DialogContent>
-//         <DialogActions>
-//           <CancelBtn onClick={handleClose}>Cancel</CancelBtn>
-//           <StyledBtn onClick={handleClose} autoFocus>
-//             Delet
-//           </StyledBtn>
-//         </DialogActions>
-//         </StyledBox>
-       
-//       </Container>
-     
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-    import * as React from 'react';
-    import Box from '@mui/material/Box';
-    import Button from '@mui/material/Button';
-    import Typography from '@mui/material/Typography';
-    import Modal from '@mui/material/Modal';
-    import Radio from '@mui/material/Radio';
-    import RadioGroup from '@mui/material/RadioGroup';
-    import FormControlLabel from '@mui/material/FormControlLabel';
-    import FormControl from '@mui/material/FormControl';
-    import TextField from '@mui/material/TextField';
-
-    import Swal from "sweetalert2"
-    export const Contact =()=> {
-
-      
-
-     const handleClick = ()=>{
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      })
-      
-      swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        confirmButtonColor: '#3085d6',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-          )
-        }
-      })
-     }
-        
-
-
-    
-      return (
-        <div>
-         <button onClick={handleClick}>
-          click
-         </button>
-  </div>
+  & > svg {
+    font-size: 1rem;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 10px;
+  }
+  `,
 );
+
+const StyledListbox = styled('ul')(
+  ({ theme }) => `
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  padding: 6px;
+  margin: 12px 0;
+  min-width: 320px;
+  border-radius: 12px;
+  overflow: auto;
+  outline: 0px;
+  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  box-shadow: 0px 4px 30px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
+  `,
+);
+
+const StyledOption = styled(OptionUnstyled)(
+  ({ theme }) => `
+  list-style: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: default;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &.${optionUnstyledClasses.selected} {
+    background-color: ${theme.palette.mode === 'dark' ? blue[900] : blue[100]};
+    color: ${theme.palette.mode === 'dark' ? blue[100] : blue[900]};
+  }
+
+  &.${optionUnstyledClasses.highlighted} {
+    background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
+    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  }
+
+  &.${optionUnstyledClasses.highlighted}.${optionUnstyledClasses.selected} {
+    background-color: ${theme.palette.mode === 'dark' ? blue[900] : blue[100]};
+    color: ${theme.palette.mode === 'dark' ? blue[100] : blue[900]};
+  }
+
+  &.${optionUnstyledClasses.disabled} {
+    color: ${theme.palette.mode === 'dark' ? grey[700] : grey[400]};
+  }
+
+  &:hover:not(.${optionUnstyledClasses.disabled}) {
+    background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
+    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  }
+  `,
+);
+
+const StyledPopper = styled(PopperUnstyled)`
+  z-index: 1;
+`;
+
+const CustomSelect = React.forwardRef(function CustomSelect<TValue extends {}>(
+  props: SelectUnstyledProps<TValue>,
+  ref: React.ForwardedRef<HTMLButtonElement>,
+) {
+  const components = {
+    Root: StyledButton,
+    Listbox: StyledListbox,
+    Popper: StyledPopper,
+    ...props.components,
+  };
+
+  return <SelectUnstyled {...props} ref={ref} components={components} />;
+});
+
+export const Contact =()=>{
+  return (
+    <CustomSelect defaultValue={10}>
+      <StyledOption value={10}>Documentation</StyledOption>
+      <StyledOption value={20}>Components</StyledOption>
+      <StyledOption value={30}>Features</StyledOption>
+    </CustomSelect>
+  );
 }
-
-
-
-
-  

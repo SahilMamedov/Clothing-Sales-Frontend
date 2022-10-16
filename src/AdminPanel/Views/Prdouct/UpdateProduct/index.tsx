@@ -263,7 +263,7 @@ export const UpdateProduct = ({productId}:Props) => {
       </FormControl>
 
       <FormControl sx={{ minWidth: 120 }} >
-        <InputLabel id="typename">{typeName?typeName:getOneData.typename}</InputLabel>
+        <InputLabel id="typename">Typename</InputLabel>
         <Select
           labelId="typename"
           id="typename"

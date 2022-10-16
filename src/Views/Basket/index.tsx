@@ -263,6 +263,7 @@ if(user.IsOnline){
         </StyledBox>
        
       </DialogBox>
+      
   </Container>
   );
 }

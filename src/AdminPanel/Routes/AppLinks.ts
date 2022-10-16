@@ -3,6 +3,7 @@ export const AppLinks ={
     login:"/admin/login",
     orders:"/admin/orders",
     product:"/admin/product",
-    categoryAndBrand:"/admin/categoryAndBrand"
+    categoryAndBrand:"/admin/categoryAndBrand",
+    users:"admin/users",
 
 }

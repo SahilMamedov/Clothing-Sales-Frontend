@@ -48,3 +48,21 @@ export interface ICategoryAndBrand{
     brand:[{id:number,name:string}]
     category:[{id:number,name:string}]
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  surname: string;
+  username: string;
+  email: string;
+  userRoles: string[];
+}
+export interface IRole {
+  id: string;
+  name: string;
+}
+
+export interface IUserAndRole{
+    allUser:IUser[];
+    role:string[]
+}
