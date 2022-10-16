@@ -14,7 +14,6 @@ import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { ToastContainer, toast,Zoom } from 'react-toastify';
 import { UpdateProduct } from './UpdateProduct';
 
 export const Product = () => {
@@ -36,22 +35,10 @@ useEffect(()=>{
   if(isSuccess){
     Swal.fire(
       'Deleted!',
-      'successfully Deleted.',
+      'Deleted Product successfully .',
       'success'
     )
-    // toast.success('the Product has been Deleted', {
-    //   position: "bottom-right",
-    //   autoClose: 3500,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme:"colored",
-    //   transition:Zoom
-      
-  
-    //   });
+
   }
 },[isSuccess])
 
@@ -219,17 +206,7 @@ const columns: GridColDef<Rows>[] = [
     </Box>
     </StyledBox>
      </>}
-     <ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
+
      </>
      
      }

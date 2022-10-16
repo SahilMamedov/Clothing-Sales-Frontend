@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IRole, IUserAndRole } from 'AdminPanel/types';
+
+
+
 export const usersApi=createApi({
     reducerPath:"usersApi",
     baseQuery:fetchBaseQuery({
@@ -12,7 +15,7 @@ export const usersApi=createApi({
             return headers;
           },
     }),
-    tagTypes:['getUser'],
+    tagTypes:['getUser','getAllRole'],
     endpoints:(builder)=>({
         fetchGetAllUsers:builder.query<IUserAndRole,void>({
             providesTags:['getUser'],
@@ -29,9 +32,43 @@ export const usersApi=createApi({
             }
         }),
         fetchGetAllRole:builder.query<IRole[],void>({
+            providesTags:['getAllRole'],
             query:()=>`getAllRole`
+        }),
+        fetchDeletUser:builder.mutation<void,string>({
+            invalidatesTags:['getUser'],
+            query:(userId)=>{
+                return{
+                    url:`userRemove?id=${userId}`,
+                    method:"DELETE"
+                }
+            }
+        }),
+        fetchCreteRole:builder.mutation<void,string>({
+            invalidatesTags:['getAllRole'],
+            query:(roleName)=>{
+                return{
+                    url:`createRole?role=${roleName}`,
+                    method:"POST",
+                }
+            }
+        }),
+        fetchDeletRole:builder.mutation<void,string>({
+            invalidatesTags:['getAllRole'],
+            query:(releId)=>{
+                return{
+                    url:`removeRole?id=${releId}`,
+                    method:"DELETE"
+                }
+            }
         })
     })
 })
 
-export const {useFetchGetAllUsersQuery,useFetchUpdateMutation,useFetchGetAllRoleQuery} = usersApi
+export const {useFetchGetAllUsersQuery,
+useFetchUpdateMutation,
+useFetchGetAllRoleQuery,
+useFetchDeletUserMutation,
+useFetchCreteRoleMutation,
+useFetchDeletRoleMutation
+} = usersApi
