@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
- import { mainListItems, secondaryListItems } from '../../Shared/ListItem';
+ import { mainListItems } from '../../Shared/ListItem';
  import Chart from '../../Shared/Chart';
 import Deposits from '../../Shared/Deposits';
  import {Orders} from '../../../Views/Orders';
@@ -96,12 +96,12 @@ export const DashboardContent =()=> {
   const {data} =useFetchGetAllOrderQuery()
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex',maxHeight:323 }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar  position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              pr: '0px', // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -149,8 +149,7 @@ export const DashboardContent =()=> {
           <Divider />
           <List component="nav">
             {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            <Divider  />
           </List>
         </Drawer>
     

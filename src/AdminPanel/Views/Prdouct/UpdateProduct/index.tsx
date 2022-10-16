@@ -153,7 +153,7 @@ export const UpdateProduct = ({productId}:Props) => {
 
       useEffect(()=>{
         if(isSuccess){
-          toast.success('Created Product', {
+          toast.success('Data updated successfully', {
             position: "bottom-right",
             autoClose: 1000,
             hideProgressBar: false,

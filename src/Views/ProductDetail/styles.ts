@@ -72,22 +72,23 @@ export const Flex = styled.div`
 `;
 
 export const StyledSize = styled.div.attrs(
-  (props: { background: string }) => props
+  (props: { background: boolean }) => props
 )`
-  width: 55px;
+  width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 55px;
+  height: 50px;
   border: 1px solid #bababa;
   border-radius: 100%;
   margin-right: 19px;
-  background-color: ${(props) => props.background};
+  background-color: ${(props) => props.background?'#099E39':'white'};
   cursor: pointer;
-  //&:hover {
-  //  background-color: deepskyblue;
-  //}
+ 
 `;
+
+
+
 export const WrapperSize = styled.div`
   display: flex;
   margin: 10px 0;

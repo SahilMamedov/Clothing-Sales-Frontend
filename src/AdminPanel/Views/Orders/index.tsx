@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useFetchGetAllOrderQuery, useFetchUpdateOrderMutation } from 'services/AdminPanelServices/saleAdminServices';
 import { IAdminOrder } from 'AdminPanel/types';
 import { OrderStatus } from 'Helper';
@@ -29,11 +29,7 @@ useEffect(()=>{
 
 },[data])
 
-// useEffect(()=>{
-// if(isSuccess){
-//   fetchGetOrders()
-// }
-// },[isSuccess])
+
 
 const handleReject =(orderId:number,statusCod:number)=>{
   
@@ -228,7 +224,6 @@ const columns: GridColDef<Rows>[] = [
          columns={columns}
          pageSize={5}
          rowsPerPageOptions={[5]}
-       
          disableSelectionOnClick
          experimentalFeatures={{ newEditingApi: true }}
        />

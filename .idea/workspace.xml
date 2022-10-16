@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd1cb3c2-1ddf-494c-8c19-df94b8166715" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminPanel/Components/Shared/ListItem/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminPanel/Components/Shared/ListItem/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminPanel/Routes/AppLinks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminPanel/Routes/AppLinks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminPanel/Routes/routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminPanel/Routes/routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdminPanel/Views/CategoryAndBrand/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminPanel/Views/CategoryAndBrand/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdminPanel/Views/CategoryAndBrand/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminPanel/Views/CategoryAndBrand/styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdminPanel/Views/Orders/OrderItems/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminPanel/Views/Orders/OrderItems/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdminPanel/Views/Orders/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminPanel/Views/Orders/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Redux/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Redux/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Basket/Checkout/Checkout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/Basket/Checkout/Checkout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Views/Contact/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/Contact/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/AdminPanelServices/categoryAndBrandservices.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/AdminPanelServices/categoryAndBrandservices.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +87,7 @@
       <workItem from="1665423976891" duration="633000" />
       <workItem from="1665425722034" duration="66000" />
       <workItem from="1665602259946" duration="809000" />
+      <workItem from="1665845446254" duration="300000" />
     </task>
     <servers />
   </component>

@@ -12,6 +12,7 @@ import userSlice from "./slices/userSlice";
 import { commentApi } from "../services/commentServices";
 import { saleApi } from 'services/saleServices';
 import { productApi } from 'services/AdminPanelServices/productServices';
+import { CategoryAndBrand } from 'services/AdminPanelServices/categoryAndBrandservices';
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     [loginApi.reducerPath]:loginApi.reducer,
     [saleAdminApi.reducerPath]:saleAdminApi.reducer,
     [productApi.reducerPath]:productApi.reducer,
+    [CategoryAndBrand.reducerPath]:CategoryAndBrand.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -42,6 +44,7 @@ export const store = configureStore({
       loginApi.middleware,
       saleAdminApi.middleware,
       productApi.middleware,
+      CategoryAndBrand.middleware,
 
     ),
 });

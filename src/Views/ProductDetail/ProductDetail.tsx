@@ -41,6 +41,7 @@ import {
   BadgeBox,
   JustifyBetween,
   StyledNotification,
+  StyledSize,
   
   
 } from "./styles";
@@ -123,6 +124,8 @@ const [value, setValue] = useState(0);
 
 const [count, setCount] = React.useState(0);
 
+const [size,setSize] = useState<boolean>(false)
+
 const { data, isLoading } = useFetchGetGoodsQuery(`${id}`);
 
 const [postCommentId, {isSuccess:successRemoveComment,isLoading:LoadingRemoveComment}]=useRemoveCommentMutation()
@@ -133,7 +136,7 @@ const [postData,{isSuccess}] = useCommentPostMutation();
 
 const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
 
-console.log(data,"dataaa");
+
 
 
 
@@ -200,7 +203,11 @@ console.log(data,"dataaa");
   
   }
 
+  // const handleClickSize=(size:string)=>{
+  // console.log(size);
+  // setSize(size)
 
+  // }
 
   const {
     data: commentAll,
@@ -289,9 +296,9 @@ useEffect(()=>{
               </Flex>
               <Select>Select Size</Select>
               <WrapperSize>
-                {/*{data?.Size.map((s) => (*/}
-                {/*  <StyledSize key={s}>{s}</StyledSize>*/}
-                {/*))}*/}
+                {data?.size?.map((s) => (
+                  <StyledSize onClick={()=> setSize(size?false:true)} background={size}  key={s.id}>{s.sizes}</StyledSize>
+                ))}
               </WrapperSize>
               <Select>Color</Select>
               <WrapperColor background={data?.color}>
@@ -433,7 +440,7 @@ useEffect(()=>{
                       </JustifyBetween>
                       <Comment>
                         {com.content}
-                       {com.appUserId==user.nameid &&
+                       {com.appUserId===user.nameid &&
                         <Tooltip title="Delete">
                         <IconButton onClick={()=>handleCommentDelet(com.id)}>
                         <DeleteIcon/>

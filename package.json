@@ -54,6 +54,7 @@
     "rsuite": "^5.17.1",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5",
+    "swal": "^0.1.0",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.4.36",
     "swiper": "^8.4.2",

@@ -22,7 +22,7 @@ export const productApi=createApi({
             return headers;
           },
     }),
-    tagTypes: ['DeletAndGet','createAndGet','updateAndGet'],
+    tagTypes: ['DeletAndGet','createAndGet','updateAndGet','getOneProduct'],
     endpoints:(builder)=>({
 
     fetchBrandAndCategory:builder.query<ICategoryAndBrand,void>({
@@ -56,10 +56,11 @@ query:(id)=>{
 }
 }),
 fetchGetOneProduct:builder.query<IOneProduct,number>({
+providesTags:['getOneProduct'],
 query:(id)=>`/getOne?id=${id}`
 }),
 fetchUpdateProduct:builder.mutation<void,FormData>({
-    invalidatesTags:['updateAndGet'],
+    invalidatesTags:['updateAndGet','getOneProduct'],
     query:(body)=>{
         return{
             url:"updateProduct",

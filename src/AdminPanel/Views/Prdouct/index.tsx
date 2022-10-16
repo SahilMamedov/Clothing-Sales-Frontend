@@ -4,6 +4,7 @@ import { EditButton, StyledButton,DeletButton } from './styles'
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { StyledBox,Image } from '../Orders/styles';
+import Swal from "sweetalert2"
 import { IProduct } from 'AdminPanel/types';
 import { 
 useFetchDeletProductMutation,
@@ -33,24 +34,43 @@ setOpen(true)
 }
 useEffect(()=>{
   if(isSuccess){
-    toast.success('the Product has been Deleted', {
-      position: "bottom-right",
-      autoClose: 3500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme:"colored",
-      transition:Zoom
+    Swal.fire(
+      'Deleted!',
+      'successfully Deleted.',
+      'success'
+    )
+    // toast.success('the Product has been Deleted', {
+    //   position: "bottom-right",
+    //   autoClose: 3500,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme:"colored",
+    //   transition:Zoom
       
   
-      });
+    //   });
   }
 },[isSuccess])
+
 const handleDeletProduct= (id:number)=>{
-  postDeletId(id)
  
+  Swal.fire({
+    title: 'Are you sure you want to delete this product?',
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    denyButtonText: `No`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      postDeletId(id)
+
+    } else if (result.isDenied) {
+      Swal.fire('Cancelled', '', 'info')
+    }
+ })   
 
 }
 

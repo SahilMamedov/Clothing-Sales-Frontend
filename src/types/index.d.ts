@@ -13,6 +13,7 @@ export interface IGoods {
   productPhotos:IProductImage[]
   productPhotos: any[];
   color: string;
+  size:[{id:number,sizes:string}]
 }
 export interface IProductImage{
   id:number;
