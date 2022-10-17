@@ -96,7 +96,7 @@ export const DashboardContent =()=> {
   const {data} =useFetchGetAllOrderQuery()
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex',maxHeight:323 }}>
+      <Box sx={{ display: 'flex',maxHeight:370 }}>
         <CssBaseline />
         <AppBar  position="absolute" open={open}>
           <Toolbar

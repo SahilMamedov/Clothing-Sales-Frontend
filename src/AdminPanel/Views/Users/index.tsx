@@ -31,6 +31,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { DeletButtonBox ,StyledBox,Flex,StyledRoleDelet,DeletButton} from './styles';
 import { CreateButton, ModalBox } from '../CategoryAndBrand/styles';
+import { useNotifications } from 'Hooks/useNotification';
 
 
 const style = {
@@ -47,7 +48,7 @@ const style = {
 export const Users = () => {
 
 
-    const [postUserIdAndRol,{isSuccess}] = useFetchUpdateMutation()
+    const [postUserIdAndRol,{isSuccess:succesUpdateRole}] = useFetchUpdateMutation()
 
     const {data:AllRole} = useFetchGetAllRoleQuery()
 
@@ -58,7 +59,6 @@ export const Users = () => {
     const [createRoleName,{isSuccess:succesCreateRole}] = useFetchCreteRoleMutation()
 
     const [deletRoleId,{isSuccess:succesDeletRole}] = useFetchDeletRoleMutation()
-
 
 
     const [role, setRole] = useState('');
@@ -73,25 +73,21 @@ export const Users = () => {
 
     const [roleName, setroleName] = useState('');
 
-    const handleDeletRole = () =>{
-        Swal.fire({
-            title: 'Are you sure you want to delete this Role?',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-          }).then((result) => {
-            if (result.isConfirmed) {
-                deletRoleId(roleId)
-        
-            } else if (result.isDenied) {
-              Swal.fire('Cancelled', '', 'info')
-            }
-         })  
-        
-        setOpenDelet(false)
 
-        
+    const handleDeletRole = () =>{
+      Swal.fire({
+        title: 'Are you sure you want to delete this Role?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) { 
+          deletRoleId(roleId)
+        }
+      })
+        setOpenDelet(false)
     }
 
    const handleChangeDelet=(event: SelectChangeEvent)=>{
@@ -105,62 +101,36 @@ export const Users = () => {
     };
 
     const handleDeletUser = (id:string) =>{
-        Swal.fire({
-            title: 'Are you sure you want to delete this user??',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-          }).then((result) => {
-            if (result.isConfirmed) {
-                deletUserId(id)
-        
-            } else if (result.isDenied) {
-              Swal.fire('Cancelled', '', 'info')
-            }
-         })  
-        
+      Swal.fire({
+        title: 'Are you sure you want to delete this user?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) { 
+          deletUserId(id)
+        }
+      })
+
     }
 
     const handleOpenDelet=()=>setOpenDelet(true)
 
     const handleOpen = () => setOpen(true);
    
-
     const handleCreate =()=>{
         createRoleName(roleName)
-        
         setOpen(false)
     }
 
-    useEffect(()=>{
-        if(succesDeletRole){
-            Swal.fire(
-                'Deleted!',
-                'Deleted Role successfully .',
-                'success'
-                )
-        }
-    },[succesDeletRole])
-
-    useEffect(()=>{
-        if(succesDeletUser){
-            Swal.fire(
-            'Deleted!',
-            'Deleted User successfully .',
-            'success'
-            )
-        }
-    },[succesDeletUser])
-
-    useEffect(()=>{
-        if(isSuccess){
-        Swal.fire('Role Updated successfully!', '', 'success')
-        }
-        if(succesCreateRole){
-            Swal.fire(`(${roleName}) Role successfully Created!`, ``, `success`)
-        }
-    },[isSuccess,succesCreateRole])
+    
+  useNotifications(succesDeletRole,'Deleted Role successfully')
+  useNotifications(succesDeletUser,'Deleted User successfully')
+  useNotifications(succesCreateRole,`(${roleName}) Role successfully Created!`)
+  useNotifications(succesUpdateRole,'Role Updated successfully!')
 
     useEffect(()=>{
        if(role !==''){
@@ -307,7 +277,7 @@ export const Users = () => {
   
 <Box sx={{ Width: 90}}>
 <FormControl fullWidth>
-<InputLabel id="demo-simple-select-label">Delet Role</InputLabel>
+<InputLabel id="demo-simple-select-label">Roles</InputLabel>
 <Select
 labelId="role"
 id="role"

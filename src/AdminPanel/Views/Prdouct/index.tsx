@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import { CreateProduct } from './CreateProduct'
 import { EditButton, StyledButton,DeletButton } from './styles'
 import Box from '@mui/material/Box';
@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { UpdateProduct } from './UpdateProduct';
+import { useNotifications } from 'Hooks/useNotification';
 
 export const Product = () => {
 
@@ -31,33 +32,24 @@ const [rows,setRows] = React.useState<IProduct[]>(data ? data : [])
 const handleAddProduct =()=> {
 setOpen(true)
 }
-useEffect(()=>{
-  if(isSuccess){
-    Swal.fire(
-      'Deleted!',
-      'Deleted Product successfully .',
-      'success'
-    )
 
-  }
-},[isSuccess])
+useNotifications(isSuccess,'Deleted Product successfully')
 
 const handleDeletProduct= (id:number)=>{
- 
   Swal.fire({
-    title: 'Are you sure you want to delete this product?',
-    showDenyButton: true,
+    title: 'Are you sure you want to delete this product??',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: 'Yes',
-    denyButtonText: `No`,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
-    if (result.isConfirmed) {
+    if (result.isConfirmed) { 
+     
       postDeletId(id)
-
-    } else if (result.isDenied) {
-      Swal.fire('Cancelled', '', 'info')
     }
- })   
+  })
 
 }
 
@@ -150,12 +142,15 @@ const columns: GridColDef<Rows>[] = [
    {
     field: ' ',
     headerName: 'Edit',
-    width: 100,
+    width: 70,
     headerClassName:'header',
     renderCell:(params)=>{
       return(
         <EditButton onClick={()=>handleEditProduct(params.row.id)}>
-          <CreateIcon fontSize='small' /> Edit
+          <Tooltip title="Edit">
+          <CreateIcon fontSize='small' />
+          </Tooltip>
+          
         </EditButton>
       )
     }

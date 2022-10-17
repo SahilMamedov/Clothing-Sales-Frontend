@@ -35,6 +35,7 @@ import { useUpdateUserMutation } from 'services/authServices';
 import { ToastContainer, toast,Zoom } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNotifications } from 'Hooks/useNotification';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -108,6 +109,7 @@ export const Profile=()=> {
   event.preventDefault();
 
   const data = new FormData(event.currentTarget);
+  data.set('Id',user.nameid)
   postUpdateUser(data)
 };
 
@@ -123,25 +125,14 @@ export const Profile=()=> {
     fetchOrder()
   },[])
     
+  useNotifications(isSuccess,'Successfully Updated User')
 
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("token",updateData.token);
-      toast.success('Successfully Updated User', {
-        position: "bottom-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme:"colored",
-        transition:Zoom
-    
-        });
         setTimeout(() => {
           navigate("/")
-        }, 2000);
+        }, 1000);
     }
 
 
@@ -270,7 +261,7 @@ export const Profile=()=> {
  </StyledTh>
  <StyledTh>
  Total
- <StyledTd>${item.total}</StyledTd>
+ <StyledTd>${item.total.toFixed(2)}</StyledTd>
  </StyledTh>
  
  </StyledTr>
@@ -300,17 +291,6 @@ export const Profile=()=> {
        </Box>
       
       }
-      <ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
 
     </Container>
   );

@@ -25,24 +25,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-  import { Modal, Group } from '@mantine/core';
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { Modal, Group } from '@mantine/core';
+import { ErrorMessage } from "../Login/styles";
+
 
 const theme = createTheme();
 
@@ -53,6 +38,8 @@ interface State {
 export default function SignUp() {
 
   const [opened, setOpened] = useState(true);
+
+  const [errorMessage,setErrorMessage] = useState('')
 
   const [values, setValues] = useState<State>({
     password: "",
@@ -82,6 +69,16 @@ export default function SignUp() {
     
 
   };
+
+
+  useEffect(()=>{
+    if(error){
+     if("data" in error){
+        // @ts-ignore
+       setErrorMessage(error.data)
+     }
+    }
+   },[error])
 
   useEffect(() => {
     if (isSuccess) {
@@ -200,6 +197,9 @@ export default function SignUp() {
                       label="Password"
                     />
                   </FormControl>
+                  <ErrorMessage>
+                    {errorMessage}
+                  </ErrorMessage>
                 </div>
               </Grid>
               <Grid item xs={12}>
@@ -229,7 +229,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
 

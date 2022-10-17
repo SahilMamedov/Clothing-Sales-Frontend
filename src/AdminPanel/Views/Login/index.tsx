@@ -19,24 +19,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useFetchLoginMutation } from "services/AdminPanelServices/accountServices";
 import { useNavigate } from "react-router-dom";
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { ErrorMessage } from "Views/Auth/Login/styles";
 
 const theme = createTheme();
 
@@ -47,14 +30,13 @@ interface State {
 export default function SignIn() {
 
 
-  // const dispatch = useAppDispatch();
-  // dispatch(extendedApi.util.resetApiState());
-
-
   const [values, setValues] = useState<State>({
     password: "",
     showPassword: false,
   });
+
+  const [errorMessage,setErrorMessage] = useState('')
+
 
   const handleChange =
     (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +55,18 @@ export default function SignIn() {
   const { isSuccess, data,error } = response;
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    if(error){
+     if("data" in error){
+        // @ts-ignore
+       setErrorMessage(error.data)
+     }
+    }
+   },[error])
   
+   
+
+
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("Admintoken",data.token);
@@ -153,8 +146,11 @@ export default function SignIn() {
                 label="Password"
               />
             </FormControl>
-            {/* <span>{error.data as ReactNode}</span> */}
+            
           </div>
+          <ErrorMessage>
+              {errorMessage}
+            </ErrorMessage>
           <Button
             type="submit"
             fullWidth

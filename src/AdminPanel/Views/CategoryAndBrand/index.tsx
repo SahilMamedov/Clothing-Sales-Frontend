@@ -1,4 +1,3 @@
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,19 +5,20 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import CreateIcon from '@mui/icons-material/Create';
 import { 
 Container, 
 EditButton,
 Wrapper,
 CreateButton,
-Flex,ButtonBox,
+Flex,
 ModalBox,
 } from './styles';
 import { DeletButton } from '../Prdouct/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { ToastContainer, toast,Zoom } from 'react-toastify';
+import {toast,Zoom } from 'react-toastify';
 import {
   useFetchCategoryUpdateMutation,
 useFetchCreateBrandMutation, 
@@ -34,13 +34,11 @@ useFetchUpdateBrandMutation
     import Box from '@mui/material/Box';
     import Typography from '@mui/material/Typography';
     import Modal from '@mui/material/Modal';
-    import Radio from '@mui/material/Radio';
-    import RadioGroup from '@mui/material/RadioGroup';
-    import FormControlLabel from '@mui/material/FormControlLabel';
     import FormControl from '@mui/material/FormControl';
     import TextField from '@mui/material/TextField';
     import { useEffect, useState } from 'react';
     import Swal from "sweetalert2"
+import { useNotifications } from 'Hooks/useNotification';
     const style = {
       position: 'absolute' as 'absolute',
       top: '50%',
@@ -86,14 +84,11 @@ export const CategoryAndBrand = () => {
 
   const [updateBrand,{isSuccess:successUpdateBrand,error:errorUpdateBrand}] = useFetchUpdateBrandMutation()
  
-  
-  
-      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue((event.target as HTMLInputElement).value);
-      };
-      
-      const handleOpen = () => setOpen(true);
 
+      const handleOpen = (str:string) =>{
+        setValue(str)
+        setOpen(true)
+      } 
 
       const handleOpenUpdate = (name:string,id:number,str:string) => {
 
@@ -157,39 +152,34 @@ export const CategoryAndBrand = () => {
         if(variant==='category'){
           setOpenUpdate(false)
           Swal.fire({
-            title: 'Do you want to save the changes?',
-            showDenyButton: true,
+            title: 'Do you want to save the changes??',
+            icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
           }).then((result) => {
-
-            if (result.isConfirmed) {
-            updateCategory({Name:updateDataName,id:updateDataId})
-         
-            } else if (result.isDenied) {
-              Swal.fire('Changes are not saved', '', 'info')
+            if (result.isConfirmed) { 
+             
+              updateCategory({Name:updateDataName,id:updateDataId})
             }
           })
-
-
         }
         if(variant==='brand'){
           setOpenUpdate(false)
           Swal.fire({
-            title: 'Do you want to save the changes?',
-            showDenyButton: true,
+            title: 'Do you want to save the changes??',
+            icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
           }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed) { 
+             
               updateBrand({Name:updateDataName,id:updateDataId})
-
-            } else if (result.isDenied) {
-              Swal.fire('Changes are not saved', '', 'info')
             }
-         })   
+          })
       }  
    }
 
@@ -213,27 +203,14 @@ export const CategoryAndBrand = () => {
         
       },[successCretaCategory,successCreateBrand])
 
-
-      useEffect(()=>{
-        if(successRemoveCategory || successRemoveBrand){
-          Swal.fire(
-            'Deleted!',
-            'successfully Deleted.',
-            'success'
-          )
-        }
-        
-      },[successRemoveCategory,successRemoveBrand])
+      useNotifications(successRemoveCategory,'successfully Deleted.')
+      useNotifications(successRemoveBrand,'successfully Deleted.')
+      useNotifications(successUpdateCategory,'Updated successfully!')
+      useNotifications(successUpdateBrand,'Updated successfully!')
+     // useNotificationsError(errorUpdateBrand,'')
 
 
       useEffect(()=>{
-        if(successUpdateCategory || successUpdateBrand){
-          Swal.fire('Updated successfully!', '', 'success')
-      
-        }
-
-
-
         if(errorUpdateBrand){
 
         if("data" in errorUpdateBrand){   
@@ -273,7 +250,7 @@ export const CategoryAndBrand = () => {
             }
            }
         
-      },[successUpdateCategory,successUpdateBrand,errorUpdateBrand,errorUpdateCategory])
+      },[errorUpdateBrand,errorUpdateCategory])
 
       
       
@@ -282,16 +259,14 @@ export const CategoryAndBrand = () => {
 
     return (
     <Container>
-      <ButtonBox>
-      <CreateButton onClick={handleOpen} >
-        Create 
-      </CreateButton>
-      </ButtonBox>
+      
       
       <Flex>
       <Wrapper>
-      
-      <TableContainer   sx={{ maxWidth: 320 }} component={Paper}>
+      <CreateButton onClick={()=>handleOpen('Brand')} >
+        Create Brand
+      </CreateButton>
+      <TableContainer   sx={{ maxWidth: 400 }} component={Paper}>
         <Table  aria-label="simple table">
           <TableHead>
             <TableRow sx={{ bgcolor:"#6dd8e6e6" }} >
@@ -310,7 +285,11 @@ export const CategoryAndBrand = () => {
                 <TableCell  component="th" scope="row">
                   {brand.name}
                 </TableCell>
-                <TableCell ><EditButton onClick={()=>handleOpenUpdate(brand.name,brand.id,'brand')}>Edit</EditButton></TableCell>
+                <TableCell ><EditButton onClick={()=>handleOpenUpdate(brand.name,brand.id,'brand')}>
+                <Tooltip title="Edit">
+                <CreateIcon fontSize='small' />
+                </Tooltip>
+                  </EditButton></TableCell>
                 <TableCell >
                   <DeletButton>
                   <Tooltip title="Delete">
@@ -330,7 +309,10 @@ export const CategoryAndBrand = () => {
   
   
       <Wrapper>
-      <TableContainer  sx={{ maxWidth: 320 }} component={Paper}>
+      <CreateButton onClick={()=>handleOpen('Category')} >
+        Create Category
+      </CreateButton>
+      <TableContainer  sx={{ maxWidth: 400 }} component={Paper}>
         <Table  aria-label="simple table">
           <TableHead>
             <TableRow sx={{ bgcolor:"#88cbf0 "}} >
@@ -349,7 +331,11 @@ export const CategoryAndBrand = () => {
                 <TableCell component="th" scope="row">
                   {category.name}
                 </TableCell>
-                <TableCell ><EditButton onClick={()=>handleOpenUpdate(category.name,category.id,'category')}>Edit</EditButton></TableCell>
+                <TableCell ><EditButton onClick={()=>handleOpenUpdate(category.name,category.id,'category')}>
+                <Tooltip title="Edit">
+                <CreateIcon fontSize='small' />
+                </Tooltip>
+                  </EditButton></TableCell>
                 <TableCell >
                   <DeletButton>
                   <Tooltip title="Delete">
@@ -379,19 +365,7 @@ export const CategoryAndBrand = () => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-              <FormControl>
-      <RadioGroup
-        aria-labelledby="demo-controlled-radio-buttons-group"
-        name="controlled-radio-buttons-group"
-        value={value}
-        onChange={handleChange}
-      >
-        <FormControlLabel value="Brand" control={<Radio />} label="Brand" />
-        <FormControlLabel value="Category" control={<Radio />} label="Category" />
-      </RadioGroup>
-    </FormControl>
-    </Typography>
+          
     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
    
     <Box
@@ -416,18 +390,6 @@ export const CategoryAndBrand = () => {
   </Box>
   </Modal>
   </div>
-  <ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
-
      <>
      <div>
           <Modal

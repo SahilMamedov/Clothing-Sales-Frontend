@@ -31,7 +31,7 @@ width: 200px;
 `
 
 export const EditButton=styled.button`
-width: 120px;
+width: 50px;
 height: 40px;
 border-radius: 6px;
 border: none;

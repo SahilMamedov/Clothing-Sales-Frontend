@@ -1,19 +1,23 @@
 export interface IGoods {
   id: number;
   name: string;
-  brand: any;
-  brandName: Brands;
+  brand: Brands;
+  category:Category;
   price: number;
   trending: boolean;
   discount: number;
   typeName: string;
-  isMainPhoto: string;
+  isMainImage: string;
   discountPrice: number;
   photoPath: string;
   productPhotos:IProductImage[]
   productPhotos: any[];
   color: string;
   size:[{id:number,sizes:string}]
+}
+export interface Category{
+  id:number,
+  name:string
 }
 export interface IProductImage{
   id:number;

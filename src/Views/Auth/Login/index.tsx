@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFetchLoginMutation } from "../../../services/authServices";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Links } from "../../../Routes/Links";
-import { ChangeEvent, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent,useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -21,28 +21,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-import { extendedApi} from 'services/basketServices';
-import {  useAppDispatch } from 'Redux/hooks/hooks';
-  import { Modal, validateJson} from '@mantine/core';
+  import { Modal} from '@mantine/core';
+import { ErrorMessage } from "./styles";
 
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+
 
 const theme = createTheme();
 
@@ -54,14 +37,13 @@ export default function SignIn() {
 
   const [opened, setOpened] = useState(true);
 
-  // const dispatch = useAppDispatch();
-  // dispatch(extendedApi.util.resetApiState());
-
-
   const [values, setValues] = useState<State>({
     password: "",
     showPassword: false,
   });
+
+  const [errorMessage,setErrorMessage] = useState('')
+
 
   const handleChange =
     (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -79,13 +61,14 @@ export default function SignIn() {
   const [postLoginData, response] = useFetchLoginMutation();
   const { isSuccess, data,error } = response;
   const navigate = useNavigate();
+ 
+  
 
   useEffect(()=>{
    if(error){
     if("data" in error){
-      
-      console.log(error.data);
-      
+       // @ts-ignore
+      setErrorMessage(error.data)
     }
    }
   },[error])
@@ -172,6 +155,7 @@ export default function SignIn() {
                   label="Password"
                 />
               </FormControl>
+              <ErrorMessage>{errorMessage}</ErrorMessage>
             </div>
             <Button
               type="submit"
@@ -195,7 +179,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   </Modal>

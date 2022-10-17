@@ -20,6 +20,7 @@ export const Goods: FC<IGoods> = ({
   brand,
   photoPath,
   productPhotos,
+  
 }) => {
   return (
     <StyledCard key={id}>

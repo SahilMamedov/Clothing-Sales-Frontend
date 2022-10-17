@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const EditButton=styled.button`
-width: 60px;
+width: 50px;
 height: 40px;
 border: none;
 border-radius: 6px;
@@ -17,7 +17,7 @@ background-color: #94C8E9
 `
 
 export const Container=styled.div`
-width: 700px;
+width: 900px;
 
 `
 export const ButtonBox=styled.div`
@@ -26,6 +26,7 @@ justify-content: center;
 `
 export const Wrapper=styled.div`
 width: 400px;
+margin: 0 30px;
 `
 export const Flex=styled.div`
 display: flex;
@@ -37,7 +38,7 @@ justify-content: center;
 
 export const CreateButton=styled.button`
 height: 40px;
-width: 120px;
+width: 140px;
 cursor: pointer;
 border: none;
 border-radius: 6px;

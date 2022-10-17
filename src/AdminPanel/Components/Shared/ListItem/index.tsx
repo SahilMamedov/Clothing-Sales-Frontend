@@ -5,11 +5,11 @@ import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
+import CategoryIcon from '@mui/icons-material/Category';
 import { StyledNavlink } from 'Views/Shop/styles';
 import { AppLinks } from 'AdminPanel/Routes/AppLinks';
-
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 export const mainListItems = (
   <React.Fragment>
    <StyledNavlink to={AppLinks.base}>
@@ -35,7 +35,7 @@ export const mainListItems = (
 <StyledNavlink to={AppLinks.product}>
 <ListItemButton>
       <ListItemIcon>
-        <PeopleIcon />
+      <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Products" />
     </ListItemButton>
@@ -46,7 +46,7 @@ export const mainListItems = (
 <StyledNavlink to={AppLinks.categoryAndBrand}>
 <ListItemButton>
       <ListItemIcon>
-        <BarChartIcon />
+        <CategoryIcon />
       </ListItemIcon>
       <ListItemText primary="Category And Brand" />
     </ListItemButton>
@@ -56,9 +56,18 @@ export const mainListItems = (
     <StyledNavlink to={AppLinks.users}>
     <ListItemButton>
       <ListItemIcon>
-        <LayersIcon />
+      <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Users" />
+    </ListItemButton>
+    </StyledNavlink>
+
+    <StyledNavlink to={AppLinks.login}>
+    <ListItemButton>
+      <ListItemIcon>
+      <ExitToAppIcon />
+      </ListItemIcon>
+      <ListItemText primary="Exit" />
     </ListItemButton>
     </StyledNavlink>
 

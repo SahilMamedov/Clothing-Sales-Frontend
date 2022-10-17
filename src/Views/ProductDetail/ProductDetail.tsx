@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetchGetGoodsQuery } from "../../services/goodsServices";
+import { useFetchGetGoodsQuery, useFetchGetSimilarProductsQuery } from "../../services/goodsServices";
 import {
   Container,
   ContentBold,
@@ -57,7 +57,6 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-//import { extendedApi} from 'services/basketServices';
 import {  useAppDispatch } from 'Redux/hooks/hooks';
 import { useAppSelector } from "../../Redux/hooks/hooks";
 import {
@@ -76,6 +75,7 @@ import { Notification } from '@mantine/core';
 import { useAddItemMutation } from "services/basketServices";
 import { addItem } from "Redux/slices/basketSlice";
 import dayjs from "dayjs";
+import { SimilarProductSlider } from "Components/shared/Slider/SimilarProductSlider";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -112,9 +112,11 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export const ProductDetail = () => {
+
 const navigate =useNavigate()
 
   const { id } = useParams();
+
    const dispatch = useAppDispatch();
   
 
@@ -126,7 +128,12 @@ const [count, setCount] = React.useState(0);
 
 const [size,setSize] = useState<boolean>(false)
 
-const { data, isLoading } = useFetchGetGoodsQuery(`${id}`);
+const [categoryId,setCategoryId] =useState(0)
+
+
+
+
+const { data, isLoading,isSuccess:successGetProduct } = useFetchGetGoodsQuery(`${id}`);
 
 const [postCommentId, {isSuccess:successRemoveComment,isLoading:LoadingRemoveComment}]=useRemoveCommentMutation()
  
@@ -136,9 +143,19 @@ const [postData,{isSuccess}] = useCommentPostMutation();
 
 const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
 
+const {data:simiLarProductAll} = useFetchGetSimilarProductsQuery(categoryId,{skip:categoryId<0})
 
+useEffect(()=>{
+  if(data?.category.id){
+  setCategoryId(data?.category.id)
+  }
+},[successGetProduct])
 
-
+useEffect(()=>{
+if(data?.isMainImage){
+  setImage(data?.isMainImage)
+}
+},[data?.isMainImage])
 
   if(dataBasket?.basketItems && successBasket){
      dispatch(addItem(dataBasket?.basketItems))
@@ -146,7 +163,7 @@ const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
     }
   
 
-  const [image, setImage] = useState(data?.productPhotos[0].path);
+  const [image, setImage] = useState(data?.isMainImage);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -203,11 +220,6 @@ const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
   
   }
 
-  // const handleClickSize=(size:string)=>{
-  // console.log(size);
-  // setSize(size)
-
-  // }
 
   const {
     data: commentAll,
@@ -274,8 +286,8 @@ useEffect(()=>{
                         src={img.path}
                       />
                       <>
-                        {image == undefined &&
-                          setImage(data.productPhotos[0].path)}
+                        {image === undefined &&
+                          setImage(data?.isMainImage)}
                       </>
                     </SliderBox>
                   ))}
@@ -286,6 +298,7 @@ useEffect(()=>{
             <ProductInformation>
               <ProductName>{data?.name}</ProductName>
               <StyledBrandName>{data?.brand.name}</StyledBrandName>
+              <StyledBrandName>{data?.category.name }</StyledBrandName>
               <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
               <Flex>
                 <StyledDiscountPrice>
@@ -480,7 +493,8 @@ useEffect(()=>{
     }
      
      </StyledNotification>
-     
+     <h2>Similar Products</h2>
+     <SimilarProductSlider data={simiLarProductAll}/>
     </Container>
   );
 };

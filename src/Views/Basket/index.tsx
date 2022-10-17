@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {BasketBox,
 BasketImg,
@@ -23,7 +24,7 @@ Flex,
 StyledTableImg, 
 TotalBox} from "./styles"
 
-import { ToastContainer, toast,Zoom} from 'react-toastify';
+import {toast,Zoom} from 'react-toastify';
 import {  useDeleteItemMutation, useGetAllBasketQuery } from 'services/basketServices';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'Redux/hooks/hooks';
@@ -173,9 +174,11 @@ if(user.IsOnline){
               <StyledTableCell align="right">{item.count}</StyledTableCell>
               <StyledTableCell align="right">${item.sum}</StyledTableCell>
               <StyledTableCell>
+              <Tooltip title="Delet">
               <IconButton aria-label="delete" size="large" onClick={()=>handleClickOpen(item.productId)}>
                 <DeleteIcon  />
-               </IconButton>
+              </IconButton>
+              </Tooltip>            
                </StyledTableCell>
                </StyledTableRow>
           ))}
@@ -189,7 +192,7 @@ if(user.IsOnline){
     </Cargo>
     <TotalBox>
       <CargoField fontSize='16px' paddingButtom='22px'>Total ($)</CargoField>
-      <CargoField fontSize='18px' paddingButtom='17px'>{data?.total} ($)</CargoField>
+      <CargoField fontSize='18px' paddingButtom='17px'>{data?.total.toFixed(2)} ($)</CargoField>
     </TotalBox>
     <ButtonBox>
    <ConfrimButton onClick={handleConfrim}>
@@ -216,17 +219,7 @@ if(user.IsOnline){
         Go to Shop
   </Button>
  </ButtonBox>
- <ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
+
     
       <DialogBox
         open={open}

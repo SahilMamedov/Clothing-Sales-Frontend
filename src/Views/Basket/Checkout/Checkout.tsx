@@ -183,7 +183,7 @@ export const Checkout = () =>  {
       Total
     </Total>
     <TotalPrice>
-      ${basket.total}
+      ${basket.total.toFixed(2)}
     </TotalPrice>
     </Justify>
     </>

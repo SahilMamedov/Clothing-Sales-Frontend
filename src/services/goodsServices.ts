@@ -16,10 +16,19 @@ export const goodsApi = createApi({
     fetchGetGoods: builder.query<IGoods, string>({
       query: (id) => `product/${id}`,
     }),
+    fetchGetSimilarProducts:builder.query<IGoods[],number>({
+      query:(categoryId)=>{
+        return{
+          url:`product/similarProducts?categoryId=${categoryId}`,
+          method:"GET"
+        }
+      }
+    })
   }),
 });
 export const {
   useFetchGoodsQuery,
   useFetchGetGoodsQuery,
   useFetchGoodsCategoryQuery,
+  useFetchGetSimilarProductsQuery
 } = goodsApi;

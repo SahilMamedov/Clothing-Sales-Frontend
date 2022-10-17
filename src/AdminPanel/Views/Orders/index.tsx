@@ -154,6 +154,11 @@ const columns: GridColDef<Rows>[] = [
     headerName: 'Total Price',
     width: 100,
     headerClassName: 'super-app-theme--header',
+    renderCell:(params)=>{
+      return(
+        <>{params.row.total.toFixed(2)}</>
+      )
+    }
   
   },
   {

@@ -17,3 +17,8 @@ export const ShowPasswordIcon = styled(Eye)`
   cursor: pointer;
   right: 10px;
 `;
+export const ErrorMessage=styled.span`
+color: red;
+font-size: 14px;
+margin: 5px 0px;
+`
