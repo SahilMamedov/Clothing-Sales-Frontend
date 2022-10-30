@@ -7,12 +7,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import LayersIcon from '@mui/icons-material/Layers';
 import CategoryIcon from '@mui/icons-material/Category';
-import { StyledNavlink } from 'Views/Shop/styles';
+import { StyledNavlink } from 'Views/Category/styles';
 import { AppLinks } from 'AdminPanel/Routes/AppLinks';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 export const mainListItems = (
   <React.Fragment>
-   <StyledNavlink to={AppLinks.base}>
+   <StyledNavlink to={AppLinks.dashboard}>
    <ListItemButton>
       <ListItemIcon>
         <DashboardIcon />

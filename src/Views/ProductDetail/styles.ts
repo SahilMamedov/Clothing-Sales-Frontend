@@ -5,6 +5,7 @@ import { Textarea } from "@mantine/core";
 import Button from "@mui/material/Button";
 import Box from '@mui/joy/Box';
 import IconButton from '@mui/joy/IconButton';
+import ReactImageMagnify from "react-image-magnify";
 
 export const Container = styled.div`
   padding: 25px 60px;
@@ -27,13 +28,13 @@ export const ProductInformation = styled.div`
 export const StyledDiscountPrice = styled.span`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  color: red;
+  color: #1BF805;
   line-height: ${({ theme }) => theme.lineHeight.medium};
   margin: 0;
 `;
 export const StyledPrice = styled.span`
   font-size: ${({ theme }) => theme.fontSize.small};
-  font-weight: ${({ theme }) => theme.fontWeight.thin};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
   line-height: ${({ theme }) => theme.lineHeight.small};
   text-decoration-line: line-through;
   margin: 0 15px;
@@ -44,7 +45,7 @@ export const StyledDiscount = styled.span`
   font-size: ${({ theme }) => theme.fontSize.medium};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   line-height: ${({ theme }) => theme.lineHeight.small};
-  color: #0a8200;
+  color: #3F7EF5;
   padding-top: 5px;
 `;
 export const ProductName = styled.h1`
@@ -82,7 +83,7 @@ export const StyledSize = styled.div.attrs(
   border: 1px solid #bababa;
   border-radius: 100%;
   margin-right: 19px;
-  background-color: ${(props) => props.background?'#099E39':'white'};
+  background-color: ${(props) => props.background?'#B3CDD4':'white'};
   cursor: pointer;
  
 `;
@@ -96,27 +97,34 @@ export const WrapperSize = styled.div`
 
 export const VerticalSlider = styled.div`
   width: 180px;
+ 
 `;
 export const StyledSlider = styled(Slider)`
   display: flex;
   flex-wrap: nowrap;
   height: 817px;
+  
 `;
 export const SliderImg = styled.img`
   width: 158px;
   height: 158px;
   cursor: pointer;
   border-radius: 10px;
+  
 `;
-export const SliderBox = styled.div``;
+export const SliderBox = styled.div`
+ margin: 10px 0px;
+`;
+
+
 export const IsMainImgBox = styled.div`
   margin-left: 30px;
 `;
 
 export const IsMainImg = styled.img`
   border-radius: 10px;
-  width: 740px;
-  height: 817px;
+  width: 650px;
+  height: 720px;
 `;
 export const WrapperColor = styled.div.attrs(
   (props: { background: string }) => props
@@ -130,21 +138,9 @@ export const WrapperColor = styled.div.attrs(
   align-items: center;
   border-radius: 4px;
   justify-content: center;
-  color: white;
+  color: Cyan;
   font-size: 18px;
 `;
-// export const StyledReactImageMagnify = styled(ReactImageMagnify)`
-//   height: 500px;
-//   smallImage {
-//     width: 300px;
-//     height: 300px;
-//   }
-//   ,
-//   largeImage {
-//     width: 400px;
-//     height: 400px;
-//   }
-// `;
 
 export const Loading = styled.div`
   position: absolute;
@@ -248,7 +244,7 @@ export const Comment = styled.li`
   list-style: none;
   height: 50px;
   width: 600px;
-  color: darksalmon;
+  color: black;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #c2bdbd;
@@ -275,8 +271,6 @@ justify-content: space-between;
 `
 
 export const StyledNotification=styled.div`
-
 display: flex;
-
 justify-content: end;
 `

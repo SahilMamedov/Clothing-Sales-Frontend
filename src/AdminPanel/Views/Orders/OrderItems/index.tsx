@@ -18,7 +18,7 @@ const {data} =useFetchGetAllOrderItemsQuery(orderId)
 
 const [rows,setRows] = React.useState<IOrderItem[]>(data ? data : [])
 
-console.log(data,"ordeitems");
+
 
 
 

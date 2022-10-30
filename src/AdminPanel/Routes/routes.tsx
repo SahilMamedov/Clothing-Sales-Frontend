@@ -1,3 +1,4 @@
+import { Chart } from 'AdminPanel/Components/Shared/Chart'
 import { AppLayout } from 'AdminPanel/Layouts/AppLayout'
 import { CategoryAndBrand } from 'AdminPanel/Views/CategoryAndBrand'
 import { Orders } from 'AdminPanel/Views/Orders'
@@ -13,6 +14,7 @@ export const AppRoutesAdmin = () => {
     <BrowserRouter>
     <Routes>
         <Route path={AppLinks.base} element={<AppLayout/>}>
+        <Route path={AppLinks.dashboard} element={<Chart/>}/>
          <Route path={AppLinks.orders} element={<Orders/>}/>
          <Route path={AppLinks.product} element={<Product/>}/>
          <Route path={AppLinks.categoryAndBrand} element={<CategoryAndBrand/>}/>

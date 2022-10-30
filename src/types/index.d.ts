@@ -127,6 +127,7 @@ export interface IFilterProduc{
   maxPrice?:number;
   minPrice?:number;
   page:number;
+  typeName:string |undefined;
   
   }
   

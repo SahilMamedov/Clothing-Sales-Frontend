@@ -36,13 +36,62 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "Hooks/useUser";
 import { logoutUser } from "Redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "Redux/hooks/hooks";
-import { useGetAllBasketQuery } from "services/basketServices";
+import {useGetAllBasketQuery } from "services/basketServices";
 import { addItem } from "Redux/slices/basketSlice";
 import { useFetchSearchMutation } from "services/shopServices";
-import { StyledNavlink } from "Views/Shop/styles";
+import { StyledNavlink } from "Views/Category/styles";
 import { debounce } from "lodash";
-
+import {useTranslation} from 'react-i18next'
+import { styled } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputBase from '@mui/material/InputBase';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 export const Header = () => {
+ 
+  useUser();
+
+  const {t,i18n} =useTranslation()
+
+  
+
+  
+
+  const BootstrapInput = styled(InputBase)(({ theme }) => ({
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+    '& .MuiInputBase-input': {
+      borderRadius: 4,
+      position: 'relative',
+      backgroundColor: theme.palette.background.paper,
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      padding: '10px 26px 10px 12px',
+      transition: theme.transitions.create(['border-color', 'box-shadow']),
+      // Use the system font instead of the default Roboto font.
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      '&:focus': {
+        borderRadius: 4,
+        
+        borderColor: '#80bdff',
+        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+      },
+    },
+  }));
+
+
 
   const navigate = useNavigate();
 
@@ -54,32 +103,60 @@ export const Header = () => {
 
   const [open, setOpen] = useState(false);
 
-  useUser();
+  const [openSearch,setOpenSearch] =useState(true)
+
+  const [searchvalue, setSearchValue]=useState('')
   
-  const {data,isSuccess}=useGetAllBasketQuery()
+
+ 
+  
+  const {data,isSuccess,refetch:fetchAllBasket}=useGetAllBasketQuery(undefined,{skip:!user.IsOnline})
 
   const [postSearch,response] = useFetchSearchMutation()
 
   const {data:searchData} =response
+
+  const Lang= localStorage.getItem('lang')
  
+  const [lang, setLang] = useState(Lang?Lang:"En");
+  
+  useEffect(()=>{
+    i18n.changeLanguage(lang)
+    localStorage.setItem('lang',lang)
+  },[lang])
+
+  useEffect(()=>{
+    fetchAllBasket()
+  },[user.IsOnline])
+
 useEffect(()=>{
   if(isSuccess&&data.basketItems){
-    
+  
     dispatch(addItem(data.basketItems))
-    
       }
+      
 },[data?.basketItems])
   
+useEffect(()=>{
+  if(openSearch===false){
+    setOpenSearch(true)
+  }
+},[searchData])
 
 const debounced = debounce(async (search) => {
     postSearch(search)
-  
-  
 }, 1000);
 
-const handleSearchChange =(ev:any)=>{
+const handleChange = (event: SelectChangeEvent) => {
+  setLang(event.target.value);
+ 
   
+};
+
+const handleSearchChange =(ev:any)=>{
+  setSearchValue(ev.target.value)
   debounced(ev.target.value)
+  
 }
   
   const handleClickOpen = () => {
@@ -87,27 +164,38 @@ const handleSearchChange =(ev:any)=>{
   };
 
   const handleLogout = () => {
+    setOpen(false)
     dispatch(logoutUser());
     localStorage.removeItem("token");
     localStorage.removeItem("Admintoken")
+  //  dispatch(extendedApi.util.resetApiState())
     navigate("/");
   };
 
   const handleProfile =() =>{
+    setOpen(false)
     navigate("/profile")
   }
 
   const handleRegister = () => {
+    setOpen(false)
     navigate("/register");
+    
   };
 
   const handleLogin = () => {
+    setOpen(false)
     navigate("/login");
   };
 
   const handleBasket = () =>{
 navigate("/basket")
   }
+const handleClikItem=()=>{
+  setSearchValue('')
+  setOpenSearch(false)
+}
+
   return (
     <>
     <StyledNavbar>
@@ -116,45 +204,51 @@ navigate("/basket")
           <img src={logo} alt="logo" />
         </StyledLogo>
         <StyledList>
-          <StyledNavLink to={Links.app.home}>Home</StyledNavLink>
-          <StyledNavLink to={Links.app.men}>Men</StyledNavLink>
-          <StyledNavLink to={Links.app.women}>Women</StyledNavLink>
-          <StyledNavLink to={Links.app.kids}>Kids</StyledNavLink>
-          <StyledNavLink to={Links.app.shop}>Shop</StyledNavLink>
-          <StyledNavLink to={Links.app.contact}>Contact</StyledNavLink>
+          <StyledNavLink to={Links.app.home}>{t('Home')}</StyledNavLink>
+          <StyledNavLink to={Links.app.men}>{t('Men')}</StyledNavLink>
+          <StyledNavLink to={Links.app.women}>{t('Women')}</StyledNavLink>
+          <StyledNavLink to={Links.app.kids}>{t('Kids')}</StyledNavLink>
+          <StyledNavLink to={Links.app.shop}>{t('Shop')}</StyledNavLink>
+          {/* <StyledNavLink to={Links.app.contact}>{t('Contact')}</StyledNavLink> */}
         </StyledList>
       </DisplayFlex>
       <DisplayFlex>
         <StyledPosition>
-          <StyledSearch onChange={handleSearchChange} placeholder="Search" />
+          <StyledSearch value={searchvalue} onChange={handleSearchChange} placeholder={t('Search')} />
           <StyledSearchIcon />
         </StyledPosition>
+
+        
+
         <StyledHeartIcon />
         <Basket>
-          <BasketLength>{basket?.basketItems.length}</BasketLength>
+          <BasketLength>
+            {user.IsOnline?basket?.basketItems.length:0}
+           
+            </BasketLength>
         <StyledBasketIcon onClick={handleBasket} />
         </Basket>
         <StyledUser onClick={handleClickOpen} />
-        <Box>
+        <Box >
           {open ? (
             <>
-              <UserBox>
+              <UserBox >
                 {user.IsOnline ? (
                   <>
                   <StyledButton onClick={handleLogout}>
-                    Logout <StyledSignOut />
+                  {t('Logouth')} <StyledSignOut />
                   </StyledButton>
                   <StyledButton onClick={handleProfile}>
-                    My Profile
+                  {t('MyProfile')}
                   </StyledButton>
                   </>
                   
 
                 ) : (
                   <>
-                    <StyledButton onClick={handleLogin}>Login</StyledButton>{" "}
+                    <StyledButton onClick={handleLogin}>{t('SignIn')}</StyledButton>{" "}
                     <StyledButton onClick={handleRegister}>
-                      Register
+                    {t('Register')}
                     </StyledButton>{" "}
                   </>
                 )}
@@ -165,22 +259,42 @@ navigate("/basket")
           )}
         </Box>
         <UserProfile>{user.Email}</UserProfile>
+
+
+    <FormControl sx={{ m: 1,minWidth:60}} variant="standard">
+        <Select
+          labelId="lang"
+          id="demo-select-small"
+          value={lang}
+          onChange={handleChange}
+          input={<BootstrapInput />}
+        >
+        <MenuItem value='En'>En</MenuItem>
+        <MenuItem value='Az'>Az</MenuItem>
+        <MenuItem value='Ru'>Ru</MenuItem>
+        <MenuItem value='Fr'>Fr</MenuItem>
+        <MenuItem value='It'>It</MenuItem>
+        <MenuItem value='Tr'>Tr</MenuItem>
+        </Select>
+      </FormControl>
+   
+
       </DisplayFlex>
     </StyledNavbar>
-    <Container>
+      {openSearch ?  <Container>
       {searchData !==undefined && 
       <StyledBox>
       <TableContainer component={Paper}>
            <Table  aria-label="customized table">
              <TableHead>
               {searchData.result.map((item)=>
-               <StyledNavlink key={item.id} to={`/productdetail/${item.id}`}>
-                <TableRow >
+               <StyledNavlink onClick={handleClikItem} key={item.id} to={`/productdetail/${item.id}`}>
+                <TableRow>
                <SerachField sx={{width:"100px"}}>{item.productPhotos.map((img)=>img.isMain && <Img key={img.id} src={img.path}/>)}</SerachField>
                <SerachField >{item.name}</SerachField>
                <SerachField >{item.brand.name}</SerachField>
                <SerachField >{item.color}</SerachField>
-               <SerachField >${item?.price - (item?.discount * item.price) / 100}</SerachField>
+               <SerachField >${(item?.price - (item?.discount * item.price) / 100).toFixed(2)}</SerachField>
              </TableRow>
              </StyledNavlink>
               )}
@@ -193,7 +307,7 @@ navigate("/basket")
          </StyledBox>
       }
     
-    </Container>
+    </Container>:""}
    
     </>
   );

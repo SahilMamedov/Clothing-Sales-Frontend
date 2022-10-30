@@ -5,7 +5,6 @@ import {
   ContentBold,
   Content,
   Flex,
-  IsMainImg,
   IsMainImgBox,
   ProductInformation,
   ProductName,
@@ -43,7 +42,6 @@ import {
   StyledNotification,
   StyledSize,
   
-  
 } from "./styles";
 
 import {Rating } from "@mui/material";
@@ -65,7 +63,7 @@ import {
   useRemoveCommentMutation
 } from "../../services/commentServices";
 import * as React from 'react';
-import { ToastContainer, toast,Zoom } from 'react-toastify';
+import { toast,Zoom } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { Notification } from '@mantine/core';
@@ -76,6 +74,8 @@ import { useAddItemMutation } from "services/basketServices";
 import { addItem } from "Redux/slices/basketSlice";
 import dayjs from "dayjs";
 import { SimilarProductSlider } from "Components/shared/Slider/SimilarProductSlider";
+import ReactImageMagnify from "react-image-magnify";
+import {useTranslation} from "react-i18next"
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -113,6 +113,8 @@ function TabPanel(props: TabPanelProps) {
 
 export const ProductDetail = () => {
 
+const {t} =useTranslation()
+
 const navigate =useNavigate()
 
   const { id } = useParams();
@@ -133,6 +135,7 @@ const [categoryId,setCategoryId] =useState(0)
 
 
 
+
 const { data, isLoading,isSuccess:successGetProduct } = useFetchGetGoodsQuery(`${id}`);
 
 const [postCommentId, {isSuccess:successRemoveComment,isLoading:LoadingRemoveComment}]=useRemoveCommentMutation()
@@ -144,6 +147,11 @@ const [postData,{isSuccess}] = useCommentPostMutation();
 const [postId,{isSuccess:successBasket,data:dataBasket}] = useAddItemMutation()
 
 const {data:simiLarProductAll} = useFetchGetSimilarProductsQuery(categoryId,{skip:categoryId<0})
+
+const [image, setImage] = useState(data?.isMainImage);
+
+console.log(data,"data");
+
 
 useEffect(()=>{
   if(data?.category.id){
@@ -163,7 +171,7 @@ if(data?.isMainImage){
     }
   
 
-  const [image, setImage] = useState(data?.isMainImage);
+  
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -197,7 +205,7 @@ if(data?.isMainImage){
         postId(basketItem)
         
        
-        toast.success('Added to Basket', {
+        toast.success(`${t('AddedToBasket')}`, {
           position: "bottom-right",
           autoClose: 3500,
           hideProgressBar: false,
@@ -252,8 +260,8 @@ useEffect(()=>{
 
   const settings = {
     dots: false,
-    infinite: true,
-    slidesToShow: 5,
+    infinite: false,
+    slidesToShow: 4,
     swipeToSlide: true,
     vertical: true,
     autoplay: true,
@@ -293,53 +301,69 @@ useEffect(()=>{
                   ))}
                 </StyledSlider>
               </VerticalSlider>
-              <IsMainImgBox>{<IsMainImg src={image} />}</IsMainImgBox>
+       
+              <IsMainImgBox>
+       {
+               <ReactImageMagnify {...{
+                style:{zIndex:100},
+                smallImage: {
+                    isFluidWidth:false,
+                    
+                    width:650,
+                    height:720,
+                    src: `${image}`
+                },
+                largeImage: {
+                    src: `${image}`,
+                    width: 2000,
+                    
+                    height: 2600
+                }
+            }} />
+       }
+                </IsMainImgBox>
             </WrapperImg>
             <ProductInformation>
               <ProductName>{data?.name}</ProductName>
               <StyledBrandName>{data?.brand.name}</StyledBrandName>
               <StyledBrandName>{data?.category.name }</StyledBrandName>
-              <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+              <Rating sx={{zIndex:1}} name="half-rating" defaultValue={2.5} precision={0.5} />
               <Flex>
                 <StyledDiscountPrice>
-                  ${data?.price - (data?.discount * data.price) / 100}
+                  ${(data?.price - (data?.discount * data.price) / 100).toFixed(2)}
                 </StyledDiscountPrice>
                 <StyledPrice>${data?.price}</StyledPrice>
-                <StyledDiscount>{`(${data?.discount} % off)`}</StyledDiscount>
+                <StyledDiscount>{`(${data?.discount} ${t('Off')} )`}</StyledDiscount>
               </Flex>
-              <Select>Select Size</Select>
+              <Select>{t('SelectSize')}</Select>
               <WrapperSize>
                 {data?.size?.map((s) => (
                   <StyledSize onClick={()=> setSize(size?false:true)} background={size}  key={s.id}>{s.sizes}</StyledSize>
                 ))}
               </WrapperSize>
-              <Select>Color</Select>
+              <Select>{t('Color')}</Select>
               <WrapperColor background={data?.color}>
                 {data?.color}
               </WrapperColor>
-              <Select>Best offers</Select>
+              <Select>{t('BestOffers')}</Select>
               <Flex>
-                <ContentBold>Special offer</ContentBold>
-                <Content>get 25% off</Content>
+                <ContentBold>{t('SpecialOffer')}</ContentBold>
+                <Content>{t('Get25%Off')}</Content>
                 <ContentLink>T&C</ContentLink>
               </Flex>
               <Flex>
-                <ContentBold>Bank offer</ContentBold>
-                <Content>get 30% off on Axis Bank Credit card</Content>
+                <ContentBold>{t('BankOffer')}</ContentBold>
+                <Content>{t('Get30%OffAxis')}</Content>
                 <ContentLink>T&C</ContentLink>
               </Flex>
               <Flex>
-                <ContentBold>Wallet offer</ContentBold>
+                <ContentBold>{t('WalletOffer')}</ContentBold>
                 <Content>
-                  get 40% cashback via Paytm wallet on first transaction
+                  {t('Get40%OffCashback')}
                 </Content>
                 <ContentLink>T&C</ContentLink>
               </Flex>
-              <Flex>
-                <ContentBold>Special offer</ContentBold>
-                <Content>get 25% off</Content>
-                <ContentLink>T&C</ContentLink>
-              </Flex>
+            
               <Badge>
               <BadgeBox>
          <BadgeBox
@@ -350,6 +374,7 @@ useEffect(()=>{
             pt: 4,
             borderTop: '1px solid',
             borderColor: 'background.level1',
+            
           }}
         >
           <BadgeIconButton
@@ -373,7 +398,7 @@ useEffect(()=>{
       </BadgeBox>
               </Badge>
               <ButtonBox>
-                <StyledButton onClick={handleAddBasket}>Add to cart</StyledButton>
+                <StyledButton onClick={handleAddBasket}>{t('AddToCart')}</StyledButton>
                 <StyledHeartIcon />
               </ButtonBox>
             </ProductInformation>
@@ -388,13 +413,13 @@ useEffect(()=>{
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="Product Details" {...a11yProps(0)} />
-              <Tab label="Ratings & Reviews" {...a11yProps(1)} />
+              <Tab label={t('ProductDetails')} {...a11yProps(0)} />
+              <Tab label={t('CustomerReviews')} {...a11yProps(1)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
             <>
-              <DetailTitle>Product Details</DetailTitle>
+              <DetailTitle></DetailTitle>
               <DetailDesc>
                 Blue washed jacket, has a spread collar, 4 pockets, button
                 closure, long sleeves, straight hem
@@ -413,11 +438,11 @@ useEffect(()=>{
           </TabPanel>
           <TabPanel value={value} index={1}>
             <div>
-              <DetailTitle>Ratings</DetailTitle>
+              <DetailTitle>{t('Comments')}</DetailTitle>
               <Flex>
                 <StyledTextarea
-                  placeholder="Your comment"
-                  label="Your comment"
+                  placeholder={t('YourComment')}
+                  label={t('YourComment')}
                   variant="default"
                   withAsterisk
                   disabled={user.IsOnline == false}
@@ -425,7 +450,7 @@ useEffect(()=>{
                   error={
                     user.IsOnline
                       ? ""
-                      : "Comment yazmag ucun login olmalisiniz!"
+                      : `${t('ErrorComment')}`
                   }
                 />
                 <CommentButton>
@@ -435,7 +460,7 @@ useEffect(()=>{
                     endIcon={<SendIcon />}
                     disabled={user.IsOnline == false}
                   >
-                    Send
+                    {t('Send')}
                   </AddComment>
 
                 </CommentButton>
@@ -471,30 +496,19 @@ useEffect(()=>{
           </TabPanel>
         </Box>
       </ProductDetailWrapper>
-      <ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
      <StyledNotification>
       {LoadingRemoveComment && <Notification
         loading
         title="Delet Comment"
         disallowClose
       >
-        Your comment is currently being deleted
+        {t('YourCommentDelete')}
       </Notification>
     }
      
      </StyledNotification>
-     <h2>Similar Products</h2>
-     <SimilarProductSlider data={simiLarProductAll}/>
+     <h2>{t('SimilarProducts')}</h2>
+    <SimilarProductSlider data={simiLarProductAll}/>
     </Container>
   );
 };

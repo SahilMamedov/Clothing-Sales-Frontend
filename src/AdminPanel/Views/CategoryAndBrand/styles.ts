@@ -17,7 +17,7 @@ background-color: #94C8E9
 `
 
 export const Container=styled.div`
-width: 900px;
+width: 1900px;
 
 `
 export const ButtonBox=styled.div`
@@ -25,8 +25,8 @@ display: flex;
 justify-content: center;
 `
 export const Wrapper=styled.div`
-width: 400px;
-margin: 0 30px;
+width: 600px;
+margin: 0 0px;
 `
 export const Flex=styled.div`
 display: flex;

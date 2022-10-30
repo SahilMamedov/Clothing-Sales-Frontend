@@ -6,7 +6,7 @@ import {
   StyledRow,
   StyledTrending,
 } from "./styles";
-import { useFetchGoodsQuery } from "services/goodsServices";
+import { useFetchGoodsQuery, useFetchNewArrivalGoodsQuery } from "services/goodsServices";
 import { TrendingSlider } from "Components/shared/Slider/TrendingSlider";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -14,17 +14,21 @@ import { StyledCustomerTitle } from "Components/shared/CustomerFeedBack/styles";
 import { CustomerFeedbackSlider } from "Components/shared/Slider/CustomerFeedbackSlider";
 import { BlogsSlider } from "Components/shared/Slider/BlogsSlider";
 import { useUser } from "Hooks/useUser";
-
+import { NewArrivalGoods } from "Components/shared/Slider/NewArriwalGoods";
+import {useTranslation} from "react-i18next"
 export const Home = () => {
+
+  const {t} =useTranslation()
+
   useUser();
   const { data, isLoading } = useFetchGoodsQuery();
-
+  const {data:newArrivalGoods} = useFetchNewArrivalGoodsQuery()
 
   return (
     <StyledMain>
       <MainSlider />
       <Container>
-        <StyledTrending>Trending Now</StyledTrending>
+        <StyledTrending>{t('TrendingNow')}</StyledTrending>
         <StyledRow>
           {isLoading && (
             <Box sx={{ display: "flex" }}>
@@ -33,9 +37,11 @@ export const Home = () => {
           )}
         </StyledRow>
         <TrendingSlider data={data?.filter((p) => p.trending)} />
-        <StyledCustomerTitle>What Our Customer Says</StyledCustomerTitle>
+        <StyledTrending>{t('NewArrivalProduct')}</StyledTrending>
+        <NewArrivalGoods data={newArrivalGoods}/>
+        <StyledCustomerTitle>{t('WhatOurCustomerSays')}</StyledCustomerTitle>
         <CustomerFeedbackSlider />
-        <StyledFeaturedBlogs>Featured Blogs</StyledFeaturedBlogs>
+        <StyledFeaturedBlogs>{t('FeaturedBlogs')}</StyledFeaturedBlogs>
         <BlogsSlider />
       </Container>
     </StyledMain>

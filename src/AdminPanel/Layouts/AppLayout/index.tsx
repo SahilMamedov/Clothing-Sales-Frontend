@@ -1,6 +1,6 @@
 import { DashboardContent } from 'AdminPanel/Components/Layouts/Header'
 import { AppLinks } from 'AdminPanel/Routes/AppLinks'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import styled from 'styled-components';
 
@@ -24,6 +24,7 @@ useEffect(()=>{
  }
 
 },[navigate])
+
 
   return (
     <StyledFlex>

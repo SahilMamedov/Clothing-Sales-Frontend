@@ -13,3 +13,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.css-hrjh4n-MuiInputBase-root .MuiInputBase-input{
+  border: none!important;
+  padding: 0px!important;
+}

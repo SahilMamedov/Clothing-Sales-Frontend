@@ -29,7 +29,7 @@ import Tooltip from '@mui/material/Tooltip';
     import {Button} from '@mantine/core';
 
 
-import { DeletButtonBox ,StyledBox,Flex,StyledRoleDelet,DeletButton} from './styles';
+import { DeletButtonBox ,StyledBox,Flex,StyledRoleDelet} from './styles';
 import { CreateButton, ModalBox } from '../CategoryAndBrand/styles';
 import { useNotifications } from 'Hooks/useNotification';
 

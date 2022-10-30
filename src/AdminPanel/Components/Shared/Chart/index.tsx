@@ -1,71 +1,40 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-import Title from '../Title';
 
-// Generate Sales Data
-function createData(time: string, amount?: number) {
-  return { time, amount };
-}
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { PolarArea } from 'react-chartjs-2';
+import { StyledBox } from './styles';
 
-const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
-];
+ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
-export default function Chart() {
-  const theme = useTheme();
-
-  return (
-    <React.Fragment>
-      <Title>Today</Title>
-      <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
-          }}
-        >
-          {/* <XAxis
-            dataKey="time"
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          />
-          <YAxis
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          > */}
-            <Label
-              angle={270}
-              position="left"
-              // style={{
-              //   textAnchor: 'middle',
-              //   fill: theme.palette.text.primary,
-              //   ...theme.typography.body1,
-              // }}
-            >
-              Sales ($)
-            </Label>
-          {/* </YAxis> */}
-          <Line
-            isAnimationActive={false}
-            type="monotone"
-            dataKey="amount"
-            stroke={theme.palette.primary.main}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </React.Fragment>
-  );
+export const data = {
+  labels: ['Jacket', 'Pants', 'Jeans', 'Coats', 'Shirt', 'Skirts','Sweater','T-Shirt'],
+  datasets: [
+    {
+      label: '# of Votes',
+      data: [80, 79, 57, 78, 66, 76,70,50],
+      backgroundColor: [
+        'rgba(10, 72, 241, 0.788)',
+        'rgba(235, 2, 2, 0.712)',
+        'rgba(27, 230, 0, 0.5)',
+        'rgba(212, 226, 13, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)',
+        'rgba(13, 231, 231, 0.5)',
+        'rgba(6, 112, 89, 0.973)',
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
+export const Chart = ()=> {
+  return(
+    <StyledBox>
+    <PolarArea data={data} />;
+    </StyledBox>
+  ) 
 }

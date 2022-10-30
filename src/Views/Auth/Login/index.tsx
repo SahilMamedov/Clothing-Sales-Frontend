@@ -21,7 +21,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-  import { Modal} from '@mantine/core';
+import {useTranslation} from "react-i18next"
+import { Modal} from '@mantine/core';
 import { ErrorMessage } from "./styles";
 
 
@@ -34,6 +35,8 @@ interface State {
   showPassword: boolean;
 }
 export default function SignIn() {
+
+  const {t} =useTranslation()
 
   const [opened, setOpened] = useState(true);
 
@@ -93,7 +96,6 @@ export default function SignIn() {
     <Modal
     opened={opened}
     onClose={() => setOpened(false)}
-    title="Login"
     overlayOpacity={0.7}
     closeOnClickOutside={false}
   >
@@ -111,7 +113,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+          {t('SignIn')}
           </Typography>
           <Box
             component="form"
@@ -123,7 +125,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('EmailAddress')}
               name="email"
               autoComplete="email"
               autoFocus
@@ -131,7 +133,7 @@ export default function SignIn() {
             <div>
               <FormControl sx={{ width: "40ch" }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">
-                  Password
+                  {t('Password')}
                 </InputLabel>
                 <OutlinedInput
                   id="password"
@@ -163,17 +165,12 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {t('SignIn')}
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <NavLink to={Links.app.register}>
-                  {"Don't have an account? Sign Up"}
+                  {t('DontHaveAccountSignUp')}
                 </NavLink>
               </Grid>
             </Grid>
@@ -182,7 +179,6 @@ export default function SignIn() {
       </Container>
     </ThemeProvider>
   </Modal>
-  {/* {navigate("/")} */}
   </>
     
   );

@@ -10,6 +10,7 @@ background-color: #1d2a57;
 color: white;
 font-size: 16px;
 margin-top: 20px;
+margin-bottom: 20px;
 display: flex;
 justify-content: center;
 align-items: center;

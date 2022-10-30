@@ -5,7 +5,7 @@ export const Links = {
     men: "/category/men",
     women: "/category/women",
     kids: "/category/kids",
-    shop: "/shop",
+    shop: "/category/shop",
     contact: "/contact",
     productDetail: "/productdetail/:id",
     register: "/register",

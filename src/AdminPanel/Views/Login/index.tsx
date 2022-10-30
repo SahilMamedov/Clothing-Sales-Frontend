@@ -72,7 +72,7 @@ export default function SignIn() {
       localStorage.setItem("Admintoken",data.token);
      console.log("useeffcet");
      
-      navigate("/admin");
+      navigate("/admin/dashboard");
     }
   }, [isSuccess]);
 

@@ -30,7 +30,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'Redux/hooks/hooks';
 import { useNavigate } from 'react-router-dom';
 import { addItem, addTotal } from 'Redux/slices/basketSlice';
-
+import {useTranslation} from "react-i18next"
 
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -66,7 +66,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const Basket= () => {
 
+  const {t} =useTranslation()
+
   const [basketItemID,setBasketItemID] = React.useState(0)
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = (id:number) => {
@@ -80,7 +83,7 @@ export const Basket= () => {
   
     if(basketItemID){
       postDeletId(basketItemID)
-      toast.success('Successfully Deleted', {
+      toast.success(`${t('SuccessfullyDeleted')}`, {
         position: "bottom-right",
         autoClose: 3500,
         hideProgressBar: false,
@@ -108,7 +111,7 @@ export const Basket= () => {
   const { user } = useAppSelector((state) => state.user);
   
 
-  const {data,refetch:fetchgetBasket} =useGetAllBasketQuery(undefined,{skip:user.IsOnline==false})
+  const {data,refetch:fetchgetBasket} =useGetAllBasketQuery(undefined,{skip:user.IsOnline===false})
   
   const [postDeletId,{isSuccess:isSuccessDelet}] = useDeleteItemMutation()
 
@@ -125,7 +128,7 @@ export const Basket= () => {
 
 
 const handleGoToBack =() =>{
-  navigate("/shop")
+  navigate("/category/shop")
 }
 
 const handleConfrim=()=>{
@@ -156,10 +159,10 @@ if(user.IsOnline){
         <TableHead>
           <TableRow>
           <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Product</StyledTableCell>
-            <StyledTableCell align="right">Price</StyledTableCell>
-            <StyledTableCell align="right">Number of</StyledTableCell>
-            <StyledTableCell align="right">Subtotal</StyledTableCell>
+            <StyledTableCell>{t('Product')}</StyledTableCell>
+            <StyledTableCell align="right">{t('Price')}</StyledTableCell>
+            <StyledTableCell align="right">{t('NumberOf')}</StyledTableCell>
+            <StyledTableCell align="right">{t('SubTotal')}</StyledTableCell>
             <StyledTableCell></StyledTableCell>
           </TableRow>
         </TableHead>
@@ -170,9 +173,9 @@ if(user.IsOnline){
               <StyledTableCell component="th" scope="row">
                 {item.product?.name}
               </StyledTableCell>
-              <StyledTableCell align="right">${item.price}</StyledTableCell>
+              <StyledTableCell align="right">${item.price.toFixed(2)}</StyledTableCell>
               <StyledTableCell align="right">{item.count}</StyledTableCell>
-              <StyledTableCell align="right">${item.sum}</StyledTableCell>
+              <StyledTableCell align="right">${item.sum.toFixed(2)}</StyledTableCell>
               <StyledTableCell>
               <Tooltip title="Delet">
               <IconButton aria-label="delete" size="large" onClick={()=>handleClickOpen(item.productId)}>
@@ -187,16 +190,16 @@ if(user.IsOnline){
     </TableContainer>
   <Box>
     <Cargo>
-      <CargoField fontSize='16px' paddingButtom='10px'>Cargo</CargoField>
-      <CargoField fontSize='18px' paddingButtom='10px'>Free Delivery</CargoField>
+      <CargoField fontSize='16px' paddingButtom='10px'>{t('Cargo')}</CargoField>
+      <CargoField fontSize='18px' paddingButtom='10px'>{t('FreeDelivery')}</CargoField>
     </Cargo>
     <TotalBox>
-      <CargoField fontSize='16px' paddingButtom='22px'>Total ($)</CargoField>
+      <CargoField fontSize='16px' paddingButtom='22px'>{t('Total')} ($)</CargoField>
       <CargoField fontSize='18px' paddingButtom='17px'>{data?.total.toFixed(2)} ($)</CargoField>
     </TotalBox>
     <ButtonBox>
    <ConfrimButton onClick={handleConfrim}>
-   Confirm the cart
+   {t('ConfirmTheCart')}
    </ConfrimButton>
     </ButtonBox>
   </Box>
@@ -205,7 +208,7 @@ if(user.IsOnline){
  :
  
 <BasketBox>
-  <BasketText>The Basket is Empty</BasketText>
+  <BasketText>{t('TheBasketisEmpty')}</BasketText>
   <BasketImg src='https://us.123rf.com/450wm/vectorplus/vectorplus1601/vectorplus160100112/50566994-shopping-basket-icon-on-white-background-vector-illustration-.jpg?ver=6'/>
 
       
@@ -216,7 +219,7 @@ if(user.IsOnline){
  }
  <ButtonBox>
  <Button variant="contained" color="success" onClick={handleGoToBack}>
-        Go to Shop
+  {t('GoToShop')}
   </Button>
  </ButtonBox>
 
@@ -237,20 +240,19 @@ if(user.IsOnline){
             mb="0.25em"
             startDecorator={<ReportProblemIcon />}
           >
-            Confirmation
+            {t('Confirmation')}
           </Typography>
           </Confirmation>
        <hr/>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          are you sure you want to delete?
-          
+         {t('AreYouSureDelete')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <CancelBtn onClick={handleClose}>Cancel</CancelBtn>
+          <CancelBtn onClick={handleClose}>{t('Cancel')}</CancelBtn>
           <StyledBtn onClick={handleDelet} autoFocus>
-            Delet
+            {t('Delet')}
           </StyledBtn>
         </DialogActions>
         </StyledBox>

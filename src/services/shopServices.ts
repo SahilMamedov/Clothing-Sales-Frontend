@@ -19,8 +19,12 @@ const funcQueryParams=(Product:IFilterProduc)=>{
     const categoryId=`${Product.categoryIds?.map((item) => `categoryIds=${item}&`)}`
     .split(",")
     .join("");
-
-    return `/filter?${brandId}&${categoryId}&minPrice=${Product.minPrice}&maxPrice=${Product.maxPrice}&page=${Product.page}`
+    console.log(Product.typeName);
+    
+    const typeName=`${Product.typeName==='shop'?'':Product.typeName}`
+    console.log(typeName,'typename');
+    
+    return `/filter?${brandId}&${categoryId}&typeName=${typeName}&minPrice=${Product.minPrice}&maxPrice=${Product.maxPrice}&page=${Product.page}`
 }
 
 

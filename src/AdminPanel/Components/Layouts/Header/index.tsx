@@ -18,7 +18,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
  import { mainListItems } from '../../Shared/ListItem';
- import Chart from '../../Shared/Chart';
 import Deposits from '../../Shared/Deposits';
  import {Orders} from '../../../Views/Orders';
 import { useFetchGetAllOrderQuery } from 'services/AdminPanelServices/saleAdminServices';

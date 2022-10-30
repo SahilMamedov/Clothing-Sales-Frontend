@@ -14,10 +14,14 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { useGetAllBasketQuery } from "services/basketServices";
 import { addItem } from "Redux/slices/basketSlice";
+import {useTranslation} from "react-i18next"
+import CircularProgress from "@mui/material/CircularProgress";
+import { IsLoading } from "Views/Auth/Profile/styles";
 const theme = createTheme();
 
 
 export const Checkout = () =>  {
+  const {t}=useTranslation()
   const dispatch = useAppDispatch();
   const navigate=useNavigate()
   const {basket} = useAppSelector((state)=>state.basket)
@@ -27,37 +31,33 @@ export const Checkout = () =>  {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
-  const [postSaleData,{isSuccess:succesSale}]= useStartSaleMutation()
+
+  const [postSaleData,{isSuccess:succesSale,isLoading}]= useStartSaleMutation()
+
   const {data,isSuccess,refetch:fetchBasket}=useGetAllBasketQuery()
-
-
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
 
   const data = new FormData(event.currentTarget);
 
-  data.set("Cash",value=="cash"?"true":"false")
+  data.set("Cash",value==="cash"?"true":"false")
 
   postSaleData(data)
 
   };
 
   if(succesSale){
-    
-   
       fetchBasket()
         if(isSuccess){
           dispatch(addItem(data?.basketItems))
           swal(
-            "Sifarishiniz qeyde alindi",
-            "Bizi sechdiniyiniz ucun teshekkurler",
+            `${t('OrderSuccessfully')}`,
+            `${t('ThankYouChoosing')}`,
             "success"
           );
-          navigate("/shop");
+          navigate("/category/shop");
         }
- 
-    
   }
 
  
@@ -83,7 +83,7 @@ export const Checkout = () =>  {
               width="350px"
               required
               id="firstname"
-              label="First name"
+              label={t('FirstName')}
               name="firstname"
               autoComplete="firstname"
               autoFocus
@@ -92,7 +92,7 @@ export const Checkout = () =>  {
               width="350px"
               required
               id="lastname"
-              label="Last name"
+              label={t('LastName')}
               name="lastname"
               autoComplete="lastname"
               autoFocus
@@ -102,7 +102,7 @@ export const Checkout = () =>  {
               width="720px"
               required
               id="city"
-              label="City"
+              label={t('City')}
               name="city"
               autoComplete="city"
               autoFocus
@@ -111,7 +111,7 @@ export const Checkout = () =>  {
               width="720px"
               required
               id="address"
-              label="Street address "
+              label={t('StreetAddress')}
               name="address"
               autoComplete="address"
               autoFocus
@@ -120,7 +120,7 @@ export const Checkout = () =>  {
               width="720px"
               required
               id="apartment"
-              label="Apartment number Entrance block "
+              label={t('ApartmentEntrance')}
               name="apartment"
               autoComplete="apartment"
               autoFocus
@@ -130,26 +130,27 @@ export const Checkout = () =>  {
               width="350px"
               required
               id="mobile"
-              label="Phone"
+              label={t('Phone')}
               name="mobile"
               defaultValue='+994'
-              type='number'
+              type='tel'
               autoComplete="mobile"
               autoFocus
             />
+         
             <StyledTextField
               width="350px"
               required
               id="email"
               type='email'
-              label="Email"
+              label={t('Email')}
               name="email"
               autoComplete="email"
               autoFocus
             />
             </Flex>
             <StyledTextarea
-             placeholder="order notes (optional)"
+             placeholder={t('OrderNote')}
              required
              id="note"
              name="note"
@@ -159,10 +160,10 @@ export const Checkout = () =>  {
      
     </BillingDetails>
     <OrderDetails>
-    <Title>Your Order</Title>
+    <Title>{t('YourOrders')}</Title>
     <SubTitle>
-      <span>Prdouct</span>
-      <span>SubTotal</span>
+      <span>{t('Product')}</span>
+      <span>{t('SubTotal')}</span>
     </SubTitle>
     <>
     {basket.basketItems.length !== 0 && 
@@ -173,7 +174,7 @@ export const Checkout = () =>  {
     {`${item.product?.name} x ${item.count}`}  
     </PrdouctName>
     <PrdouctPrice>
-      ${item.price}
+      ${item.price.toFixed(2)}
     </PrdouctPrice>
     </Justify>
     </div>
@@ -194,14 +195,24 @@ export const Checkout = () =>  {
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel value="cash" control={<Radio />} label="Cash on Delivery" />
-        <FormControlLabel value="card" control={<Radio />} label="Payment by Card" />
+        <FormControlLabel value="cash" control={<Radio />} label={t('CashOnDelivery')} />
+        <FormControlLabel value="card" control={<Radio />} label={t('PaymentByCard')} />
         <>
-       {value=="card" ? <PaymentForm/>:""}
+       {value==="card" ? <PaymentForm/>:""}
         </>
       </RadioGroup>
     </FormControl>
-    <PlaceOrder>Place Order</PlaceOrder>
+    <PlaceOrder>
+    {isLoading?
+      <IsLoading >
+      <CircularProgress
+        color="primary"
+        size='35px'
+/>
+      </IsLoading>:`${t('PlaceOrder')}`}
+
+      
+      </PlaceOrder>
     </OrderDetails>
    
    </Container>

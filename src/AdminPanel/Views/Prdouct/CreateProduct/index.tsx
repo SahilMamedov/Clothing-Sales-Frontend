@@ -14,7 +14,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ToastContainer, toast,Zoom } from 'react-toastify';
+import { toast,Zoom } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -40,7 +40,13 @@ const names = [
   'XS',
   'XL',
   'XXS',
-  'XXL'
+  'XXL',
+  '24',
+  '6years',
+  '3years',
+  '12years',
+  '4years',
+  '10years'
 ];
 
 
@@ -131,7 +137,7 @@ export const CreateProduct = () => {
             });
 
             setTimeout(() => {
-              navigate("/admin")
+              navigate("/admin/dashboard")
             }, 2000);
         }
       },[isSuccess])
@@ -286,20 +292,9 @@ export const CreateProduct = () => {
       </FormControl>
 
       <FileBox >
-      <FileInput required name='ChildPhotos' label="Multiple Photo" placeholder="Photos" multiple valueComponent={ValueComponent} />
-      <FileInput required name='Photos' mt="md" label="Single Photo" placeholder="Photo" valueComponent={ValueComponent} />
+      <FileInput sx={{  width: 270 }} required name='ChildPhotos' label="Additional Photos" placeholder="Photos" multiple valueComponent={ValueComponent} />
+      <FileInput sx={{  width: 270 }} required name='Photos' mt="md" label="Single Photo" placeholder="Photo" valueComponent={ValueComponent} />
       </FileBox>
-      <ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
     
 </Box>
 <StyledButton> {isLoading?

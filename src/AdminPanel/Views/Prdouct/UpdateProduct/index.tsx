@@ -15,7 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast,Zoom } from 'react-toastify';
+import { toast,Zoom } from 'react-toastify';
 
 
 
@@ -40,7 +40,13 @@ const names = [
   'XS',
   'XL',
   'XXS',
-  'XXL'
+  'XXL',
+  '24',
+  '6years',
+  '3years',
+  '12years',
+  '4years',
+  '10years'
 ];
 
 
@@ -92,10 +98,10 @@ export interface Props{
   }
 
 export const UpdateProduct = ({productId}:Props) => {
-  const navigate=useNavigate()
 
+    const navigate=useNavigate()
 
-    const [typeName, setTypeName] = React.useState('');
+    const [typeName, setTypeName] = useState('');
 
     const [brand,setBrand] = useState(0) 
 
@@ -103,8 +109,7 @@ export const UpdateProduct = ({productId}:Props) => {
 
     const [trend,setTrend] = useState('')
 
-    const [sizes, setSizes] = React.useState<string[]>([]);
-
+    const [sizes, setSizes] = useState<string[]>([]);
 
 
     const {data:BrandAndCategory} = useFetchBrandAndCategoryQuery()
@@ -113,13 +118,13 @@ export const UpdateProduct = ({productId}:Props) => {
 
     const [postProductUpdate,{isSuccess,isLoading}] = useFetchUpdateProductMutation()
 
-   console.log(getOneData,"DATA");
-   
-    
-    
+
+ 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+   
+    
     postProductUpdate(data)
       };
      
@@ -149,13 +154,16 @@ export const UpdateProduct = ({productId}:Props) => {
         );
       };
 
-
+      useEffect(()=>{
+        getOneData?.size.map(s=>setSizes([...sizes,s.sizes]))
+       },[getOneData])
+        
 
       useEffect(()=>{
         if(isSuccess){
           toast.success('Data updated successfully', {
             position: "bottom-right",
-            autoClose: 1000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -167,11 +175,14 @@ export const UpdateProduct = ({productId}:Props) => {
             });
 
             setTimeout(() => {
-              navigate("/admin")
-            }, 2000);
+              navigate("/admin/dashboard")
+            }, 2500);
         }
       },[isSuccess])
+
+   
       
+      console.log(sizes)
 
 
   return (
@@ -284,8 +295,9 @@ export const UpdateProduct = ({productId}:Props) => {
           labelId="size"
           name='Sizes'
           id="size"
-          
           multiple
+          required
+          defaultChecked={true}
           value={sizes}
           onChange={handleChangeSize}
           input={<OutlinedInput label="Tag" />}
@@ -294,7 +306,7 @@ export const UpdateProduct = ({productId}:Props) => {
         >
           {names.map((name) => (
             <MenuItem key={name} value={name}>
-              <Checkbox  checked={sizes.indexOf(name) > -1} />
+              <Checkbox defaultChecked={true}  checked={sizes.indexOf(name) > -1} />
               <ListItemText primary={name} />
             </MenuItem>
           ))}
@@ -308,23 +320,13 @@ export const UpdateProduct = ({productId}:Props) => {
             <Images key={img.path} src={img.path}/>
           )}
         </ProductImages>
-      <FileInput name='ChildPhotos' label="Multiple Photo" placeholder="Photos" multiple valueComponent={ValueComponent} />
-      <FileInput name='Photos' mt="md" label="Single Photo" placeholder="Photo" valueComponent={ValueComponent} />
+      <FileInput sx={{  width: 270 }} name='ChildPhotos' label="Additional Photos" placeholder="Photos" multiple valueComponent={ValueComponent} />
+      <FileInput sx={{  width: 270 }} name='Photos' mt="md" label="Main Photo" placeholder="Photo" valueComponent={ValueComponent} />
       </FileBox>
      
     
 </Box>
-<ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
+
 <StyledButton> {isLoading?
       <IsLoading >
           <CircularProgress

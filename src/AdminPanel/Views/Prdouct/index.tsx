@@ -184,11 +184,13 @@ const columns: GridColDef<Rows>[] = [
      {editId>0 ?<UpdateProduct productId={editId}/>:
      <>
      {open?<CreateProduct/>:<>
-     <StyledButton onClick={handleAddProduct}>Add Product</StyledButton>
+     
      <StyledBox>
+      
       <Box sx={{ height: 631,alignItems:"center", width: '1232px','& .header': {
       backgroundColor: 'rgba(83, 233, 128, 0.849)',
     }, }}>
+      <StyledButton onClick={handleAddProduct}>Add Product</StyledButton>
       <DataGrid
         rows={rows}
         columns={columns}

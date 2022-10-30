@@ -32,7 +32,7 @@ import {useEffect, useState} from "react"
 import { OrderDetails } from './OrderDetails';
 import { useAppSelector } from 'Redux/hooks/hooks';
 import { useUpdateUserMutation } from 'services/authServices';
-import { ToastContainer, toast,Zoom } from 'react-toastify';
+import {useTranslation} from "react-i18next"
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNotifications } from 'Hooks/useNotification';
@@ -75,6 +75,8 @@ function a11yProps(index: number) {
 
 export const Profile=()=> {
 
+  const {t} =useTranslation()
+  
   const { user } = useAppSelector((state) => state.user);
 
   const navigate=useNavigate()
@@ -125,7 +127,7 @@ export const Profile=()=> {
     fetchOrder()
   },[])
     
-  useNotifications(isSuccess,'Successfully Updated User')
+  useNotifications(isSuccess,`${t('UserUpdatedSuccessfully')}`)
 
   useEffect(() => {
     if (isSuccess) {
@@ -146,9 +148,9 @@ export const Profile=()=> {
          <Box >
          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-             <StyledTab label="Profile" {...a11yProps(0)} />
+             <StyledTab label={t('Profile')} {...a11yProps(0)} />
              
-             <StyledTab label="Orders" {...a11yProps(1)} />
+             <StyledTab label={t('Orders')} {...a11yProps(1)} />
            </Tabs>
          </Box>
          <TabPanel value={value} index={0}>
@@ -160,7 +162,7 @@ export const Profile=()=> {
         sx={{ '& > :not(style)': { m: 1 } }}>
       <FormControl variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
-         Firstname
+        {t('FirstName')}
         </InputLabel>
         <Input
           id="firstname"
@@ -175,7 +177,7 @@ export const Profile=()=> {
       </FormControl>
       <TextField
         id="surname"
-        label="Lastname"
+        label={t('LastName')}
         name='surname'
         defaultValue={user.Surname}
         InputProps={{
@@ -192,7 +194,7 @@ export const Profile=()=> {
       sx={{ display: 'flex', alignItems: 'flex-end', }}>
       <TextField
         id="email"
-        label="email"
+        label={t('Email')}
         name='email'
         type='email'
         defaultValue={user.Email}
@@ -209,7 +211,7 @@ export const Profile=()=> {
       <TextField
         id="Username"
         name='username'
-        label="Username"
+        label={t('UserName')}
         defaultValue={user.unique_name}
         InputProps={{
           startAdornment: (
@@ -222,20 +224,15 @@ export const Profile=()=> {
       />
       </ProfileInfo>
       </Box>
-     
-         
-      
       <SaveChangesBtn> {isLoading?
       <IsLoading >
           <CircularProgress
         color="warning"
         size='35px'
 />
-      </IsLoading>:"Save Changes"}
-      </SaveChangesBtn>
-    </Box>
-   
-
+      </IsLoading>:`${t('SaveChanges')}`}
+         </SaveChangesBtn>
+         </Box>
          </TabPanel>
          <TabPanel value={value} index={1}  >
          <StyledBox>
@@ -248,19 +245,19 @@ export const Profile=()=> {
  <thead>
  <StyledTr>
  <StyledTh>
- Order
+ {t('Order')}
  <StyledTd>{item.id}</StyledTd>
  </StyledTh>
  <StyledTh>
- Data
+ {t('Data')}
  <StyledTd>{item.date}</StyledTd>
  </StyledTh>
  <StyledTh>
- Status
- <StyledTd>{item.orderStatus===0 && "Pending" || item.orderStatus===1 && "Accepted"  || item.orderStatus===2 && "Rejected"}</StyledTd>
+ {t('Status')}
+ <StyledTd>{item.orderStatus===0 && `${t('Pending')}` || item.orderStatus===1 && `${t('Accepted')}`  || item.orderStatus===2 && `${t('Rejected')}`}</StyledTd>
  </StyledTh>
  <StyledTh>
- Total
+ {t('Total')}
  <StyledTd>${item.total.toFixed(2)}</StyledTd>
  </StyledTh>
  
@@ -268,7 +265,7 @@ export const Profile=()=> {
  </thead>
 </StyledTable>
 <StyledTh>
- <StyledButton onClick={()=>handleViewOrderDetail(item.id)}>View</StyledButton>
+ <StyledButton onClick={()=>handleViewOrderDetail(item.id)}>{t('View')}</StyledButton>
  </StyledTh>
 </Flex>
 )}
@@ -291,7 +288,6 @@ export const Profile=()=> {
        </Box>
       
       }
-
     </Container>
   );
 }

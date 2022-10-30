@@ -13,7 +13,7 @@ function App() {
         <Theme>
           <AppRoutes />
           <ToastContainer
-          position="bottom-right"
+     position="bottom-right"
      autoClose={3000}
      hideProgressBar={false}
      newestOnTop

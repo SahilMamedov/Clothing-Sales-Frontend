@@ -14,6 +14,7 @@ StyledReject,
 StyledSuccess,
 ViewButton } from './styles';import { useEffect, useState } from 'react';
 import { OrderItems } from './OrderItems';
+import Tooltip from '@mui/material/Tooltip';
 export const Orders =() => {
 const [orderId,setOrderId]=useState(0)
 
@@ -134,6 +135,7 @@ const columns: GridColDef<Rows>[] = [
     field: 'address',
     headerName: 'Address',
     width: 120,
+    editable:true,
     headerClassName: 'super-app-theme--header',
   },
   {
@@ -180,18 +182,22 @@ const columns: GridColDef<Rows>[] = [
   {
     field:" ",
     headerName:" ",
-    width: 100,
+    width: 120,
     headerClassName: 'super-app-theme--header',
     
 
     renderCell:(params)=>{
       return(
        <>
+       <Tooltip title="Reject">
         <StyledReject onClick={()=>handleReject(params.row.id,params.row.orderStatus+1 )}>
         <CloseIcon/>
         </StyledReject>
+        </Tooltip>
         <StyledSuccess onClick={()=>handleSuccess(params.row.id,params.row.orderStatus+1)}>
-          <DoneIcon/>
+        <Tooltip title="Accept">
+        <DoneIcon/>
+        </Tooltip>
         </StyledSuccess>
        </>
       )
@@ -235,17 +241,6 @@ const columns: GridColDef<Rows>[] = [
         }
      
     </Box>
-    <ToastContainer
-     position="bottom-right"
-     autoClose={5000}
-     hideProgressBar={false}
-     newestOnTop
-     closeOnClick
-     rtl={false}
-     pauseOnFocusLoss
-     draggable
-     pauseOnHover
-     />
     </StyledBox>
   );
 }

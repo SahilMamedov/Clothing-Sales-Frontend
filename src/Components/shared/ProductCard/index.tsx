@@ -10,6 +10,7 @@ import {
 } from "./styled";
 import { FC } from "react";
 import { IGoods } from "types";
+import {useTranslation} from "react-i18next"
 
 export const Goods: FC<IGoods> = ({
   id,
@@ -22,6 +23,7 @@ export const Goods: FC<IGoods> = ({
   productPhotos,
   
 }) => {
+  const {t} =useTranslation()
   return (
     <StyledCard key={id}>
       {productPhotos!== null ? productPhotos.map(item=>item.isMain && <StyledCardImg key={item.id} src={item.path}  />):<StyledCardImg src={photoPath}/>}
@@ -29,9 +31,9 @@ export const Goods: FC<IGoods> = ({
       <StyledInformation>
         <StyledProductName>{name}</StyledProductName>
         <StyledBrandName>{brand.name}</StyledBrandName>
-        <StyledDiscountPrice>${discountPrice}</StyledDiscountPrice>
+        <StyledDiscountPrice>${discountPrice.toFixed(2)}</StyledDiscountPrice>
         <StyledPrice>${price}</StyledPrice>
-        <StyledDiscount>{`(${discount} % off)`}</StyledDiscount>
+        <StyledDiscount>{`(${discount} ${t('Off')})`}</StyledDiscount>
       </StyledInformation>
     </StyledCard>
   );

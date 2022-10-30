@@ -1,7 +1,8 @@
 import { useGetOrderDataQuery } from "services/saleServices"
 import { Column, Filed, OrderDetailBox, OrderDetailItem } from "./styles"
-
+import {useTranslation} from "react-i18next"
 import dayjs from "dayjs";
+import { t } from "i18next";
 
 
 
@@ -13,6 +14,8 @@ export interface Props{
 
 export const OrderDetails =({orderId}:Props)=>{
   
+const {t} = useTranslation()
+
 const {data}= useGetOrderDataQuery(orderId)
 
 
@@ -23,7 +26,7 @@ const {data}= useGetOrderDataQuery(orderId)
     <OrderDetailBox key={item.id}>
     <Column>
     <Filed>
-    Fullname:
+    {t('FullName')}:
   </Filed>
   <OrderDetailItem>
     {item.appUser.name} {item.appUser.surname}
@@ -31,7 +34,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-    City:
+    {t('City')}:
   </Filed>
   <OrderDetailItem>
     {item.city}
@@ -39,7 +42,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-    Street Address:
+    {t('StreetAddress')}:
   </Filed>
   <OrderDetailItem>
     {item.address}
@@ -47,7 +50,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-    Apartment:
+    {t('Apartment')}:
   </Filed>
   <OrderDetailItem>
     {item.apartment}
@@ -55,7 +58,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-    Phone:
+    {t('Phone')}:
   </Filed>
   <OrderDetailItem>
    {item.mobile}
@@ -63,7 +66,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-    Email:
+    {t('Email')}:
   </Filed>
   <OrderDetailItem>
     {item.appUser.email}
@@ -71,7 +74,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-    Payment method:
+    {t('PaymentMethod')}:
   </Filed>
   <OrderDetailItem>
     {item.cash?"Cash on delivery":"Direct bank transfer"}
@@ -79,7 +82,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-  Date of Order:
+  {t('DateOfOrder')}:
   </Filed>
   <OrderDetailItem>
     {dayjs(`${item.createdAt}`).format("DD.MM.YYYY HH:m")}
@@ -87,7 +90,7 @@ const {data}= useGetOrderDataQuery(orderId)
     </Column>
     <Column>
     <Filed>
-    Note:
+    {t('Note')}:
   </Filed>
   <OrderDetailItem>
    {item.note}

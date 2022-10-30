@@ -17,7 +17,7 @@ export const StyledNavbar = styled.nav`
   position: -webkit-sticky;
   position: sticky;
   background-color: white;
-  z-index: 3;
+  z-index:101;
   top: 0;
 `;
 export const StyledLogo = styled.div`
@@ -84,7 +84,7 @@ export const StyledBasketIcon = styled(ShoppingCart)`
 export const UserProfile = styled.div`
   width: 150px;
   margin-left: 20px;
-  margin-right: 40px;
+  margin-right: 10px;
 `;
 export const UserBox = styled.div`
   position: absolute;
@@ -169,4 +169,5 @@ export const Container=styled.div`
 position: relative;
 display: flex;
 justify-content: center;
+z-index: 103;
 `

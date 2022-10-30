@@ -25,9 +25,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-import { Modal, Group } from '@mantine/core';
+import { Modal } from '@mantine/core';
 import { ErrorMessage } from "../Login/styles";
-
+import { extendedApi } from "services/basketServices";
+import { useAppDispatch } from "Redux/hooks/hooks";
+import {useTranslation} from "react-i18next"
 
 const theme = createTheme();
 
@@ -36,6 +38,10 @@ interface State {
   showPassword: boolean;
 }
 export default function SignUp() {
+
+  const {t} =useTranslation()
+
+  const dispatch = useAppDispatch();
 
   const [opened, setOpened] = useState(true);
 
@@ -80,12 +86,13 @@ export default function SignUp() {
     }
    },[error])
 
+
   useEffect(() => {
     if (isSuccess) {
-      
+      dispatch(extendedApi.util.resetApiState())
       swal(
-        "Ugurlu qeydiyyat",
-        "Davam etmek ucun ok duymesine click edin",
+        `${t('SuccessfulRegistration')}`,
+        "",
         "success"
       );
       navigate("/login");
@@ -100,7 +107,7 @@ export default function SignUp() {
     <Modal
           opened={opened}
           onClose={() => setOpened(false)}
-          title="Register!"
+          title={t('Register')}
           overlayOpacity={0.7}
           closeOnClickOutside={false}
         >
@@ -121,7 +128,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            {t('SignUp')}
           </Typography>
           <Box
             component="form"
@@ -136,7 +143,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="name"
-                  label="Name"
+                  label={t('FirstName')}
                   autoFocus
                 />
               </Grid>
@@ -145,7 +152,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="surName"
-                  label="Surname"
+                  label={t('LastName')}
                   name="surName"
                   autoComplete="family-name"
                 />
@@ -155,7 +162,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('EmailAddress')}
                   name="email"
                   autoComplete="email"
                 />
@@ -165,7 +172,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="username"
-                  label="Username"
+                  label={t('UserName')}
                   name="username"
                   autoComplete="username"
                 />
@@ -174,7 +181,7 @@ export default function SignUp() {
                 <div>
                   <FormControl sx={{ width: "46ch" }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
-                      Password
+                      {t('Password')}
                     </InputLabel>
                     <OutlinedInput
                       type={values.showPassword ? "text" : "password"}
@@ -194,22 +201,14 @@ export default function SignUp() {
                           </IconButton>
                         </InputAdornment>
                       }
-                      label="Password"
+                      label={t('Password')}
                     />
                   </FormControl>
                   <ErrorMessage>
                     {errorMessage}
                   </ErrorMessage>
                 </div>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+              </Grid>        
             </Grid>
             <Button
               type="submit"
@@ -217,13 +216,13 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              {t('SignUp')}
             </Button>
 
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <NavLink to={Links.app.login}>
-                  Already have an account? Sign in
+                 {t('AlreadyHaveAccountSignIn')}
                 </NavLink>
               </Grid>
             </Grid>
@@ -231,8 +230,6 @@ export default function SignUp() {
         </Box>
       </Container>
     </ThemeProvider>
-
-
         </Modal>
    </>
   );

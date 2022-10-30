@@ -4,7 +4,7 @@ import { FC } from "react";
 import { IGoods } from "types";
 import { Goods } from "../../ProductCard";
 import { StyledContainer } from "./styles";
-import { StyledNavlink } from "../../../../Views/Shop/styles";
+import { StyledNavlink } from "Views/Category/styles";
 import * as React from "react";
 
 interface Props {
@@ -17,6 +17,7 @@ export const TrendingSlider: FC<Props> = ({ data }) => {
     swipeToSlide: true,
     autoplay: true,
     autoplaySpeed: 2000,
+    
   };
   return (
     <StyledContainer>

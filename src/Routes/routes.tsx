@@ -2,8 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "../Layouts/AppLayout";
 import { Links } from "./Links";
 import { Category } from "../Views/Category";
-import { Shop } from "../Views/Shop";
-import { Contact } from "../Views/Contact";
+//import { Contact } from "../Views/Contact";
 import { Home } from "../Views/Home";
 import { ProductDetail } from "../Views/ProductDetail/ProductDetail";
 import Register from "Views/Auth/Register";
@@ -22,8 +21,7 @@ export const AppRoutes = () => {
             element={<Category />}
           />
 
-          <Route path={Links.app.shop} element={<Shop />} />
-          <Route path={Links.app.contact} element={<Contact />} />
+          {/* <Route path={Links.app.contact} element={<Contact />} /> */}
           <Route path={Links.app.register} element={<Register />} />
           <Route path={Links.app.login} element={<Login />} />
           <Route path={Links.app.productDetail} element={<ProductDetail />} />
